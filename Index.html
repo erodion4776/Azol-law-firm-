@@ -201,6 +201,36 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
+        /* Unmute Button */
+        .unmute-btn {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.9);
+            border: 2px solid white;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .unmute-btn:hover {
+            background: rgba(212, 175, 55, 1);
+            transform: scale(1.1);
+        }
+
+        .unmute-btn:focus {
+            outline: 2px solid white;
+            outline-offset: 3px;
+        }
+
         /* Services Section */
         .services {
             padding: 5rem 2rem;
@@ -479,6 +509,14 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
+
+            .unmute-btn {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -506,10 +544,23 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <video class="hero-video" autoplay muted loop playsinline poster="assets/images/video-poster.jpg">
+        <video 
+            class="hero-video" 
+            autoplay 
+            muted 
+            loop 
+            playsinline
+            poster="assets/images/video-poster.jpg"
+            id="heroVideo">
             <source src="assets/videos/hero-video.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
+        
+        <!-- Unmute Button -->
+        <button class="unmute-btn" id="unmuteBtn" aria-label="Unmute video">
+            <i class="fas fa-volume-mute" id="volumeIcon"></i>
+        </button>
+        
         <div class="hero-content">
             <h1>Helping You Navigate U.S. Immigration with Confidence</h1>
             <p>Simplifying complex immigration processes so you and your family can achieve your American dream.</p>
@@ -648,6 +699,29 @@
             nav.classList.toggle('active');
         });
 
+        // Unmute Button Functionality
+        const unmuteBtn = document.getElementById('unmuteBtn');
+        const heroVideo = document.getElementById('heroVideo');
+        const volumeIcon = document.getElementById('volumeIcon');
+
+        if (unmuteBtn && heroVideo) {
+            unmuteBtn.addEventListener('click', function() {
+                if (heroVideo.muted) {
+                    // Unmute the video
+                    heroVideo.muted = false;
+                    volumeIcon.classList.remove('fa-volume-mute');
+                    volumeIcon.classList.add('fa-volume-up');
+                    unmuteBtn.setAttribute('aria-label', 'Mute video');
+                } else {
+                    // Mute the video
+                    heroVideo.muted = true;
+                    volumeIcon.classList.remove('fa-volume-up');
+                    volumeIcon.classList.add('fa-volume-mute');
+                    unmuteBtn.setAttribute('aria-label', 'Unmute video');
+                }
+            });
+        }
+
         // FAQ Accordion
         const faqItems = document.querySelectorAll('.faq-item');
 
@@ -688,6 +762,15 @@
 
         const fadeElements = document.querySelectorAll('.fade-in-section');
         fadeElements.forEach(element => observer.observe(element));
+
+        // Force video to play on load (backup)
+        window.addEventListener('load', function() {
+            if (heroVideo) {
+                heroVideo.play().catch(error => {
+                    console.log('Autoplay prevented:', error);
+                });
+            }
+        });
     </script>
 </body>
 </html>
