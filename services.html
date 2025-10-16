@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Law Office of Cynthia Azor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a2342;
+            --accent-color: #d4af37;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0d3a66 100%);
+            color: var(--white);
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-detail {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            padding-bottom: 4rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .service-detail:last-child {
+            border-bottom: none;
+        }
+
+        .service-icon-wrapper {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .service-icon {
+            font-size: 5rem;
+            color: var(--accent-color);
+            background: var(--light-bg);
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .service-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-info p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-info ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-info ul li {
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .service-info ul li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent-color);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #c4a137;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--light-bg);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section ul {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Scroll Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                padding: 5rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .service-detail {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .service-icon {
+                width: 120px;
+                height: 120px;
+                font-size: 4rem;
+            }
+
+            .service-info h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">CY <span>AZOR</span> LAW</a>
+            <nav id="nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Our Services</h1>
+        <p>Comprehensive Legal Solutions Tailored to Your Needs</p>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="service-detail fade-in-section">
+            <div class="service-icon-wrapper">
+                <div class="service-icon">
+                    <i class="fas fa-passport"></i>
+                </div>
+            </div>
+            <div class="service-info">
+                <h2>Immigration Law</h2>
+                <p>Navigating U.S. immigration law can be complex and overwhelming. Our firm provides comprehensive immigration services to individuals, families, and businesses seeking to enter, stay, or work in the United States.</p>
+                <ul>
+                    <li>Family-based immigration petitions</li>
+                    <li>Employment-based visa applications</li>
+                    <li>Green card applications and renewals</li>
+                    <li>Citizenship and naturalization</li>
+                    <li>Deportation defense and removal proceedings</li>
+                    <li>Asylum and refugee applications</li>
+                    <li>DACA and TPS applications</li>
+                    <li>Consular processing and waivers</li>
+                </ul>
+                <p>We stay current with the latest immigration policies and regulations to provide you with accurate, effective legal guidance. Our personalized approach ensures that your unique circumstances are carefully considered in developing your immigration strategy.</p>
+            </div>
+        </div>
+
+        <div class="service-detail fade-in-section">
+            <div class="service-icon-wrapper">
+                <div class="service-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+            </div>
+            <div class="service-info">
+                <h2>Bar Exam Preparation</h2>
+                <p>Passing the bar exam is a crucial step in your legal career. With years of experience and a proven track record, we offer comprehensive bar exam preparation services to help you succeed.</p>
+                <ul>
+                    <li>Personalized study plans and schedules</li>
+                    <li>Practice exams and essay reviews</li>
+                    <li>One-on-one tutoring sessions</li>
+                    <li>Multistate Bar Examination (MBE) prep</li>
+                    <li>Essay writing strategies and techniques</li>
+                    <li>Performance test preparation</li>
+                    <li>Stress management and test-taking strategies</li>
+                    <li>Post-exam support and guidance</li>
+                </ul>
+                <p>Our bar prep program is designed to build your confidence and competence, ensuring you're fully prepared to tackle the exam and launch your legal career successfully.</p>
+            </div>
+        </div>
+
+        <div class="service-detail fade-in-section">
+            <div class="service-icon-wrapper">
+                <div class="service-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+            </div>
+            <div class="service-info">
+                <h2>Intellectual Property Law</h2>
+                <p>Your ideas and creative works deserve protection. We provide comprehensive intellectual property services to safeguard your innovations, brands, and artistic creations.</p>
+                <ul>
+                    <li>Trademark registration and protection</li>
+                    <li>Copyright registration and enforcement</li>
+                    <li>Patent application assistance</li>
+                    <li>Trade secret protection</li>
+                    <li>IP licensing and agreements</li>
+                    <li>Infringement defense and litigation</li>
+                    <li>Brand strategy and portfolio management</li>
+                    <li>IP due diligence for business transactions</li>
+                </ul>
+                <p>Whether you're an entrepreneur, artist, inventor, or business owner, we'll help you navigate the complexities of intellectual property law to protect what you've created and maximize its value.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section fade-in-section">
+        <h2>Ready to Get Started?</h2>
+        <p>Schedule a consultation today to discuss your legal needs</p>
+        <a href="contact.html" class="cta-button">Book Your Consultation</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@cyazorlaw.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Legal Plaza, Suite 400<br>New York, NY 10001</p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 2:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Law Office of Cynthia Azor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        const fadeElements = document.querySelectorAll('.fade-in-section');
+        fadeElements.forEach(element => observer.observe(element));
+    </script>
+</body>
+</html>
