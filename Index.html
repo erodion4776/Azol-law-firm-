@@ -123,64 +123,109 @@
             transform: rotate(-45deg) translate(7px, -6px);
         }
 
-        /* Hero Section */
-        .hero {
+        /* Hero Carousel Section */
+        .hero-carousel {
             position: relative;
             height: 100vh;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
 
-        .hero-video {
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slide-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            z-index: -2;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .hero-overlay {
+        .slide-background::after {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 35, 66, 0.7);
-            z-index: -1;
+            background: rgba(10, 35, 66, 0.75);
         }
 
-        .hero-content {
+        /* Individual slide backgrounds */
+        .slide-1 .slide-background {
+            background-image: url('assets/images/video-poster.jpg');
+        }
+
+        .slide-2 .slide-background {
+            background-image: url('assets/images/video-poster.jpg');
+        }
+
+        .slide-3 .slide-background {
+            background-image: url('assets/images/video-poster.jpg');
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
             text-align: center;
             color: var(--white);
-            max-width: 800px;
+            max-width: 900px;
             padding: 2rem;
+        }
+
+        .slide-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.5s;
+            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .carousel-slide.active .slide-content h1 {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
             font-weight: 300;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+        }
+
+        .carousel-slide.active .slide-content p {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .cta-button {
@@ -193,6 +238,14 @@
             border-radius: 50px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .carousel-slide.active .cta-button {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s, background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cta-button:hover {
@@ -201,18 +254,62 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
-        /* Unmute Button */
-        .unmute-btn {
-            position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: rgba(212, 175, 55, 0.9);
-            border: 2px solid white;
+        /* Circular Thumbnails */
+        .slide-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .carousel-slide.active .slide-thumbnails {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.1);
+        }
+
+        .thumbnail i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Navigation Arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(212, 175, 55, 0.9);
+            color: var(--white);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
             cursor: pointer;
             z-index: 10;
             transition: all 0.3s ease;
@@ -221,14 +318,47 @@
             justify-content: center;
         }
 
-        .unmute-btn:hover {
+        .carousel-arrow:hover {
             background: rgba(212, 175, 55, 1);
-            transform: scale(1.1);
+            transform: translateY(-50%) scale(1.1);
         }
 
-        .unmute-btn:focus {
-            outline: 2px solid white;
-            outline-offset: 3px;
+        .carousel-arrow.left {
+            left: 2rem;
+        }
+
+        .carousel-arrow.right {
+            right: 2rem;
+        }
+
+        /* Slide Indicators (Dots) */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .indicator-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator-dot.active {
+            background: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .indicator-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
         }
 
         /* Services Section */
@@ -494,12 +624,47 @@
                 gap: 1.5rem;
             }
 
-            .hero h1 {
+            .hero-carousel {
+                margin-top: 60px;
+            }
+
+            .slide-content h1 {
                 font-size: 2rem;
             }
 
-            .hero p {
+            .slide-content p {
                 font-size: 1rem;
+            }
+
+            .carousel-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-arrow.left {
+                left: 1rem;
+            }
+
+            .carousel-arrow.right {
+                right: 1rem;
+            }
+
+            .carousel-indicators {
+                bottom: 2rem;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .thumbnail i {
+                font-size: 1.5rem;
+            }
+
+            .slide-thumbnails {
+                gap: 1rem;
             }
 
             .section-title {
@@ -509,13 +674,29 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
+        }
 
-            .unmute-btn {
-                bottom: 1rem;
-                right: 1rem;
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
+        @media (max-width: 480px) {
+            .slide-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .slide-content p {
+                font-size: 0.9rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+            }
+
+            .thumbnail {
+                width: 50px;
+                height: 50px;
+            }
+
+            .thumbnail i {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -542,29 +723,86 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <video 
-            class="hero-video" 
-            autoplay 
-            muted 
-            loop 
-            playsinline
-            poster="assets/images/video-poster.jpg"
-            id="heroVideo">
-            <source src="assets/videos/hero-video.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        
-        <!-- Unmute Button -->
-        <button class="unmute-btn" id="unmuteBtn" aria-label="Unmute video">
-            <i class="fas fa-volume-mute" id="volumeIcon"></i>
+    <!-- Hero Carousel Section -->
+    <section class="hero-carousel">
+        <div class="carousel-container">
+            <!-- Slide 1: Immigration -->
+            <div class="carousel-slide active slide-1">
+                <div class="slide-background"></div>
+                <div class="slide-content">
+                    <h1>Helping You Navigate U.S. Immigration with Confidence</h1>
+                    <p>Law Office of Cynthia Azor simplifies complex immigration processes so you and your family can achieve your American dream with clarity and peace of mind.</p>
+                    <a href="contact.html" class="cta-button">Book a Consultation</a>
+                    <div class="slide-thumbnails">
+                        <div class="thumbnail">
+                            <i class="fas fa-passport"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Bar Prep -->
+            <div class="carousel-slide slide-2">
+                <div class="slide-background"></div>
+                <div class="slide-content">
+                    <h1>Ace the Bar with Expert Guidance</h1>
+                    <p>Get tips, eBooks, and join a supportive bar prep community. Law Office of Cynthia Azor equips aspiring lawyers with proven strategies, study resources, and mentorship to pass the bar confidently.</p>
+                    <a href="shop.html" class="cta-button">Join Our Prep Program!</a>
+                    <div class="slide-thumbnails">
+                        <div class="thumbnail">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-award"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Legal Support -->
+            <div class="carousel-slide slide-3">
+                <div class="slide-background"></div>
+                <div class="slide-content">
+                    <h1>Personalized Legal Support When You Need It</h1>
+                    <p>Schedule a one-on-one session with Attorney Cynthia Azor for tailored guidance. Whether immigration, business, or IP law, receive actionable legal solutions designed specifically for your unique needs.</p>
+                    <a href="contact.html" class="cta-button">Book Your Session Now!</a>
+                    <div class="slide-thumbnails">
+                        <div class="thumbnail">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button class="carousel-arrow left" id="prevBtn">
+            <i class="fas fa-chevron-left"></i>
         </button>
-        
-        <div class="hero-content">
-            <h1>Helping You Navigate U.S. Immigration with Confidence</h1>
-            <p>Simplifying complex immigration processes so you and your family can achieve your American dream.</p>
-            <a href="contact.html" class="cta-button">Book a Consultation</a>
+        <button class="carousel-arrow right" id="nextBtn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Slide Indicators -->
+        <div class="carousel-indicators">
+            <span class="indicator-dot active" data-slide="0"></span>
+            <span class="indicator-dot" data-slide="1"></span>
+            <span class="indicator-dot" data-slide="2"></span>
         </div>
     </section>
 
@@ -699,28 +937,76 @@
             nav.classList.toggle('active');
         });
 
-        // Unmute Button Functionality
-        const unmuteBtn = document.getElementById('unmuteBtn');
-        const heroVideo = document.getElementById('heroVideo');
-        const volumeIcon = document.getElementById('volumeIcon');
+        // Carousel Functionality
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.indicator-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        let currentSlide = 0;
+        let autoPlayInterval;
+        const autoPlayDelay = 6000; // 6 seconds
 
-        if (unmuteBtn && heroVideo) {
-            unmuteBtn.addEventListener('click', function() {
-                if (heroVideo.muted) {
-                    // Unmute the video
-                    heroVideo.muted = false;
-                    volumeIcon.classList.remove('fa-volume-mute');
-                    volumeIcon.classList.add('fa-volume-up');
-                    unmuteBtn.setAttribute('aria-label', 'Mute video');
-                } else {
-                    // Mute the video
-                    heroVideo.muted = true;
-                    volumeIcon.classList.remove('fa-volume-up');
-                    volumeIcon.classList.add('fa-volume-mute');
-                    unmuteBtn.setAttribute('aria-label', 'Unmute video');
-                }
-            });
+        function showSlide(index) {
+            // Remove active class from all slides and dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Add active class to current slide and dot
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
         }
+
+        function nextSlide() {
+            let next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prev);
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        function resetAutoPlay() {
+            stopAutoPlay();
+            startAutoPlay();
+        }
+
+        // Event Listeners
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetAutoPlay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetAutoPlay();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+                resetAutoPlay();
+            });
+        });
+
+        // Pause autoplay on hover
+        const carouselContainer = document.querySelector('.hero-carousel');
+        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+
+        // Start autoplay on page load
+        startAutoPlay();
 
         // FAQ Accordion
         const faqItems = document.querySelectorAll('.faq-item');
@@ -763,12 +1049,14 @@
         const fadeElements = document.querySelectorAll('.fade-in-section');
         fadeElements.forEach(element => observer.observe(element));
 
-        // Force video to play on load (backup)
-        window.addEventListener('load', function() {
-            if (heroVideo) {
-                heroVideo.play().catch(error => {
-                    console.log('Autoplay prevented:', error);
-                });
+        // Keyboard Navigation for Carousel
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+                resetAutoPlay();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+                resetAutoPlay();
             }
         });
     </script>
