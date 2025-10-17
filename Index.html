@@ -420,6 +420,12 @@
             gap: 2rem;
         }
 
+        /* Make the entire card a clickable link */
+        .service-card-link {
+            text-decoration: none;
+            display: block;
+        }
+
         .service-card {
             background: var(--white);
             padding: 2.5rem;
@@ -427,6 +433,8 @@
             text-align: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
         }
 
         .service-card:hover {
@@ -438,6 +446,12 @@
             font-size: 3rem;
             color: var(--accent-color);
             margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover i {
+            transform: scale(1.1);
+            color: #c4a137;
         }
 
         .service-card h3 {
@@ -445,6 +459,11 @@
             font-size: 1.5rem;
             color: var(--primary-color);
             margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .service-card:hover h3 {
+            color: var(--accent-color);
         }
 
         .service-card p {
@@ -863,21 +882,32 @@
             <h2 class="section-title">Our Services</h2>
             <p class="section-subtitle">Expert legal assistance tailored to your needs</p>
             <div class="services-grid">
-                <div class="service-card">
-                    <i class="fas fa-passport"></i>
-                    <h3>Immigration Law</h3>
-                    <p>Comprehensive immigration services including visas, green cards, citizenship applications, and deportation defense.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-gavel"></i>
-                    <h3>Bar Exam Preparation</h3>
-                    <p>Expert guidance and resources to help you successfully pass the bar examination and start your legal career.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-lightbulb"></i>
-                    <h3>Intellectual Property</h3>
-                    <p>Protection of your creative works, trademarks, patents, and trade secrets with experienced legal counsel.</p>
-                </div>
+                <!-- Immigration Law Card - Clickable -->
+                <a href="services.html" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-passport"></i>
+                        <h3>Immigration Law</h3>
+                        <p>Comprehensive immigration services including visas, green cards, citizenship applications, and deportation defense.</p>
+                    </div>
+                </a>
+
+                <!-- Bar Prep Card - Clickable -->
+                <a href="services.html" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-gavel"></i>
+                        <h3>Bar Exam Preparation</h3>
+                        <p>Expert guidance and resources to help you successfully pass the bar examination and start your legal career.</p>
+                    </div>
+                </a>
+
+                <!-- Intellectual Property Card - Clickable -->
+                <a href="services.html" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Intellectual Property</h3>
+                        <p>Protection of your creative works, trademarks, patents, and trade secrets with experienced legal counsel.</p>
+                    </div>
+                </a>
             </div>
         </div>
     </section>
