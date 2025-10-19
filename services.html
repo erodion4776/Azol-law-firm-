@@ -102,6 +102,7 @@
             flex-direction: column;
             cursor: pointer;
             gap: 4px;
+            z-index: 1001;
         }
 
         .hamburger span {
@@ -425,6 +426,15 @@
 
             .service-list {
                 grid-template-columns: 1fr;
+            }
+
+            .services-nav-container {
+                gap: 0.5rem;
+            }
+
+            .service-nav-link {
+                font-size: 0.85rem;
+                padding: 0.6rem 1rem;
             }
         }
     </style>
@@ -1121,13 +1131,32 @@
     </footer>
 
     <script>
-        // Hamburger Menu Toggle
+        // Hamburger Menu Toggle with Fix
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('nav');
+        const navLinks = document.querySelectorAll('nav ul li a');
 
-        hamburger.addEventListener('click', () => {
+        // Toggle menu on hamburger click
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
             hamburger.classList.toggle('active');
             nav.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a navigation link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
         });
 
         // Smooth scroll to sections
