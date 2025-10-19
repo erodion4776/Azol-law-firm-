@@ -143,6 +143,43 @@
             opacity: 0.9;
         }
 
+        /* Services Navigation */
+        .services-nav {
+            background: var(--white);
+            padding: 2rem;
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .services-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .service-nav-link {
+            padding: 0.8rem 1.5rem;
+            background: var(--light-bg);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .service-nav-link:hover,
+        .service-nav-link.active {
+            background: var(--accent-color);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
         /* Services Section */
         .services {
             padding: 5rem 2rem;
@@ -151,70 +188,111 @@
         }
 
         .service-detail {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 3rem;
-            margin-bottom: 4rem;
-            padding-bottom: 4rem;
-            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 6rem;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            scroll-margin-top: 150px;
         }
 
-        .service-detail:last-child {
-            border-bottom: none;
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--accent-color);
         }
 
         .service-icon-wrapper {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-        }
-
-        .service-icon {
-            font-size: 5rem;
-            color: var(--accent-color);
-            background: var(--light-bg);
-            width: 150px;
-            height: 150px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            flex-shrink: 0;
         }
 
-        .service-info h2 {
+        .service-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+        }
+
+        .service-header h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             color: var(--primary-color);
-            margin-bottom: 1.5rem;
         }
 
-        .service-info p {
+        .service-intro {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .service-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-content p {
             color: var(--text-light);
             font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 1.5rem;
         }
 
-        .service-info ul {
-            list-style: none;
-            margin-bottom: 1.5rem;
+        .service-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
         }
 
-        .service-info ul li {
-            color: var(--text-light);
-            margin-bottom: 0.8rem;
-            padding-left: 2rem;
-            position: relative;
+        .service-list-item {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
         }
 
-        .service-info ul li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
+        .service-list-item i {
             color: var(--accent-color);
+            margin-right: 0.8rem;
+        }
+
+        .service-list-item strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .cta-box p {
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.9);
         }
 
         .cta-button {
@@ -233,26 +311,6 @@
             background: #c4a137;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: var(--light-bg);
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            color: var(--text-light);
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
         }
 
         /* Footer */
@@ -352,19 +410,21 @@
                 font-size: 2rem;
             }
 
-            .service-detail {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+            .service-header {
+                flex-direction: column;
+                text-align: center;
             }
 
-            .service-icon {
-                width: 120px;
-                height: 120px;
-                font-size: 4rem;
-            }
-
-            .service-info h2 {
+            .service-header h2 {
                 font-size: 2rem;
+            }
+
+            .service-detail {
+                padding: 2rem 1.5rem;
+            }
+
+            .service-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -393,87 +453,640 @@
 
     <!-- Page Header -->
     <section class="page-header">
-        <h1>Our Services</h1>
-        <p>Comprehensive Legal Solutions Tailored to Your Needs</p>
+        <h1>Our Legal Services</h1>
+        <p>Comprehensive legal solutions for immigration, business, and intellectual property</p>
     </section>
+
+    <!-- Services Navigation -->
+    <nav class="services-nav">
+        <div class="services-nav-container">
+            <a href="#immigration" class="service-nav-link">Immigration</a>
+            <a href="#ip" class="service-nav-link">Intellectual Property</a>
+            <a href="#business" class="service-nav-link">Business Formation</a>
+            <a href="#contracts" class="service-nav-link">Contracts & Templates</a>
+            <a href="#training" class="service-nav-link">Legal Training</a>
+            <a href="#consultation" class="service-nav-link">Consultation</a>
+        </div>
+    </nav>
 
     <!-- Services Section -->
     <section class="services">
-        <div class="service-detail fade-in-section">
-            <div class="service-icon-wrapper">
-                <div class="service-icon">
-                    <i class="fas fa-passport"></i>
+        <!-- Immigration Services -->
+        <div class="service-detail fade-in-section" id="immigration">
+            <div class="service-header">
+                <div class="service-icon-wrapper">
+                    <i class="fas fa-passport service-icon"></i>
+                </div>
+                <h2>Immigration Services</h2>
+            </div>
+            <p class="service-intro">Navigate the complexities of U.S. immigration law with expert guidance. We provide comprehensive support for individuals, families, and businesses seeking to enter, remain, or work in the United States.</p>
+            
+            <div class="service-content">
+                <h3>Family-Based Immigration</h3>
+                <p>Reunite with your loved ones through family sponsorship. We assist with:</p>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Spouse & Fiancé Visas</strong>
+                        K-1, K-3, and CR-1/IR-1 visa petitions
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Parent & Child Petitions</strong>
+                        IR-2, IR-5, and F-2 family preference categories
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Sibling Sponsorship</strong>
+                        F-4 visa category for adult siblings
+                    </div>
+                </div>
+
+                <h3>Employment-Based Immigration</h3>
+                <p>Secure work authorization and permanent residency for professionals and skilled workers:</p>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>H-1B Specialty Occupation</strong>
+                        Professional work visas and extensions
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>L-1 Intracompany Transfer</strong>
+                        Transfer executives and managers to U.S. offices
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>EB-1, EB-2, EB-3</strong>
+                        Employment-based green card categories
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>PERM Labor Certification</strong>
+                        Complete labor certification process
+                    </div>
+                </div>
+
+                <h3>Green Cards & Citizenship</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Adjustment of Status</strong>
+                        Apply for permanent residency from within the U.S.
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Consular Processing</strong>
+                        Immigrant visa applications abroad
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Naturalization</strong>
+                        U.S. citizenship applications (N-400)
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Green Card Renewal</strong>
+                        I-751 and I-829 petition support
+                    </div>
+                </div>
+
+                <h3>Deportation Defense & Relief</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Removal Defense</strong>
+                        Representation in immigration court
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Asylum Applications</strong>
+                        Affirmative and defensive asylum
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Cancellation of Removal</strong>
+                        LPR and non-LPR cancellation
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Waivers & Appeals</strong>
+                        I-601, I-601A, and BIA appeals
+                    </div>
+                </div>
+
+                <h3>Special Immigration Programs</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>DACA</strong>
+                        Deferred Action for Childhood Arrivals
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>TPS</strong>
+                        Temporary Protected Status applications
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>U Visa</strong>
+                        For crime victims assisting law enforcement
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>VAWA</strong>
+                        Violence Against Women Act petitions
+                    </div>
                 </div>
             </div>
-            <div class="service-info">
-                <h2>Immigration Law</h2>
-                <p>Navigating U.S. immigration law can be complex and overwhelming. Our firm provides comprehensive immigration services to individuals, families, and businesses seeking to enter, stay, or work in the United States.</p>
-                <ul>
-                    <li>Family-based immigration petitions</li>
-                    <li>Employment-based visa applications</li>
-                    <li>Green card applications and renewals</li>
-                    <li>Citizenship and naturalization</li>
-                    <li>Deportation defense and removal proceedings</li>
-                    <li>Asylum and refugee applications</li>
-                    <li>DACA and TPS applications</li>
-                    <li>Consular processing and waivers</li>
-                </ul>
-                <p>We stay current with the latest immigration policies and regulations to provide you with accurate, effective legal guidance. Our personalized approach ensures that your unique circumstances are carefully considered in developing your immigration strategy.</p>
+
+            <div class="cta-box">
+                <h3>Start Your Immigration Journey Today</h3>
+                <p>Every immigration case is unique. Schedule a consultation to discuss your specific situation and explore your options.</p>
+                <a href="contact.html" class="cta-button">Book Immigration Consultation</a>
             </div>
         </div>
 
-        <div class="service-detail fade-in-section">
-            <div class="service-icon-wrapper">
-                <div class="service-icon">
-                    <i class="fas fa-gavel"></i>
+        <!-- Intellectual Property Law -->
+        <div class="service-detail fade-in-section" id="ip">
+            <div class="service-header">
+                <div class="service-icon-wrapper">
+                    <i class="fas fa-lightbulb service-icon"></i>
                 </div>
-            </div>
-            <div class="service-info">
-                <h2>Bar Exam Preparation</h2>
-                <p>Passing the bar exam is a crucial step in your legal career. With years of experience and a proven track record, we offer comprehensive bar exam preparation services to help you succeed.</p>
-                <ul>
-                    <li>Personalized study plans and schedules</li>
-                    <li>Practice exams and essay reviews</li>
-                    <li>One-on-one tutoring sessions</li>
-                    <li>Multistate Bar Examination (MBE) prep</li>
-                    <li>Essay writing strategies and techniques</li>
-                    <li>Performance test preparation</li>
-                    <li>Stress management and test-taking strategies</li>
-                    <li>Post-exam support and guidance</li>
-                </ul>
-                <p>Our bar prep program is designed to build your confidence and competence, ensuring you're fully prepared to tackle the exam and launch your legal career successfully.</p>
-            </div>
-        </div>
-
-        <div class="service-detail fade-in-section">
-            <div class="service-icon-wrapper">
-                <div class="service-icon">
-                    <i class="fas fa-lightbulb"></i>
-                </div>
-            </div>
-            <div class="service-info">
                 <h2>Intellectual Property Law</h2>
-                <p>Your ideas and creative works deserve protection. We provide comprehensive intellectual property services to safeguard your innovations, brands, and artistic creations.</p>
-                <ul>
-                    <li>Trademark registration and protection</li>
-                    <li>Copyright registration and enforcement</li>
-                    <li>Patent application assistance</li>
-                    <li>Trade secret protection</li>
-                    <li>IP licensing and agreements</li>
-                    <li>Infringement defense and litigation</li>
-                    <li>Brand strategy and portfolio management</li>
-                    <li>IP due diligence for business transactions</li>
+            </div>
+            <p class="service-intro">Protect your innovations, creative works, and brand identity. Our IP services safeguard your intellectual assets and maximize their commercial value.</p>
+            
+            <div class="service-content">
+                <h3>Trademark Services</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Trademark Registration</strong>
+                        Federal and state trademark applications
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Trademark Search & Clearance</strong>
+                        Comprehensive availability analysis
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Office Action Response</strong>
+                        USPTO correspondence handling
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Trademark Monitoring</strong>
+                        Protection against infringement
+                    </div>
+                </div>
+
+                <h3>Copyright Protection</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Copyright Registration</strong>
+                        Literary, artistic, and digital works
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>DMCA Takedown Notices</strong>
+                        Online infringement removal
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Work-for-Hire Agreements</strong>
+                        Ownership documentation
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Licensing Agreements</strong>
+                        Commercial use contracts
+                    </div>
+                </div>
+
+                <h3>Patent Assistance</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Patent Searches</strong>
+                        Prior art investigation
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Provisional Applications</strong>
+                        Early filing date protection
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Patent Referrals</strong>
+                        Connection to patent attorneys
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Patent Strategy</strong>
+                        IP portfolio development
+                    </div>
+                </div>
+
+                <h3>Trade Secret Protection</h3>
+                <p>Safeguard confidential business information through:</p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-shield-alt" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Non-Disclosure Agreements (NDAs)</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-shield-alt" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Employee Confidentiality Agreements</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-shield-alt" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Non-Compete Clauses</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-shield-alt" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Trade Secret Policies</li>
                 </ul>
-                <p>Whether you're an entrepreneur, artist, inventor, or business owner, we'll help you navigate the complexities of intellectual property law to protect what you've created and maximize its value.</p>
+            </div>
+
+            <div class="cta-box">
+                <h3>Protect Your Intellectual Property</h3>
+                <p>Don't leave your innovations unprotected. Consult with us to develop a comprehensive IP strategy.</p>
+                <a href="contact.html" class="cta-button">Schedule IP Consultation</a>
             </div>
         </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section fade-in-section">
-        <h2>Ready to Get Started?</h2>
-        <p>Schedule a consultation today to discuss your legal needs</p>
-        <a href="contact.html" class="cta-button">Book Your Consultation</a>
+        <!-- Business Formation -->
+        <div class="service-detail fade-in-section" id="business">
+            <div class="service-header">
+                <div class="service-icon-wrapper">
+                    <i class="fas fa-building service-icon"></i>
+                </div>
+                <h2>Business Formation (U.S. & Nigeria)</h2>
+            </div>
+            <p class="service-intro">Launch and structure your business correctly from day one. We provide comprehensive business formation services in both the United States and Nigeria.</p>
+            
+            <div class="service-content">
+                <h3>U.S. Business Formation</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>LLC Formation</strong>
+                        Limited Liability Company setup
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Corporation Formation</strong>
+                        C-Corp and S-Corp structuring
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>DBA/Sole Proprietorship</strong>
+                        Doing Business As registration
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Nonprofit Formation</strong>
+                        501(c)(3) and other tax-exempt entities
+                    </div>
+                </div>
+
+                <h3>Nigeria Business Formation</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Business Name Registration</strong>
+                        CAC registration and certification
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Limited Company Formation</strong>
+                        Private and public limited companies
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Tax ID (TIN) Registration</strong>
+                        FIRS tax identification
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Foreign Company Registration</strong>
+                        International business setup
+                    </div>
+                </div>
+
+                <h3>Corporate Governance</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Operating Agreements</strong>
+                        LLC management documents
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Bylaws & Articles</strong>
+                        Corporate governance documents
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Shareholder Agreements</strong>
+                        Ownership and voting rights
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Annual Compliance</strong>
+                        State filings and corporate minutes
+                    </div>
+                </div>
+
+                <h3>Business Licensing & Permits</h3>
+                <p>We assist with obtaining necessary licenses and permits:</p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-certificate" style="color: var(--accent-color); margin-right: 0.5rem;"></i> EIN/Tax ID Registration</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-certificate" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Business Licenses</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-certificate" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Professional Certifications</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-certificate" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Import/Export Permits</li>
+                </ul>
+            </div>
+
+            <div class="cta-box">
+                <h3>Ready to Start Your Business?</h3>
+                <p>Choose the right business structure and ensure compliance from the start. Let's discuss your business goals.</p>
+                <a href="contact.html" class="cta-button">Start Your Business</a>
+            </div>
+        </div>
+
+        <!-- Contract Drafting & Templates -->
+        <div class="service-detail fade-in-section" id="contracts">
+            <div class="service-header">
+                <div class="service-icon-wrapper">
+                    <i class="fas fa-file-signature service-icon"></i>
+                </div>
+                <h2>Contract Drafting & Legal Templates</h2>
+            </div>
+            <p class="service-intro">Protect your business interests with professionally drafted contracts and customizable legal templates. Whether you need custom agreements or ready-to-use templates, we've got you covered.</p>
+            
+            <div class="service-content">
+                <h3>Custom Contract Drafting</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Service Agreements</strong>
+                        Client service and consulting contracts
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Vendor Contracts</strong>
+                        Supplier and procurement agreements
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Partnership Agreements</strong>
+                        Joint venture and collaboration contracts
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Sales Agreements</strong>
+                        Purchase and sale contracts
+                    </div>
+                </div>
+
+                <h3>Employment Documents</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Employment Contracts</strong>
+                        Full-time, part-time, and contractor agreements
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Offer Letters</strong>
+                        Job offer documentation
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Non-Compete Agreements</strong>
+                        Post-employment restrictions
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Severance Agreements</strong>
+                        Termination and separation terms
+                    </div>
+                </div>
+
+                <h3>Ready-to-Use Legal Templates</h3>
+                <p>Download instantly and customize for your needs:</p>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-file-download"></i>
+                        <strong>NDA Templates</strong>
+                        Mutual and unilateral NDAs
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-file-download"></i>
+                        <strong>Independent Contractor Agreement</strong>
+                        1099 contractor templates
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-file-download"></i>
+                        <strong>Terms of Service</strong>
+                        Website and app terms
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-file-download"></i>
+                        <strong>Privacy Policy</strong>
+                        GDPR and CCPA compliant templates
+                    </div>
+                </div>
+
+                <h3>Contract Review & Negotiation</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-search" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Third-party contract review</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-search" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Risk assessment and recommendations</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-search" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Negotiation support</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-search" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Redline and revision services</li>
+                </ul>
+            </div>
+
+            <div class="cta-box">
+                <h3>Need a Contract or Template?</h3>
+                <p>Browse our template library or request custom contract drafting tailored to your specific needs.</p>
+                <a href="shop.html" class="cta-button">View Templates</a>
+            </div>
+        </div>
+
+        <!-- Legal Guides & Training -->
+        <div class="service-detail fade-in-section" id="training">
+            <div class="service-header">
+                <div class="service-icon-wrapper">
+                    <i class="fas fa-graduation-cap service-icon"></i>
+                </div>
+                <h2>Legal Guides & Training</h2>
+            </div>
+            <p class="service-intro">Empower yourself with legal knowledge. Our educational resources, training programs, and comprehensive guides help you understand complex legal concepts and prepare for professional success.</p>
+            
+            <div class="service-content">
+                <h3>Bar Exam Preparation</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>MBE Preparation</strong>
+                        Multistate Bar Exam strategies
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Essay Writing Workshop</strong>
+                        MEE and state essay techniques
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Performance Test Prep</strong>
+                        MPT mastery program
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>One-on-One Tutoring</strong>
+                        Personalized bar exam coaching
+                    </div>
+                </div>
+
+                <h3>Legal Education Resources</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Immigration Law eBooks</strong>
+                        Comprehensive guides for applicants
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Business Law Guides</strong>
+                        Entrepreneur's legal handbook
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>IP Protection Manual</strong>
+                        Trademark and copyright basics
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Compliance Checklists</strong>
+                        Step-by-step legal compliance
+                    </div>
+                </div>
+
+                <h3>Professional Training</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>CLE Webinars</strong>
+                        Continuing Legal Education credits
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Legal Writing Workshops</strong>
+                        Professional writing skills
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Contract Drafting Course</strong>
+                        Master agreement creation
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Immigration Practice Course</strong>
+                        For aspiring immigration attorneys
+                    </div>
+                </div>
+
+                <h3>Community & Support</h3>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-users" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Exclusive bar prep community</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-users" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Monthly Q&A sessions</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-users" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Study group coordination</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-users" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Mentorship programs</li>
+                </ul>
+            </div>
+
+            <div class="cta-box">
+                <h3>Start Learning Today</h3>
+                <p>Explore our educational resources and training programs to advance your legal knowledge and career.</p>
+                <a href="shop.html" class="cta-button">Browse Training Programs</a>
+            </div>
+        </div>
+
+        <!-- Legal Consultation -->
+        <div class="service-detail fade-in-section" id="consultation">
+            <div class="service-header">
+                <div class="service-icon-wrapper">
+                    <i class="fas fa-comments service-icon"></i>
+                </div>
+                <h2>Legal Consultation</h2>
+            </div>
+            <p class="service-intro">Get expert legal advice tailored to your specific situation. Our consultation services provide you with clarity, strategic guidance, and actionable solutions.</p>
+            
+            <div class="service-content">
+                <h3>What You Get</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>60-Minute Session</strong>
+                        In-depth discussion of your legal matter
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Expert Analysis</strong>
+                        Professional assessment of your situation
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Strategic Guidance</strong>
+                        Clear action plan and next steps
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Follow-Up Summary</strong>
+                        Written recap and recommendations
+                    </div>
+                </div>
+
+                <h3>Consultation Types</h3>
+                <div class="service-list">
+                    <div class="service-list-item">
+                        <i class="fas fa-video"></i>
+                        <strong>Video Consultation</strong>
+                        Face-to-face via Zoom or Teams
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-phone"></i>
+                        <strong>Phone Consultation</strong>
+                        Convenient call-based session
+                    </div>
+                    <div class="service-list-item">
+                        <i class="fas fa-building"></i>
+                        <strong>In-Person Meeting</strong>
+                        Office visit (by appointment)
+                    </div>
+                </div>
+
+                <h3>Consultation Topics</h3>
+                <p>We provide consultations on:</p>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-arrow-right" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Immigration eligibility and options</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-arrow-right" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Business structure selection</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-arrow-right" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Intellectual property strategy</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-arrow-right" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Contract review and negotiation</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-arrow-right" style="color: var(--accent-color); margin-right: 0.5rem;"></i> Compliance and regulatory matters</li>
+                    <li style="margin-bottom: 1rem;"><i class="fas fa-arrow-right" style="color: var(--accent-color); margin-right: 0.5rem;"></i> General legal questions</li>
+                </ul>
+
+                <h3>How It Works</h3>
+                <ol style="line-height: 2; font-size: 1.1rem; color: var(--text-light);">
+                    <li>Schedule your consultation online or by phone</li>
+                    <li>Complete intake form with case details</li>
+                    <li>Receive confirmation and preparation materials</li>
+                    <li>Attend your consultation session</li>
+                    <li>Receive follow-up summary and next steps</li>
+                </ol>
+            </div>
+
+            <div class="cta-box">
+                <h3>Schedule Your Consultation</h3>
+                <p>Get the legal clarity you need. Book your one-on-one consultation with Attorney Cynthia Azor today.</p>
+                <a href="contact.html" class="cta-button">Book Consultation Now</a>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -515,6 +1128,42 @@
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             nav.classList.toggle('active');
+        });
+
+        // Smooth scroll to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section in navigation
+        const serviceNavLinks = document.querySelectorAll('.service-nav-link');
+        const sections = document.querySelectorAll('.service-detail');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            serviceNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
 
         // Intersection Observer for Scroll Animations
