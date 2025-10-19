@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Law Office of Cynthia Azor - Immigration Law Expert</title>
+    <title>Law Office of Cynthia Azor - Immigration & Business Law Expert</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -416,7 +416,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
 
@@ -435,6 +435,10 @@
             transition: all 0.3s ease;
             cursor: pointer;
             height: 100%;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .service-card:hover {
@@ -469,6 +473,7 @@
         .service-card p {
             color: var(--text-light);
             line-height: 1.8;
+            font-size: 0.95rem;
         }
 
         /* About Section */
@@ -644,6 +649,12 @@
         }
 
         /* Mobile Styles */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -802,8 +813,8 @@
             <!-- Slide 1: Immigration -->
             <div class="carousel-slide active">
                 <div class="slide-content">
-                    <h1>Helping You Navigate U.S. Immigration with Confidence</h1>
-                    <p>Law Office of Cynthia Azor simplifies complex immigration processes so you and your family can achieve your American dream with clarity and peace of mind.</p>
+                    <h1>Expert Immigration Services for Your American Dream</h1>
+                    <p>Navigate the complex U.S. immigration system with confidence. From family visas to citizenship, we provide comprehensive legal support tailored to your unique journey.</p>
                     <a href="contact.html" class="cta-button">Book a Consultation</a>
                     <div class="slide-thumbnails">
                         <div class="thumbnail">
@@ -819,41 +830,41 @@
                 </div>
             </div>
 
-            <!-- Slide 2: Bar Prep -->
+            <!-- Slide 2: Business Formation -->
             <div class="carousel-slide">
                 <div class="slide-content">
-                    <h1>Ace the Bar with Expert Guidance</h1>
-                    <p>Get tips, eBooks, and join a supportive bar prep community. Law Office of Cynthia Azor equips aspiring lawyers with proven strategies, study resources, and mentorship to pass the bar confidently.</p>
-                    <a href="shop.html" class="cta-button">Join Our Prep Program!</a>
+                    <h1>Business Formation & Corporate Law Services</h1>
+                    <p>Launch and protect your business in the U.S. and Nigeria. Expert guidance on LLCs, corporations, contracts, and intellectual property for entrepreneurs and established businesses.</p>
+                    <a href="services.html#business" class="cta-button">Explore Business Services</a>
                     <div class="slide-thumbnails">
                         <div class="thumbnail">
-                            <i class="fas fa-graduation-cap"></i>
+                            <i class="fas fa-briefcase"></i>
                         </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-award"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Legal Support -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <h1>Personalized Legal Support When You Need It</h1>
-                    <p>Schedule a one-on-one session with Attorney Cynthia Azor for tailored guidance. Whether immigration, business, or IP law, receive actionable legal solutions designed specifically for your unique needs.</p>
-                    <a href="contact.html" class="cta-button">Book Your Session Now!</a>
-                    <div class="slide-thumbnails">
                         <div class="thumbnail">
                             <i class="fas fa-handshake"></i>
                         </div>
                         <div class="thumbnail">
                             <i class="fas fa-balance-scale"></i>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Legal Resources -->
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <h1>Professional Legal Guides & Templates</h1>
+                    <p>Access expertly crafted legal documents, comprehensive guides, and professional training resources. Empower yourself with the knowledge and tools to succeed.</p>
+                    <a href="shop.html" class="cta-button">View Resources</a>
+                    <div class="slide-thumbnails">
                         <div class="thumbnail">
-                            <i class="fas fa-gavel"></i>
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-book-open"></i>
                         </div>
                     </div>
                 </div>
@@ -879,33 +890,60 @@
     <!-- Services Section -->
     <section class="services fade-in-section">
         <div class="section-container">
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-subtitle">Expert legal assistance tailored to your needs</p>
+            <h2 class="section-title">Our Legal Services</h2>
+            <p class="section-subtitle">Comprehensive legal solutions for individuals and businesses</p>
             <div class="services-grid">
-                <!-- Immigration Law Card - Clickable -->
-                <a href="services.html" class="service-card-link">
+                <!-- Immigration Services -->
+                <a href="services.html#immigration" class="service-card-link">
                     <div class="service-card">
                         <i class="fas fa-passport"></i>
-                        <h3>Immigration Law</h3>
-                        <p>Comprehensive immigration services including visas, green cards, citizenship applications, and deportation defense.</p>
+                        <h3>Immigration Services</h3>
+                        <p>Visas, green cards, citizenship, deportation defense, and asylum applications for individuals and families.</p>
                     </div>
                 </a>
 
-                <!-- Bar Prep Card - Clickable -->
-                <a href="services.html" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-gavel"></i>
-                        <h3>Bar Exam Preparation</h3>
-                        <p>Expert guidance and resources to help you successfully pass the bar examination and start your legal career.</p>
-                    </div>
-                </a>
-
-                <!-- Intellectual Property Card - Clickable -->
-                <a href="services.html" class="service-card-link">
+                <!-- Intellectual Property Law -->
+                <a href="services.html#ip" class="service-card-link">
                     <div class="service-card">
                         <i class="fas fa-lightbulb"></i>
-                        <h3>Intellectual Property</h3>
-                        <p>Protection of your creative works, trademarks, patents, and trade secrets with experienced legal counsel.</p>
+                        <h3>Intellectual Property Law</h3>
+                        <p>Trademark registration, copyright protection, patents, and trade secret safeguarding for your innovations.</p>
+                    </div>
+                </a>
+
+                <!-- Business Formation -->
+                <a href="services.html#business" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-building"></i>
+                        <h3>Business Formation</h3>
+                        <p>LLC and corporation formation in the U.S. and Nigeria with comprehensive corporate structuring support.</p>
+                    </div>
+                </a>
+
+                <!-- Contract Drafting -->
+                <a href="services.html#contracts" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-file-signature"></i>
+                        <h3>Contract Drafting & Templates</h3>
+                        <p>Custom contracts, NDAs, employment agreements, and ready-to-use legal templates for your business needs.</p>
+                    </div>
+                </a>
+
+                <!-- Legal Guides & Training -->
+                <a href="services.html#training" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Legal Guides & Training</h3>
+                        <p>Comprehensive legal education, bar exam prep, webinars, and professional development resources.</p>
+                    </div>
+                </a>
+
+                <!-- Legal Consultation -->
+                <a href="services.html#consultation" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-comments"></i>
+                        <h3>Legal Consultation</h3>
+                        <p>One-on-one expert legal advice tailored to your specific immigration, business, or IP law matters.</p>
                     </div>
                 </a>
             </div>
@@ -917,8 +955,8 @@
         <div class="section-container">
             <h2 class="section-title">Who We Are</h2>
             <div class="about-content">
-                <p>The Law Office of Cynthia Azor is dedicated to providing exceptional legal services with a personal touch. With years of experience in immigration law, we understand the challenges and complexities our clients face.</p>
-                <p>Our mission is to make your journey through the U.S. immigration system as smooth and stress-free as possible. We treat every case with the utmost care and dedication it deserves.</p>
+                <p>The Law Office of Cynthia Azor is dedicated to providing exceptional legal services with a personal touch. With years of experience in immigration law, business formation, and intellectual property, we understand the challenges our clients face in navigating complex legal systems.</p>
+                <p>Our mission is to make your journey through U.S. immigration, business establishment, and legal compliance as smooth and stress-free as possible. We treat every case with the utmost care and dedication it deserves, whether you're an individual seeking citizenship or an entrepreneur launching a business.</p>
             </div>
         </div>
     </section>
@@ -953,23 +991,23 @@
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>What documents do I need for my consultation?</span>
+                        <span>Do you help with business formation in Nigeria?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
                         <div class="faq-answer-content">
-                            Bring any immigration-related documents you have, including passports, visas, previous applications, and correspondence from USCIS. Don't worry if you don't have everything—we'll guide you through what's needed.
+                            Yes! We provide comprehensive business formation services in both the United States and Nigeria, including company registration, corporate structuring, and compliance guidance for both jurisdictions.
                         </div>
                     </div>
                 </div>
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>Do you offer payment plans?</span>
+                        <span>What's included in a legal consultation?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
                         <div class="faq-answer-content">
-                            Yes, we understand that legal services are an investment. We offer flexible payment plans to make our services accessible. Contact us to discuss options that work for your budget.
+                            A consultation includes a comprehensive review of your situation, expert legal advice, discussion of your options, and a clear action plan. You'll receive personalized guidance tailored to your specific needs, whether immigration, business, or IP law.
                         </div>
                     </div>
                 </div>
@@ -1047,20 +1085,16 @@
         
         let currentSlide = 0;
         let autoPlayInterval;
-        const autoPlayDelay = 6000; // 6 seconds
+        const autoPlayDelay = 6000;
 
         function showSlide(index) {
-            // Remove active class from all slides and dots
             slides.forEach(slide => slide.classList.remove('active'));
             dots.forEach(dot => dot.classList.remove('active'));
             
-            // Add active class to current slide and dot
             slides[index].classList.add('active');
             dots[index].classList.add('active');
             
             currentSlide = index;
-            
-            // Video continues playing - no pause/play needed
         }
 
         function nextSlide() {
@@ -1086,7 +1120,6 @@
             startAutoPlay();
         }
 
-        // Event Listeners
         nextBtn.addEventListener('click', () => {
             nextSlide();
             resetAutoPlay();
@@ -1104,12 +1137,10 @@
             });
         });
 
-        // Pause autoplay on hover
         const carouselContainer = document.querySelector('.hero-carousel');
         carouselContainer.addEventListener('mouseenter', stopAutoPlay);
         carouselContainer.addEventListener('mouseleave', startAutoPlay);
 
-        // Start autoplay and video on page load
         window.addEventListener('load', function() {
             if (heroVideo) {
                 heroVideo.play().catch(error => {
@@ -1128,13 +1159,11 @@
             question.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
                 
-                // Close all items
                 faqItems.forEach(faqItem => {
                     faqItem.classList.remove('active');
                     faqItem.querySelector('.faq-answer').style.maxHeight = null;
                 });
                 
-                // Open clicked item if it wasn't active
                 if (!isActive) {
                     item.classList.add('active');
                     const answer = item.querySelector('.faq-answer');
@@ -1160,7 +1189,7 @@
         const fadeElements = document.querySelectorAll('.fade-in-section');
         fadeElements.forEach(element => observer.observe(element));
 
-        // Keyboard Navigation for Carousel
+        // Keyboard Navigation
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
                 prevSlide();
