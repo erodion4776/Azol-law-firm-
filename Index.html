@@ -102,6 +102,7 @@
             flex-direction: column;
             cursor: pointer;
             gap: 4px;
+            z-index: 1001;
         }
 
         .hamburger span {
@@ -495,16 +496,42 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Testimonials Section */
+        /* Enhanced Testimonials Section with Slide Effect */
         .testimonials {
             padding: 5rem 2rem;
             background: var(--primary-color);
             color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .testimonial-slide {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s ease;
+            pointer-events: none;
+        }
+
+        .testimonial-slide.active {
+            position: relative;
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .testimonial-slide.prev {
+            transform: translateX(-100px);
         }
 
         .testimonial-card {
-            max-width: 800px;
-            margin: 0 auto;
             text-align: center;
             padding: 2rem;
         }
@@ -513,6 +540,20 @@
             font-size: 3rem;
             color: var(--accent-color);
             margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .testimonial-text {
@@ -520,11 +561,80 @@
             font-style: italic;
             line-height: 1.8;
             margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.4s;
         }
 
         .testimonial-author {
             font-weight: 500;
             color: var(--accent-color);
+            font-size: 1.1rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        /* Testimonial Navigation Dots */
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-dot.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .testimonial-dot:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Testimonial Navigation Arrows */
+        .testimonial-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--white);
+            border: 2px solid rgba(212, 175, 55, 0.5);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .testimonial-nav:hover {
+            background: rgba(212, 175, 55, 0.4);
+            border-color: var(--accent-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .testimonial-nav.prev {
+            left: 2rem;
+        }
+
+        .testimonial-nav.next {
+            right: 2rem;
         }
 
         /* FAQ Section */
@@ -653,6 +763,14 @@
             .services-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .testimonial-nav.prev {
+                left: 1rem;
+            }
+            
+            .testimonial-nav.next {
+                right: 1rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -735,6 +853,24 @@
             .services-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .testimonial-text {
+                font-size: 1.1rem;
+            }
+            
+            .testimonial-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .testimonial-nav.prev {
+                left: 0.5rem;
+            }
+            
+            .testimonial-nav.next {
+                right: 0.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -758,6 +894,14 @@
 
             .thumbnail i {
                 font-size: 1.2rem;
+            }
+            
+            .testimonial-text {
+                font-size: 1rem;
+            }
+            
+            .testimonial-author {
+                font-size: 1rem;
             }
         }
     </style>
@@ -961,14 +1105,53 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Updated Testimonials Section with Slide Effect -->
     <section class="testimonials fade-in-section">
         <div class="section-container">
             <h2 class="section-title" style="color: white;">What Our Clients Say</h2>
-            <div class="testimonial-card">
-                <i class="fas fa-quote-left"></i>
-                <p class="testimonial-text">"Cynthia and her team made our immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents!"</p>
-                <p class="testimonial-author">- Maria & Carlos Rodriguez</p>
+            
+            <div class="testimonials-carousel">
+                <!-- Navigation Arrows -->
+                <button class="testimonial-nav prev" id="testimonialPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-nav next" id="testimonialNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Testimonial Slide 1 -->
+                <div class="testimonial-slide active">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p class="testimonial-text">"Cynthia and her team made our immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents!"</p>
+                        <p class="testimonial-author">- Maria & Carlos Rodriguez</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial Slide 2 (New) -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p class="testimonial-text">"Working with Cynthia was a blessing. Her faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. She not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
+                        <p class="testimonial-author">- Chinemelum Azike</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial Slide 3 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p class="testimonial-text">"The business formation services provided by Cynthia's office were exceptional. They helped me establish my LLC and guided me through all the legal requirements. Their attention to detail and expertise in both U.S. and Nigerian law is unmatched."</p>
+                        <p class="testimonial-author">- Dr. Adebayo Ogundimu</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial Dots Navigation -->
+                <div class="testimonial-dots">
+                    <span class="testimonial-dot active" data-testimonial="0"></span>
+                    <span class="testimonial-dot" data-testimonial="1"></span>
+                    <span class="testimonial-dot" data-testimonial="2"></span>
+                </div>
             </div>
         </div>
     </section>
@@ -1047,13 +1230,32 @@
     </footer>
 
     <script>
-        // Hamburger Menu Toggle
+        // Hamburger Menu Toggle with Fix
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('nav');
+        const navLinks = document.querySelectorAll('nav ul li a');
 
-        hamburger.addEventListener('click', () => {
+        // Toggle menu on hamburger click
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
             hamburger.classList.toggle('active');
             nav.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a navigation link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
         });
 
         // Video and Unmute Button
@@ -1141,6 +1343,111 @@
         carouselContainer.addEventListener('mouseenter', stopAutoPlay);
         carouselContainer.addEventListener('mouseleave', startAutoPlay);
 
+        // Testimonials Carousel
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+        const testimonialPrev = document.getElementById('testimonialPrev');
+        const testimonialNext = document.getElementById('testimonialNext');
+        
+        let currentTestimonial = 0;
+        let testimonialAutoPlay;
+        const testimonialDelay = 5000;
+
+        function showTestimonial(index) {
+            testimonialSlides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i < index) {
+                    slide.classList.add('prev');
+                }
+            });
+            testimonialDots.forEach(dot => dot.classList.remove('active'));
+            
+            testimonialSlides[index].classList.add('active');
+            testimonialDots[index].classList.add('active');
+            
+            // Reset animations for active slide
+            const activeCard = testimonialSlides[index].querySelector('.testimonial-card');
+            const icon = activeCard.querySelector('i');
+            const text = activeCard.querySelector('.testimonial-text');
+            const author = activeCard.querySelector('.testimonial-author');
+            
+            // Force animation restart
+            [icon, text, author].forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // Trigger reflow
+                el.style.animation = '';
+            });
+            
+            currentTestimonial = index;
+        }
+
+        function nextTestimonial() {
+            let next = (currentTestimonial + 1) % testimonialSlides.length;
+            showTestimonial(next);
+        }
+
+        function prevTestimonial() {
+            let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
+            showTestimonial(prev);
+        }
+
+        function startTestimonialAutoPlay() {
+            testimonialAutoPlay = setInterval(nextTestimonial, testimonialDelay);
+        }
+
+        function stopTestimonialAutoPlay() {
+            clearInterval(testimonialAutoPlay);
+        }
+
+        function resetTestimonialAutoPlay() {
+            stopTestimonialAutoPlay();
+            startTestimonialAutoPlay();
+        }
+
+        testimonialNext.addEventListener('click', () => {
+            nextTestimonial();
+            resetTestimonialAutoPlay();
+        });
+
+        testimonialPrev.addEventListener('click', () => {
+            prevTestimonial();
+            resetTestimonialAutoPlay();
+        });
+
+        testimonialDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showTestimonial(index);
+                resetTestimonialAutoPlay();
+            });
+        });
+
+        // Touch/Swipe support for testimonials
+        let testimonialTouchStart = 0;
+        let testimonialTouchEnd = 0;
+
+        const testimonialsSection = document.querySelector('.testimonials-carousel');
+        
+        testimonialsSection.addEventListener('touchstart', (e) => {
+            testimonialTouchStart = e.changedTouches[0].screenX;
+        });
+
+        testimonialsSection.addEventListener('touchend', (e) => {
+            testimonialTouchEnd = e.changedTouches[0].screenX;
+            handleTestimonialSwipe();
+        });
+
+        function handleTestimonialSwipe() {
+            if (testimonialTouchEnd < testimonialTouchStart - 50) {
+                nextTestimonial();
+                resetTestimonialAutoPlay();
+            }
+            if (testimonialTouchEnd > testimonialTouchStart + 50) {
+                prevTestimonial();
+                resetTestimonialAutoPlay();
+            }
+        }
+
+        // Start testimonial autoplay
         window.addEventListener('load', function() {
             if (heroVideo) {
                 heroVideo.play().catch(error => {
@@ -1148,6 +1455,7 @@
                 });
             }
             startAutoPlay();
+            startTestimonialAutoPlay();
         });
 
         // FAQ Accordion
