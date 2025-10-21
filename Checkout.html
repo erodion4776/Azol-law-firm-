@@ -257,7 +257,7 @@
 
         /* Stripe Elements Container */
         #card-element {
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             border: 1px solid #ddd;
             border-radius: 5px;
             background: var(--white);
@@ -634,7 +634,6 @@
                         <label for="state">State / Province</label>
                         <input type="text" id="state" name="state">
                         <span class="error-message">State / Province is required (for US/CA)</span>
-                        <!-- NOTE: Removed 'required' and changed to text for international compatibility. Validation can be dynamic in a real app. -->
                     </div>
                 </div>
 
@@ -643,7 +642,6 @@
                         <label for="zip">ZIP / Postal Code <span class="required">*</span></label>
                         <input type="text" id="zip" name="zip" required>
                         <span class="error-message">ZIP / Postal code is required</span>
-                        <!-- NOTE: Removed pattern="[0-9]{5}" for international compatibility -->
                     </div>
                     <div class="form-group">
                         <label for="country">Country <span class="required">*</span></label>
@@ -652,7 +650,6 @@
                             <option value="US" selected>United States</option>
                             <option value="CA">Canada</option>
                             <option value="MX">Mexico</option>
-                            <!-- Added common options for demo, full list is usually loaded dynamically -->
                             <option value="GB">United Kingdom</option>
                             <option value="AU">Australia</option>
                             <option value="DE">Germany</option>
@@ -684,15 +681,9 @@
                     <div class="form-group">
                         <label for="card-element">Card Details <span class="required">*</span></label>
                         <div id="card-element">
-                            <!-- Stripe Elements will be inserted here -->
-                            <!-- For demo, showing placeholder -->
-                            <input type="text" placeholder="Card Number" style="width: 100%; margin-bottom: 10px;">
-                            <div style="display: flex; gap: 10px;">
-                                <input type="text" placeholder="MM/YY" style="flex: 1;">
-                                <input type="text" placeholder="CVC" style="flex: 1;">
-                            </div>
+                            <!-- Stripe Elements will be inserted here by JavaScript -->
                         </div>
-                        <div id="card-errors" class="card-errors"></div>
+                        <div id="card-errors" class="card-errors" role="alert"></div>
                     </div>
 
                     <div class="security-badge">
@@ -800,22 +791,124 @@
     <script src="https://js.stripe.com/v3/"></script>
     
     <script>
-    // Initialize Stripe (Replace with your publishable key)
-    // const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY_HERE');
-    // const elements = stripe.elements();
+    // ===============================================
+    // *** STRIPE INITIALIZATION AND HANDLING LOGIC ***
+    // ===============================================
+    
+    // NOTE: REPLACE with your actual publishable key from Stripe Dashboard
+    const STRIPE_PUBLISHABLE_KEY = 'pk_test_TYSSgR5vK8fWj8bO3E5uVlMv'; // Example test key (must be replaced)
+    
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+    const elements = stripe.elements({
+        fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap' }]
+    });
+
+    const cardElement = elements.create('card', {
+        style: {
+            base: {
+                fontSize: '16px',
+                color: '#333',
+                '::placeholder': {
+                    color: '#aab7c4',
+                },
+                fontFamily: 'Roboto, sans-serif'
+            },
+            invalid: {
+                color: 'var(--error-color)',
+                iconColor: 'var(--error-color)'
+            }
+        }
+    });
+
+    // Mount the Card Element to the DOM
+    document.addEventListener('DOMContentLoaded', () => {
+        if (document.getElementById('card-element')) {
+            cardElement.mount('#card-element');
+        }
+    });
+
+    // Handle real-time validation errors from the card Element.
+    cardElement.on('change', function(event) {
+        const displayError = document.getElementById('card-errors');
+        if (event.error) {
+            displayError.textContent = event.error.message;
+        } else {
+            displayError.textContent = '';
+        }
+    });
+
+    // ===============================================
+    // *** PAYMENT SUBMISSION FUNCTION (UPDATED) ***
+    // ===============================================
+
+    async function processStripePayment(totalAmount) {
+        const displayError = document.getElementById('card-errors');
+        
+        // 1. Fetch the client_secret from your Netlify Function
+        const response = await fetch('/.netlify/functions/create-payment-intent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                amount: totalAmount, // Send total amount (in dollars)
+                // You can add metadata like cart items if your Netlify function expects it
+            })
+        });
+
+        const { clientSecret, error: serverError } = await response.json();
+
+        if (serverError) {
+            displayError.textContent = serverError.message || 'Failed to initialize payment.';
+            return { success: false, error: serverError };
+        }
+
+        // 2. Confirm payment with Stripe using the received clientSecret
+        const billingDetails = {
+            name: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            address: {
+                line1: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                postal_code: document.getElementById('zip').value,
+                country: document.getElementById('country').value,
+            }
+        };
+
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret, {
+                payment_method: {
+                    card: cardElement,
+                    billing_details: billingDetails,
+                }
+            }
+        );
+
+        if (confirmError) {
+            // Show error to your customer (e.g., incorrect CVC, card declined)
+            displayError.textContent = confirmError.message;
+            return { success: false, error: confirmError };
+        } else if (paymentIntent.status === 'succeeded') {
+            // The payment succeeded!
+            return { success: true, paymentIntent };
+        } else {
+             // Handle any other status (e.g. requires_action for 3D Secure)
+            return { success: false, error: { message: `Payment status: ${paymentIntent.status}` } };
+        }
+    }
+
+    // ===============================================
+    // *** EXISTING CART/FORM/LOGIC FUNCTIONS ***
+    // ===============================================
 
     const SESSION_STORAGE_CART_KEY = 'cartItems';
     const SESSION_STORAGE_PROMO_KEY = 'appliedPromo';
     const SESSION_STORAGE_ORDER_KEY = 'lastOrder';
 
-    // Get cart data from sessionStorage
     let cartItems = JSON.parse(sessionStorage.getItem(SESSION_STORAGE_CART_KEY));
 
-    // Initialize checkout page
     function initCheckout() {
-        // Fallback/Demo Logic: If no cart items are found (e.g., first direct load, or coming from a cart page that didn't set it)
         if (!cartItems || cartItems.length === 0) {
-            // DEMO ONLY: Set a default cart for testing this single HTML page
             const defaultCart = [{
                 id: 1,
                 name: 'EB-2 NIW Strategy Webinar',
@@ -832,7 +925,6 @@
         attachEventListeners();
     }
 
-    // Display cart items in order summary
     function displayCartItems() {
         const cartItemsContainer = document.getElementById('cartItems');
         cartItemsContainer.innerHTML = '';
@@ -851,13 +943,11 @@
             cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHTML);
         });
         
-        // Reattach remove listeners
         document.querySelectorAll('.remove-item').forEach(btn => {
             btn.addEventListener('click', handleRemoveItem);
         });
     }
 
-    // Update totals based on cart items
     function updateTotals() {
         const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
         const discountAmount = getDiscountAmount(subtotal);
@@ -865,12 +955,10 @@
         const tax = taxableAmount * 0.09; // 9% tax rate
         const total = taxableAmount + tax;
         
-        // Update display
         document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
         document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
         document.getElementById('total').textContent = `$${total.toFixed(2)}`;
         
-        // Show discount if applied
         const discountRow = document.getElementById('discountRow');
         const discountText = document.getElementById('discount');
 
@@ -878,11 +966,10 @@
             discountRow.style.display = 'flex';
             discountText.textContent = `-$${discountAmount.toFixed(2)}`;
             
-            // Also apply visual feedback if a promo is active on total update
             const appliedPromo = sessionStorage.getItem(SESSION_STORAGE_PROMO_KEY);
             if (appliedPromo) {
                 const promoInput = document.getElementById('promoCode');
-                promoInput.value = promoCodeInput.value || appliedPromo; // Use existing value or session value
+                promoInput.value = promoInput.value || appliedPromo;
                 promoInput.style.borderColor = 'var(--success-color)';
                 promoInput.disabled = true;
                 document.querySelector('.btn-apply').textContent = 'Applied!';
@@ -891,30 +978,24 @@
         } else {
             discountRow.style.display = 'none';
         }
+        return total;
     }
 
-    // Get discount amount (check if promo was applied in cart or checkout)
     function getDiscountAmount(subtotal) {
         const appliedPromo = sessionStorage.getItem(SESSION_STORAGE_PROMO_KEY);
         if (appliedPromo === 'SAVE10' || appliedPromo === 'LEGAL10') {
-            return subtotal * 0.1; // 10% discount
+            return subtotal * 0.1;
         }
         return 0;
     }
 
-    // Handle remove item from checkout
     function handleRemoveItem(e) {
         const itemId = parseInt(e.currentTarget.dataset.itemId);
-        
-        // Remove from array
         cartItems = cartItems.filter(item => item.id !== itemId);
-        
-        // Update sessionStorage
         sessionStorage.setItem(SESSION_STORAGE_CART_KEY, JSON.stringify(cartItems));
         
         if (cartItems.length === 0) {
             sessionStorage.removeItem(SESSION_STORAGE_PROMO_KEY);
-
             alert('Your cart is empty. Redirecting to shop...');
             // window.location.href = 'shop.html';
         } else {
@@ -923,13 +1004,11 @@
         }
     }
 
-    // Payment method selection
     const paymentMethods = document.querySelectorAll('.payment-method');
     const cardPayment = document.getElementById('card-payment');
     const paypalPayment = document.getElementById('paypal-payment');
 
     function attachEventListeners() {
-        // Payment method selection
         paymentMethods.forEach(method => {
             method.addEventListener('click', () => {
                 paymentMethods.forEach(m => m.classList.remove('selected'));
@@ -945,14 +1024,10 @@
             });
         });
 
-        // Apply promo code
         document.querySelector('.btn-apply').addEventListener('click', handlePromoCode);
-
-        // Form submission
         document.getElementById('submitPayment').addEventListener('click', handleSubmitPayment);
     }
 
-    // Handle promo code application
     function handlePromoCode() {
         const promoCodeInput = document.getElementById('promoCode');
         const promoCode = promoCodeInput.value.trim().toUpperCase();
@@ -962,43 +1037,42 @@
             sessionStorage.setItem(SESSION_STORAGE_PROMO_KEY, promoCode);
             updateTotals();
             
-            // Show success message visual feedback
             promoCodeInput.style.borderColor = 'var(--success-color)';
             promoCodeInput.disabled = true;
             applyBtn.textContent = 'Applied!';
             applyBtn.style.background = 'var(--success-color)';
         } else {
             sessionStorage.removeItem(SESSION_STORAGE_PROMO_KEY);
-            updateTotals(); // Recalculate without discount
+            updateTotals();
             alert('Invalid promo code');
             promoCodeInput.style.borderColor = 'var(--error-color)';
         }
     }
 
-    // Form validation
     const form = document.getElementById('checkoutForm');
 
     function validateForm() {
-        const inputs = form.querySelectorAll('input[required], select[required]');
+        const requiredInputs = form.querySelectorAll('input[required], select[required]');
         let isValid = true;
 
-        inputs.forEach(input => {
-            // Simple validation: check for empty value
+        requiredInputs.forEach(input => {
             if (!input.value) {
                 input.classList.add('input-error');
-                if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
-                    input.nextElementSibling.classList.add('show');
+                const errorMessage = input.nextElementSibling;
+                if (errorMessage && errorMessage.classList.contains('error-message')) {
+                    errorMessage.classList.add('show');
                 }
                 isValid = false;
             } else {
                 input.classList.remove('input-error');
-                if (input.nextElementSibling && input.nextElementSibling.classList.contains('error-message')) {
-                    input.nextElementSibling.classList.remove('show');
+                const errorMessage = input.nextElementSibling;
+                if (errorMessage && errorMessage.classList.contains('error-message')) {
+                    errorMessage.classList.remove('show');
                 }
             }
         });
         
-        // Custom check for email format (simple regex)
+        // Custom check for email format
         const emailInput = document.getElementById('email');
         if (emailInput.value && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
             emailInput.classList.add('input-error');
@@ -1009,12 +1083,11 @@
         return isValid;
     }
 
-    // Handle form submission
+    // Main submit handler
     async function handleSubmitPayment(e) {
         e.preventDefault();
         
         if (!validateForm()) {
-            // Scroll to the first error
             const firstError = document.querySelector('.input-error');
             if (firstError) {
                 firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1023,74 +1096,58 @@
         }
 
         const submitBtn = document.getElementById('submitPayment');
-        
-        // Show loading state
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
 
-        // Get order data
-        const orderData = {
-            items: cartItems,
-            customer: {
-                email: document.getElementById('email').value,
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                phone: document.getElementById('phone').value,
-            },
-            billing: {
-                address: document.getElementById('address').value,
-                city: document.getElementById('city').value,
-                state: document.getElementById('state').value, // Now text input
-                zip: document.getElementById('zip').value, // Now simple text
-                country: document.getElementById('country').value,
-            },
-            totals: {
-                subtotal: parseFloat(document.getElementById('subtotal').textContent.replace('$', '')),
-                tax: parseFloat(document.getElementById('tax').textContent.replace('$', '')),
-                total: parseFloat(document.getElementById('total').textContent.replace('$', '')),
-            }
-        };
+        const selectedMethod = document.querySelector('.payment-method.selected').dataset.method;
+        let paymentResult = { success: false };
+        const totalAmount = updateTotals(); // Get the calculated total
 
-        // Simulate payment processing (replace with actual Stripe payment intent)
-        setTimeout(() => {
-            // Generate order number
+        if (selectedMethod === 'card') {
+            // Initiate Stripe payment confirmation via Netlify Function call
+            paymentResult = await processStripePayment(totalAmount);
+        } else if (selectedMethod === 'paypal') {
+            // PayPal simulation (requires dedicated PayPal backend integration in a real app)
+            console.log("Simulating PayPal redirect...");
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            paymentResult.success = true;
+        }
+
+
+        if (paymentResult.success) {
+            // Logic for a successful payment
             const orderNumber = 'CYA-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
             document.getElementById('orderNumber').textContent = orderNumber;
             
-            // Store order data
-            sessionStorage.setItem(SESSION_STORAGE_ORDER_KEY, JSON.stringify({
-                orderNumber: orderNumber,
-                ...orderData
-            }));
+            // Collect and store order data (simplified)
+            const orderData = { orderNumber, totals: { total: totalAmount } };
+            sessionStorage.setItem(SESSION_STORAGE_ORDER_KEY, JSON.stringify(orderData));
             
-            // Clear cart
             sessionStorage.removeItem(SESSION_STORAGE_CART_KEY);
             sessionStorage.removeItem(SESSION_STORAGE_PROMO_KEY);
             
-            // Show success message
             document.getElementById('successOverlay').classList.add('show');
             
-            // Reset button
             submitBtn.classList.remove('loading');
             submitBtn.disabled = false;
             
-            // Redirect after 3 seconds
             setTimeout(() => {
-                // In a real application, you would redirect to an order confirmation page, 
-                // which would then use the 'lastOrder' data in sessionStorage.
-                // window.location.href = 'order-confirmation.html'; 
+                // window.location.href = 'order-confirmation.html';
             }, 3000);
-        }, 2000);
+        } else {
+            // Handle Payment Failure
+            alert(`Payment Failed: ${paymentResult.error ? paymentResult.error.message : 'Unknown error'}`);
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
     }
 
-    // Close success overlay when clicked outside
     document.getElementById('successOverlay').addEventListener('click', function(e) {
         if (e.target === this) {
             this.classList.remove('show');
         }
     });
 
-    // Input formatting for phone number
     document.getElementById('phone').addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 0) {
@@ -1105,46 +1162,7 @@
         e.target.value = value;
     });
 
-    // Initialize checkout on page load
     document.addEventListener('DOMContentLoaded', initCheckout);
-
-    /* 
-    ===============================
-    STRIPE INTEGRATION INSTRUCTIONS
-    ===============================
-    
-    1. Include Stripe.js (already included above)
-    
-    2. Initialize Stripe with your publishable key:
-       const stripe = Stripe('pk_test_YOUR_KEY_HERE');
-    
-    3. Create Elements instance:
-       const elements = stripe.elements();
-    
-    4. Create and mount card element:
-       const cardElement = elements.create('card', {
-           style: {
-               base: {
-                   fontSize: '16px',
-                   color: '#333',
-                   '::placeholder': {
-                       color: '#aab7c4',
-                   },
-               },
-           },
-       });
-       cardElement.mount('#card-element');
-    
-    5. Handle form submission:
-       - Create payment intent on your server
-       - Confirm payment with Stripe
-       - Handle success/error responses
-    
-    6. Backend requirements:
-       - Server endpoint to create payment intent
-       - Webhook handler for payment events
-       - Order processing logic
-    */
-</script>
+    </script>
 </body>
 </html>
