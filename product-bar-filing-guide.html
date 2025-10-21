@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Exam Filing Guide - Law Office of Cynthia Azor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a2342;
+            --accent-color: #d4af37;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --success-color: #28a745;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Cart Notification Badge */
+        .cart-notification {
+            position: fixed;
+            top: 100px;
+            right: -350px;
+            background: var(--white);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            z-index: 1500;
+            transition: right 0.3s ease;
+            max-width: 350px;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .cart-notification.show {
+            right: 20px;
+        }
+
+        .cart-notification-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--success-color);
+            font-weight: 500;
+        }
+
+        .cart-notification-content {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-notification-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .cart-notification-image i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .cart-notification-details h4 {
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-notification-details p {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .cart-notification-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .cart-notification-actions a {
+            flex: 1;
+            padding: 0.6rem;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-cart-btn {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .continue-shopping-btn {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: var(--white);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1002;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            margin-top: 90px;
+            padding: 1rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-color);
+        }
+
+        .breadcrumb span {
+            color: var(--text-light);
+        }
+
+        .breadcrumb .current {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Product Hero Section */
+        .product-hero {
+            padding: 3rem 2rem;
+            background: var(--white);
+        }
+
+        .product-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .product-image-section {
+            position: relative;
+        }
+
+        .product-main-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-main-image i {
+            font-size: 6rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .product-badge-large {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+
+        .product-info-section {
+            padding: 2rem 0;
+        }
+
+        .product-category-tag {
+            color: var(--accent-color);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-title-large {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stars {
+            color: var(--accent-color);
+        }
+
+        .rating-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .product-description-main {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .product-highlights {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .product-highlights h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .product-highlights ul {
+            list-style: none;
+        }
+
+        .product-highlights li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .product-highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .price-section {
+            margin-bottom: 2rem;
+        }
+
+        .price-large {
+            font-size: 3rem;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin-left: 1rem;
+        }
+
+        .savings-badge {
+            display: inline-block;
+            background: var(--success-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .purchase-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .btn-buy {
+            background: var(--accent-color);
+            color: var(--white);
+            flex: 2;
+        }
+
+        .btn-buy:hover {
+            background: #c4a137;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-add-cart {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            flex: 1;
+        }
+
+        .btn-add-cart:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-add-cart.added {
+            background: var(--success-color);
+            color: var(--white);
+            border-color: var(--success-color);
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .trust-badge i {
+            color: var(--accent-color);
+        }
+
+        /* Product Details Tabs */
+        .product-details {
+            padding: 4rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ddd;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .tab-content h4 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .module-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+        }
+
+        .module-number {
+            background: var(--accent-color);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .module-content h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .module-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Instructor Section */
+        .instructor-section {
+            padding: 4rem 2rem;
+            background: var(--white);
+        }
+
+        .instructor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .instructor-image {
+            width: 100%;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .instructor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .instructor-info h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .instructor-title {
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .instructor-bio {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .instructor-credentials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .credential {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .credential i {
+            color: var(--accent-color);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: var(--white);
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--light-bg);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* Related Products */
+        .related-products {
+            padding: 4rem 2rem;
+            background: var(--white);
+        }
+
+        .related-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .related-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .related-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .related-card-image {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .related-card-image i {
+            font-size: 3rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .related-card-content {
+            padding: 1.5rem;
+        }
+
+        .related-card-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .related-card-price {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section ul {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                background: var(--white);
+                padding: 5rem 2rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+                z-index: 1001;
+                overflow-y: auto;
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid var(--light-bg);
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1.2rem 0;
+                font-size: 1.1rem;
+            }
+
+            .product-hero-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-title-large {
+                font-size: 2rem;
+            }
+
+            .price-large {
+                font-size: 2rem;
+            }
+
+            .purchase-actions {
+                flex-direction: column;
+            }
+
+            .instructor-container {
+                grid-template-columns: 1fr;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                gap: 0.5rem;
+            }
+
+            .tab {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .cart-notification {
+                right: -100%;
+                max-width: calc(100% - 20px);
+            }
+
+            .cart-notification.show {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        <div class="cart-notification-header">
+            <i class="fas fa-check-circle"></i>
+            <span>Added to Cart!</span>
+        </div>
+        <div class="cart-notification-content">
+            <div class="cart-notification-image">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+            <div class="cart-notification-details">
+                <h4>Bar Exam Filing Guide</h4>
+                <p>$59.99</p>
+            </div>
+        </div>
+        <div class="cart-notification-actions">
+            <a href="cart.html" class="view-cart-btn">View Cart</a>
+            <a href="shop.html" class="continue-shopping-btn">Continue Shopping</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">CY <span>AZOR</span> LAW</a>
+            <nav id="nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount" style="display: none;">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="shop.html">Shop</a>
+            <span>/</span>
+            <span class="current">Bar Exam Filing Guide</span>
+        </div>
+    </div>
+
+    <!-- Product Hero Section -->
+    <section class="product-hero">
+        <div class="product-hero-container">
+            <div class="product-image-section">
+                <div class="product-main-image">
+                    <i class="fas fa-balance-scale"></i>
+                    <span class="product-badge-large">2024 Edition</span>
+                </div>
+            </div>
+            
+            <div class="product-info-section">
+                <p class="product-category-tag">Bar Exam Preparation</p>
+                <h1 class="product-title-large">Complete Bar Exam Filing Guide</h1>
+                
+                <div class="product-rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="rating-text">4.7 out of 5 (189 reviews)</span>
+                </div>
+                
+                <p class="product-description-main">
+                    Navigate the complex bar exam application process with confidence. This comprehensive guide covers 
+                    all 50 states' requirements, deadlines, and procedures, with special sections for foreign-educated 
+                    attorneys and LLM graduates.
+                </p>
+                
+                <div class="product-highlights">
+                    <h4>What's Included:</h4>
+                    <ul>
+                        <li>State-by-state filing requirements & deadlines</li>
+                        <li>Character & fitness application strategies</li>
+                        <li>Foreign credential evaluation guidance</li>
+                        <li>Sample application forms & answers</li>
+                        <li>Timeline planning worksheets</li>
+                        <li>Common mistakes to avoid checklist</li>
+                        <li>2024 updates & rule changes</li>
+                    </ul>
+                </div>
+                
+                <div class="price-section">
+                    <span class="price-large">$59.99</span>
+                    <span class="price-original">$99.99</span>
+                    <span class="savings-badge">Save $40</span>
+                </div>
+                
+                <div class="purchase-actions">
+                    <a href="checkout.html?product=bar-filing-guide&price=59.99" class="btn-large btn-buy">
+                        <i class="fas fa-credit-card"></i>
+                        Buy Now - Instant Access
+                    </a>
+                    <button class="btn-large btn-add-cart" id="addToCartBtn">
+                        <i class="fas fa-cart-plus"></i>
+                        Add to Cart
+                    </button>
+                </div>
+                
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i class="fas fa-sync"></i>
+                        <span>2024 Updated</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>All 50 States</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-user-check"></i>
+                        <span>Attorney-Verified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Tabs -->
+    <section class="product-details">
+        <div class="details-container">
+            <div class="tabs">
+                <button class="tab active" data-tab="overview">Overview</button>
+                <button class="tab" data-tab="contents">Guide Contents</button>
+                <button class="tab" data-tab="states">State Coverage</button>
+                <button class="tab" data-tab="reviews">Reviews</button>
+            </div>
+            
+            <div class="tab-content active" id="overview">
+                <h3>Master the Bar Application Process</h3>
+                <p>
+                    The bar exam application process can be overwhelming, with each state having unique requirements, 
+                    deadlines, and procedures. This comprehensive guide eliminates the confusion and ensures you submit 
+                    a complete, accurate application the first time.
+                </p>
+                
+                <h4>Who This Guide Helps:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>JD graduates preparing for their first bar exam</li>
+                    <li>Foreign-educated attorneys seeking US admission</li>
+                    <li>LLM graduates navigating eligibility requirements</li>
+                    <li>Attorneys seeking admission to additional states</li>
+                    <li>Law students planning their bar exam strategy</li>
+                    <li>Career services professionals and bar prep advisors</li>
+                </ul>
+                
+                <h4>Key Benefits:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Avoid costly application mistakes and delays</li>
+                    <li>Understand character & fitness requirements</li>
+                    <li>Navigate foreign credential evaluations</li>
+                    <li>Meet all deadlines with planning tools</li>
+                    <li>Prepare comprehensive application packages</li>
+                    <li>Access state-specific tips and insights</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="contents">
+                <h3>Complete Guide Contents</h3>
+                <div class="module-list">
+                    <div class="module-item">
+                        <div class="module-number">1</div>
+                        <div class="module-content">
+                            <h5>Bar Exam Fundamentals</h5>
+                            <p>Overview of the bar examination system, UBE vs. state-specific exams, admission requirements, and timeline planning</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">2</div>
+                        <div class="module-content">
+                            <h5>Application Process Step-by-Step</h5>
+                            <p>Detailed walkthrough of application forms, required documents, fees, deadlines, and submission procedures</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">3</div>
+                        <div class="module-content">
+                            <h5>Character & Fitness Preparation</h5>
+                            <p>Understanding C&F investigations, disclosure requirements, addressing past issues, and interview preparation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">4</div>
+                        <div class="module-content">
+                            <h5>Foreign Attorney & LLM Section</h5>
+                            <p>Special requirements for foreign-educated lawyers, credential evaluation process, and eligibility determination</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">5</div>
+                        <div class="module-content">
+                            <h5>State-Specific Requirements</h5>
+                            <p>Detailed requirements for all 50 states plus DC, including unique rules, deadlines, and procedures</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">6</div>
+                        <div class="module-content">
+                            <h5>Resources & Templates</h5>
+                            <p>Sample applications, timeline worksheets, document checklists, and troubleshooting guides</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="states">
+                <h3>State Coverage</h3>
+                
+                <h4>Comprehensive State Information:</h4>
+                <p style="margin-top: 1rem;">
+                    Our guide covers all 50 states plus the District of Columbia, with detailed information on:
+                </p>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Application deadlines and fees</li>
+                    <li>Education requirements and exceptions</li>
+                    <li>Character & fitness procedures</li>
+                    <li>Foreign attorney eligibility</li>
+                    <li>Reciprocity and admission by motion</li>
+                    <li>MPRE requirements and timing</li>
+                    <li>Bar exam format and scoring</li>
+                </ul>
+                
+                <h4>Special Focus States:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li><strong>New York:</strong> Foreign attorney requirements, Pro Hac Vice rules</li>
+                    <li><strong>California:</strong> Moral character determination, law office study program</li>
+                    <li><strong>Texas:</strong> Foreign Legal Consultant rules, declaration of intent</li>
+                    <li><strong>Florida:</strong> Educational requirements, background investigation</li>
+                    <li><strong>Illinois:</strong> Character & fitness process, conditional admission</li>
+                    <li><strong>DC:</strong> Special admission rules, waive-in procedures</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="reviews">
+                <h3>Customer Reviews</h3>
+                <div style="margin-top: 2rem;">
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div class="stars" style="color: var(--accent-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Saved Me from Major Mistakes</h5>
+                        <p style="color: var(--text-light); font-style: italic; margin-bottom: 0.5rem;">
+                            "As a foreign attorney, I was completely lost with the NY bar application. This guide walked me 
+                            through every step and helped me avoid errors that would have delayed my application by months."
+                        </p>
+                        <p style="color: var(--text-dark); font-weight: 500;">- Maria Fernandez, LLM Graduate</p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div class="stars" style="color: var(--accent-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Comprehensive and Clear</h5>
+                        <p style="color: var(--text-light); font-style: italic; margin-bottom: 0.5rem;">
+                            "The character & fitness section alone is worth the price. It helped me properly disclose and 
+                            explain past issues that could have been problematic."
+                        </p>
+                        <p style="color: var(--text-dark); font-weight: 500;">- James Wilson, JD Graduate</p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div class="stars" style="color: var(--accent-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Essential Resource</h5>
+                        <p style="color: var(--text-light); font-style: italic; margin-bottom: 0.5rem;">
+                            "This guide made applying to multiple states so much easier. The state-by-state breakdown 
+                            saved me hours of research."
+                        </p>
+                        <p style="color: var(--text-dark); font-weight: 500;">- Ashley Thompson, Attorney</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructor Section -->
+    <section class="instructor-section">
+        <div class="instructor-container">
+            <div class="instructor-image">
+                <img src="https://raw.githubusercontent.com/erodion4776/Azol-law-firm-/refs/heads/main/assets/images/Cynthia-Azor.jpg" alt="Attorney Cynthia Azor">
+            </div>
+            <div class="instructor-info">
+                <h3>Attorney Cynthia Azor</h3>
+                <p class="instructor-title">Bar Admission Expert</p>
+                <p class="instructor-bio">
+                    Attorney Cynthia Azor has guided hundreds of law graduates and foreign attorneys through the 
+                    bar admission process. With extensive experience in both traditional JD and foreign credential 
+                    evaluations, she understands the unique challenges faced by different applicants.
+                </p>
+                <p class="instructor-bio">
+                    As a member of multiple state bars and a frequent advisor to international legal professionals, 
+                    Attorney Azor has compiled this guide to share insider knowledge and proven strategies for 
+                    successful bar applications across all jurisdictions.
+                </p>
+                <div class="instructor-credentials">
+                    <div class="credential">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>JD, Harvard Law School</span>
+                    </div>
+                    <div class="credential">
+                        <i class="fas fa-gavel"></i>
+                        <span>Multi-State Bar Member</span>
+                    </div>
+                    <div class="credential">
+                        <i class="fas fa-users"></i>
+                        <span>500+ Successful Applications</span>
+                    </div>
+                    <div class="credential">
+                        <i class="fas fa-globe"></i>
+                        <span>Foreign Credential Expert</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is this guide updated for 2024?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Yes! This guide includes all 2024 updates, including recent changes to UBE adoption, 
+                        online exam options, and modified character & fitness procedures. We update the guide 
+                        quarterly to reflect any rule changes or new requirements.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    Does this cover foreign attorney requirements?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Absolutely! We have dedicated sections for foreign-educated attorneys, including credential 
+                        evaluation processes, LLM requirements, and state-specific rules for foreign attorney 
+                        eligibility. This is one of the most comprehensive resources available for international lawyers.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can this help with character & fitness issues?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Yes, we include extensive guidance on character & fitness applications, including how to 
+                        properly disclose past issues, write effective explanations, gather supporting documentation, 
+                        and prepare for interviews. While not legal advice, this guide provides practical strategies 
+                        based on successful applications.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    How long do I have access to the guide?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        You receive lifetime access to the digital guide, including all future updates. The guide 
+                        is available as a downloadable PDF that you can keep forever, and you'll also get access 
+                        to our online portal where updates are posted quarterly.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-products">
+        <div class="related-container">
+            <h2 class="related-title">You May Also Like</h2>
+            <div class="related-grid">
+                <a href="product-llm-h1b-talk.html" class="related-card">
+                    <div class="related-card-image">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="related-card-content">
+                        <h4 class="related-card-title">LLM to H-1B: Complete Guide</h4>
+                        <p class="related-card-price">$99.99</p>
+                    </div>
+                </a>
+                
+                <a href="product-contract-templates.html" class="related-card">
+                    <div class="related-card-image">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="related-card-content">
+                        <h4 class="related-card-title">Contract Papers & Templates</h4>
+                        <p class="related-card-price">$79.99</p>
+                    </div>
+                </a>
+                
+                <a href="product-immigration-checklist.html" class="related-card">
+                    <div class="related-card-image">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="related-card-content">
+                        <h4 class="related-card-title">Immigration Filing Checklist</h4>
+                        <p class="related-card-price">$29.99</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@cyazorlaw.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Legal Plaza, Suite 400<br>New York, NY 10001</p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 2:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Law Office of Cynthia Azor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cart Management
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart') || '[]');
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCount = document.getElementById('cartCount');
+            
+            if (count > 0) {
+                cartCount.textContent = count;
+                cartCount.style.display = 'flex';
+            } else {
+                cartCount.style.display = 'none';
+            }
+        }
+
+        // Add to Cart Functionality
+        document.getElementById('addToCartBtn').addEventListener('click', function() {
+            const product = {
+                id: 'bar-filing-guide',
+                name: 'Bar Exam Filing Guide',
+                price: 59.99,
+                quantity: 1,
+                type: 'guide'
+            };
+            
+            let cart = getCart();
+            
+            // Check if product already in cart
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+            
+            saveCart(cart);
+            
+            // Update button state
+            this.classList.add('added');
+            this.innerHTML = '<i class="fas fa-check"></i> Added to Cart';
+            
+            // Show notification
+            const notification = document.getElementById('cartNotification');
+            notification.classList.add('show');
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                this.classList.remove('added');
+                this.innerHTML = '<i class="fas fa-cart-plus"></i> Add to Cart';
+            }, 2000);
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        });
+
+        // Initialize cart count on page load
+        updateCartCount();
+
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Tabs Functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
