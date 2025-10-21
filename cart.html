@@ -1246,9 +1246,9 @@
             document.getElementById('headerCartCount').textContent = itemCount;
 
             // Update prices
-            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
-            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `${total.toFixed(2)}`;
 
             // Show/hide empty cart
             if (cartItems.length === 0) {
@@ -1369,19 +1369,22 @@
             const promoCode = promoInput.value.trim().toUpperCase();
             
             if (promoCode === 'SAVE10' || promoCode === 'LEGAL10') {
+                // Store promo code in sessionStorage
+                sessionStorage.setItem('appliedPromo', promoCode);
+                
                 const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
                 const discount = subtotal * 0.1; // 10% discount
                 
                 document.getElementById('discountRow').style.display = 'flex';
-                document.getElementById('discount').textContent = `-$${discount.toFixed(2)}`;
+                document.getElementById('discount').textContent = `-${discount.toFixed(2)}`;
                 document.getElementById('promoSuccess').classList.add('show');
                 document.getElementById('savingsBadge').style.display = 'block';
                 
                 // Recalculate total
                 const tax = (subtotal - discount) * 0.09;
                 const total = subtotal - discount + tax;
-                document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
-                document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+                document.getElementById('tax').textContent = `${tax.toFixed(2)}`;
+                document.getElementById('total').textContent = `${total.toFixed(2)}`;
                 
                 showToast('Promo code applied!', 'success');
             } else {
@@ -1392,8 +1395,24 @@
         // Handle checkout
         function handleCheckout() {
             if (cartItems.length > 0) {
+                // Create detailed cart items for checkout
+                const detailedCartItems = [];
+                document.querySelectorAll('.cart-item').forEach(item => {
+                    const itemId = parseInt(item.dataset.itemId);
+                    const itemName = item.querySelector('.item-title').textContent;
+                    const itemPrice = parseFloat(item.dataset.price);
+                    const itemQuantity = parseInt(item.querySelector('.quantity-input').value);
+                    
+                    detailedCartItems.push({
+                        id: itemId,
+                        name: itemName,
+                        price: itemPrice,
+                        quantity: itemQuantity
+                    });
+                });
+                
                 // Store cart data in sessionStorage
-                sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+                sessionStorage.setItem('cartItems', JSON.stringify(detailedCartItems));
                 window.location.href = 'checkout.html';
             }
         }
