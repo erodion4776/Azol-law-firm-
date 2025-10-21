@@ -284,9 +284,9 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             background: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; /* Important for centering map if it were just text */
+            align-items: center; /* Important for centering map if it were just text */
+            justify-content: center; /* Important for centering map if it were just text */
             color: var(--text-light);
         }
 
@@ -531,9 +531,16 @@
     <!-- Map Section -->
     <section class="map-section fade-in-section">
         <div class="map-container">
-            <p><i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--accent-color);"></i><br><br>
-            Interactive map would be embedded here<br>
-            (Google Maps or similar service)</p>
+            <!-- EMBEDDED GOOGLE MAP -->
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12905.928877346543!2d-86.5513085!3d36.0329355!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88640d64c1adf45d%3A0xe87899bd0449f769!2s153%20Dreville%20Dr%2C%20La%20Vergne%2C%20TN%2037086%2C%20USA!5e0!3m2!1sen!2sng!4v1761063959403!5m2!1sen!2sng" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
     </section>
 
