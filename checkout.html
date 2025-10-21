@@ -843,21 +843,38 @@
 
     async function processStripePayment(totalAmount) {
         const displayError = document.getElementById('card-errors');
+        displayError.textContent = ''; // Clear previous errors
         
         // 1. Fetch the client_secret from your Netlify Function
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                amount: totalAmount, // Send total amount (in dollars)
-                // You can add metadata like cart items if your Netlify function expects it
+                amount: totalAmount,
             })
         });
 
+        if (!response.ok) {
+            // CRITICAL CHECK: If the serverless function call failed (e.g., 404, 500 from missing key)
+            let errorData = { message: `Payment initialization failed. Server status: ${response.status}` };
+            
+            try {
+                // Try to parse the error message if the server sent JSON
+                const serverResponse = await response.json();
+                errorData.message = serverResponse.error || errorData.message;
+            } catch (e) {
+                // If the server didn't send JSON (e.g., a simple HTML 500 page), use the default message
+            }
+
+            displayError.textContent = errorData.message + ' (Check Netlify logs and STRIPE_SECRET_KEY)';
+            return { success: false, error: errorData };
+        }
+        
         const { clientSecret, error: serverError } = await response.json();
 
-        if (serverError) {
-            displayError.textContent = serverError.message || 'Failed to initialize payment.';
+        if (serverError || !clientSecret) {
+            // If the server returned a 200 but included an explicit error or missing secret
+            displayError.textContent = serverError.message || 'Failed to receive payment details from server.';
             return { success: false, error: serverError };
         }
 
@@ -892,7 +909,7 @@
             // The payment succeeded!
             return { success: true, paymentIntent };
         } else {
-             // Handle any other status (e.g. requires_action for 3D Secure)
+             // This is typically for 'requires_action' or other intermediate statuses
             return { success: false, error: { message: `Payment status: ${paymentIntent.status}` } };
         }
     }
@@ -1107,7 +1124,7 @@
             // Initiate Stripe payment confirmation via Netlify Function call
             paymentResult = await processStripePayment(totalAmount);
         } else if (selectedMethod === 'paypal') {
-            // PayPal simulation (requires dedicated PayPal backend integration in a real app)
+            // PayPal simulation
             console.log("Simulating PayPal redirect...");
             await new Promise(resolve => setTimeout(resolve, 2000));
             paymentResult.success = true;
