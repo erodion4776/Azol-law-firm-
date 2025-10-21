@@ -631,32 +631,35 @@
                         <span class="error-message">City is required</span>
                     </div>
                     <div class="form-group">
-                        <label for="state">State <span class="required">*</span></label>
-                        <select id="state" name="state" required>
-                            <option value="">Select State</option>
-                            <option value="NY">New York</option>
-                            <option value="CA">California</option>
-                            <option value="TX">Texas</option>
-                            <option value="FL">Florida</option>
-                            <!-- Add all states -->
-                        </select>
-                        <span class="error-message">Please select a state</span>
+                        <label for="state">State / Province</label>
+                        <input type="text" id="state" name="state">
+                        <span class="error-message">State / Province is required (for US/CA)</span>
+                        <!-- NOTE: Removed 'required' and changed to text for international compatibility. Validation can be dynamic in a real app. -->
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="zip">ZIP Code <span class="required">*</span></label>
-                        <input type="text" id="zip" name="zip" pattern="[0-9]{5}" required>
-                        <span class="error-message">Valid ZIP code is required</span>
+                        <label for="zip">ZIP / Postal Code <span class="required">*</span></label>
+                        <input type="text" id="zip" name="zip" required>
+                        <span class="error-message">ZIP / Postal code is required</span>
+                        <!-- NOTE: Removed pattern="[0-9]{5}" for international compatibility -->
                     </div>
                     <div class="form-group">
                         <label for="country">Country <span class="required">*</span></label>
                         <select id="country" name="country" required>
+                            <option value="">Select Country</option>
                             <option value="US" selected>United States</option>
                             <option value="CA">Canada</option>
                             <option value="MX">Mexico</option>
+                            <!-- Added common options for demo, full list is usually loaded dynamically -->
+                            <option value="GB">United Kingdom</option>
+                            <option value="AU">Australia</option>
+                            <option value="DE">Germany</option>
+                            <option value="FR">France</option>
+                            <option value="OTHER">Other / International</option> 
                         </select>
+                        <span class="error-message">Please select a country</span>
                     </div>
                 </div>
             </section>
@@ -812,10 +815,6 @@
     function initCheckout() {
         // Fallback/Demo Logic: If no cart items are found (e.g., first direct load, or coming from a cart page that didn't set it)
         if (!cartItems || cartItems.length === 0) {
-            // Actual App Logic: Uncomment the line below in a real app to ensure users come from the cart.
-            // window.location.href = 'cart.html';
-            // return; 
-
             // DEMO ONLY: Set a default cart for testing this single HTML page
             const defaultCart = [{
                 id: 1,
@@ -883,7 +882,7 @@
             const appliedPromo = sessionStorage.getItem(SESSION_STORAGE_PROMO_KEY);
             if (appliedPromo) {
                 const promoInput = document.getElementById('promoCode');
-                promoInput.value = appliedPromo;
+                promoInput.value = promoCodeInput.value || appliedPromo; // Use existing value or session value
                 promoInput.style.borderColor = 'var(--success-color)';
                 promoInput.disabled = true;
                 document.querySelector('.btn-apply').textContent = 'Applied!';
@@ -914,16 +913,13 @@
         sessionStorage.setItem(SESSION_STORAGE_CART_KEY, JSON.stringify(cartItems));
         
         if (cartItems.length === 0) {
-            // If cart is empty, also remove the promo, as it no longer applies
             sessionStorage.removeItem(SESSION_STORAGE_PROMO_KEY);
 
-            // In a real app, this should redirect
             alert('Your cart is empty. Redirecting to shop...');
             // window.location.href = 'shop.html';
         } else {
-            // Refresh display
-            displayCartItems(); // Refresh items display
-            updateTotals(); // Recalculate and update totals
+            displayCartItems();
+            updateTotals(); 
         }
     }
 
@@ -1001,6 +997,14 @@
                 }
             }
         });
+        
+        // Custom check for email format (simple regex)
+        const emailInput = document.getElementById('email');
+        if (emailInput.value && !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
+            emailInput.classList.add('input-error');
+            emailInput.nextElementSibling.classList.add('show');
+            isValid = false;
+        }
 
         return isValid;
     }
@@ -1010,6 +1014,11 @@
         e.preventDefault();
         
         if (!validateForm()) {
+            // Scroll to the first error
+            const firstError = document.querySelector('.input-error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
             return;
         }
 
@@ -1031,8 +1040,8 @@
             billing: {
                 address: document.getElementById('address').value,
                 city: document.getElementById('city').value,
-                state: document.getElementById('state').value,
-                zip: document.getElementById('zip').value,
+                state: document.getElementById('state').value, // Now text input
+                zip: document.getElementById('zip').value, // Now simple text
                 country: document.getElementById('country').value,
             },
             totals: {
