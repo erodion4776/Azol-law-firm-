@@ -693,10 +693,13 @@
         <div class="services-nav-container">
             <a href="#immigration" class="service-nav-link">Immigration</a>
             <a href="#ip" class="service-nav-link">Intellectual Property</a>
-            <a href="#business" class="service-nav-link">Business Formation</a>
+            <!-- UPDATED BUSINESS FORMATION LINK -->
+            <a href="https://calendly.com/cynobas/free-legal-strategy-session?month=2025-10" class="service-nav-link">Business Formation</a>
             <a href="#contracts" class="service-nav-link">Contracts & Templates</a>
-            <a href="#training" class="service-nav-link">Legal Training</a>
-            <a href="#consultation" class="service-nav-link">Consultation</a>
+            <!-- UPDATED LEGAL TRAINING LINK -->
+            <a href="https://calendly.com/cynobas/new-meeting-1?month=2025-10" class="service-nav-link">Legal Training</a>
+            <!-- UPDATED CONSULTATION LINK -->
+            <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call?month=2025-10" class="service-nav-link">Consultation</a>
         </div>
     </nav>
 
@@ -772,7 +775,8 @@
             <div class="cta-box">
                 <h3>Start Your Business</h3>
                 <p>Choose the right structure and ensure compliance.</p>
-                <a href="contact.html" class="cta-button">Get Started</a>
+                <!-- UPDATED BUSINESS FORMATION CTA LINK -->
+                <a href="https://calendly.com/cynobas/free-legal-strategy-session?month=2025-10" class="cta-button">Get Started</a>
             </div>
         </div>
 
@@ -806,7 +810,8 @@
             <div class="cta-box">
                 <h3>Start Learning</h3>
                 <p>Explore our educational resources and training programs.</p>
-                <a href="shop.html" class="cta-button">Browse Programs</a>
+                <!-- UPDATED TRAINING CTA LINK -->
+                <a href="https://calendly.com/cynobas/new-meeting-1?month=2025-10" class="cta-button">Browse Programs</a>
             </div>
         </div>
 
@@ -823,7 +828,8 @@
             <div class="cta-box">
                 <h3>Schedule Your Consultation</h3>
                 <p>Book your one-on-one consultation with Attorney Cynthia Azor today.</p>
-                <a href="contact.html" class="cta-button">Book Now</a>
+                <!-- UPDATED CONSULTATION CTA LINK -->
+                <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call?month=2025-10" class="cta-button">Book Now</a>
             </div>
         </div>
     </section>
@@ -927,29 +933,37 @@
             closeServiceMenu();
         });
 
-        // CRITICAL: Close menu and navigate when service link is clicked
+        // UPDATED JAVASCRIPT: Handles both internal anchors and external links
         serviceNavLinks.forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent default to control the behavior
-                
                 const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
                 
-                // Close the menu FIRST
-                closeServiceMenu();
-                
-                // Then scroll to section after a short delay
-                setTimeout(() => {
-                    if (targetSection) {
-                        const offset = 150; // Account for sticky headers
-                        const targetPosition = targetSection.offsetTop - offset;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }, 300); // Wait for menu to close
+                // Check if it's an internal anchor link (starts with '#')
+                if (targetId.startsWith('#')) {
+                    e.preventDefault(); // Prevent default to scroll instead of full navigation
+                    
+                    const targetSection = document.querySelector(targetId);
+                    
+                    // Close the menu FIRST
+                    closeServiceMenu();
+                    
+                    // Then scroll to section after a short delay
+                    setTimeout(() => {
+                        if (targetSection) {
+                            const offset = 150; // Account for sticky headers
+                            const targetPosition = targetSection.offsetTop - offset;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 300); // Wait for menu to close
+                } else {
+                    // It's an external link. Close the menu and let it navigate normally.
+                    closeServiceMenu();
+                    // The browser will follow the link immediately after the function returns
+                }
             });
         });
 
@@ -1004,6 +1018,7 @@
 
             serviceNavLinks.forEach(link => {
                 link.classList.remove('active');
+                // Only highlight if the link is an internal anchor and matches the current section
                 if (link.getAttribute('href') === `#${current}`) {
                     link.classList.add('active');
                 }
