@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM to H-1B Complete Guide - Law Office of Cynthia Azor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a2342;
+            --accent-color: #d4af37;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --success-color: #28a745;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Cart Notification Badge */
+        .cart-notification {
+            position: fixed;
+            top: 100px;
+            right: -350px;
+            background: var(--white);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            z-index: 1500;
+            transition: right 0.3s ease;
+            max-width: 350px;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .cart-notification.show {
+            right: 20px;
+        }
+
+        .cart-notification-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--success-color);
+            font-weight: 500;
+        }
+
+        .cart-notification-content {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-notification-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .cart-notification-image i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .cart-notification-details h4 {
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .cart-notification-details p {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .cart-notification-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .cart-notification-actions a {
+            flex: 1;
+            padding: 0.6rem;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-cart-btn {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .continue-shopping-btn {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-color);
+            color: var(--white);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1002;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            margin-top: 90px;
+            padding: 1rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--accent-color);
+        }
+
+        .breadcrumb span {
+            color: var(--text-light);
+        }
+
+        .breadcrumb .current {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        /* Product Hero Section */
+        .product-hero {
+            padding: 3rem 2rem;
+            background: var(--white);
+        }
+
+        .product-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .product-image-section {
+            position: relative;
+        }
+
+        .product-main-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-main-image i {
+            font-size: 6rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .product-badge-large {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+
+        .product-info-section {
+            padding: 2rem 0;
+        }
+
+        .product-category-tag {
+            color: var(--accent-color);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-title-large {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stars {
+            color: var(--accent-color);
+        }
+
+        .rating-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .product-description-main {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .product-highlights {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .product-highlights h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .product-highlights ul {
+            list-style: none;
+        }
+
+        .product-highlights li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .product-highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .price-section {
+            margin-bottom: 2rem;
+        }
+
+        .price-large {
+            font-size: 3rem;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .price-original {
+            text-decoration: line-through;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin-left: 1rem;
+        }
+
+        .savings-badge {
+            display: inline-block;
+            background: var(--success-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-left: 1rem;
+        }
+
+        .purchase-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .btn-buy {
+            background: var(--accent-color);
+            color: var(--white);
+            flex: 2;
+        }
+
+        .btn-buy:hover {
+            background: #c4a137;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-add-cart {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            flex: 1;
+        }
+
+        .btn-add-cart:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-add-cart.added {
+            background: var(--success-color);
+            color: var(--white);
+            border-color: var(--success-color);
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .trust-badge i {
+            color: var(--accent-color);
+        }
+
+        /* Product Details Tabs */
+        .product-details {
+            padding: 4rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .details-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ddd;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .tab-content h4 {
+            color: var(--primary-color);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .module-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+        }
+
+        .module-number {
+            background: var(--accent-color);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .module-content h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .module-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Instructor Section */
+        .instructor-section {
+            padding: 4rem 2rem;
+            background: var(--white);
+        }
+
+        .instructor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .instructor-image {
+            width: 100%;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .instructor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .instructor-info h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .instructor-title {
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .instructor-bio {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .instructor-credentials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .credential {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .credential i {
+            color: var(--accent-color);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem;
+            background: var(--white);
+            border: none;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--light-bg);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        /* Related Products */
+        .related-products {
+            padding: 4rem 2rem;
+            background: var(--white);
+        }
+
+        .related-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .related-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .related-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .related-card-image {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .related-card-image i {
+            font-size: 3rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .related-card-content {
+            padding: 1.5rem;
+        }
+
+        .related-card-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .related-card-price {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section ul {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                background: var(--white);
+                padding: 5rem 2rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+                z-index: 1001;
+                overflow-y: auto;
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav ul li {
+                border-bottom: 1px solid var(--light-bg);
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 1.2rem 0;
+                font-size: 1.1rem;
+            }
+
+            .product-hero-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .product-title-large {
+                font-size: 2rem;
+            }
+
+            .price-large {
+                font-size: 2rem;
+            }
+
+            .purchase-actions {
+                flex-direction: column;
+            }
+
+            .instructor-container {
+                grid-template-columns: 1fr;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                gap: 0.5rem;
+            }
+
+            .tab {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .cart-notification {
+                right: -100%;
+                max-width: calc(100% - 20px);
+            }
+
+            .cart-notification.show {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cart Notification -->
+    <div class="cart-notification" id="cartNotification">
+        <div class="cart-notification-header">
+            <i class="fas fa-check-circle"></i>
+            <span>Added to Cart!</span>
+        </div>
+        <div class="cart-notification-content">
+            <div class="cart-notification-image">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <div class="cart-notification-details">
+                <h4>LLM to H-1B Guide</h4>
+                <p>$99.99</p>
+            </div>
+        </div>
+        <div class="cart-notification-actions">
+            <a href="cart.html" class="view-cart-btn">View Cart</a>
+            <a href="shop.html" class="continue-shopping-btn">Continue Shopping</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">CY <span>AZOR</span> LAW</a>
+            <nav id="nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount" style="display: none;">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="shop.html">Shop</a>
+            <span>/</span>
+            <span class="current">LLM to H-1B Complete Guide</span>
+        </div>
+    </div>
+
+    <!-- Product Hero Section -->
+    <section class="product-hero">
+        <div class="product-hero-container">
+            <div class="product-image-section">
+                <div class="product-main-image">
+                    <i class="fas fa-user-graduate"></i>
+                    <span class="product-badge-large">Complete Package</span>
+                </div>
+            </div>
+            
+            <div class="product-info-section">
+                <p class="product-category-tag">Career Transition Guide</p>
+                <h1 class="product-title-large">LLM to H-1B: Complete Career Guide</h1>
+                
+                <div class="product-rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="rating-text">4.9 out of 5 (287 reviews)</span>
+                </div>
+                
+                <p class="product-description-main">
+                    The ultimate roadmap for international law graduates pursuing legal careers in the United States. 
+                    Navigate the complex journey from LLM student to H-1B professional with confidence, including 
+                    bar exam strategies, job search tactics, and visa sponsorship guidance.
+                </p>
+                
+                <div class="product-highlights">
+                    <h4>What's Included:</h4>
+                    <ul>
+                        <li>Complete LLM to H-1B roadmap & timeline</li>
+                        <li>Job search strategies for international lawyers</li>
+                        <li>H-1B sponsorship negotiation guide</li>
+                        <li>Resume & cover letter templates</li>
+                        <li>Interview preparation materials</li>
+                        <li>Bar exam eligibility by state</li>
+                        <li>OPT optimization strategies</li>
+                        <li>Network building action plan</li>
+                        <li>Sample H-1B petition documents</li>
+                    </ul>
+                </div>
+                
+                <div class="price-section">
+                    <span class="price-large">$99.99</span>
+                    <span class="price-original">$179.99</span>
+                    <span class="savings-badge">Save $80</span>
+                </div>
+                
+                <div class="purchase-actions">
+                    <a href="checkout.html?product=llm-h1b-guide&price=99.99" class="btn-large btn-buy">
+                        <i class="fas fa-credit-card"></i>
+                        Buy Now - Instant Access
+                    </a>
+                    <button class="btn-large btn-add-cart" id="addToCartBtn">
+                        <i class="fas fa-cart-plus"></i>
+                        Add to Cart
+                    </button>
+                </div>
+                
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i class="fas fa-globe"></i>
+                        <span>International Focus</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Career Ready</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-certificate"></i>
+                        <span>Expert Guidance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Tabs -->
+    <section class="product-details">
+        <div class="details-container">
+            <div class="tabs">
+                <button class="tab active" data-tab="overview">Overview</button>
+                <button class="tab" data-tab="roadmap">The Roadmap</button>
+                <button class="tab" data-tab="resources">Resources</button>
+                <button class="tab" data-tab="reviews">Reviews</button>
+            </div>
+            
+            <div class="tab-content active" id="overview">
+                <h3>Your Path to Legal Practice in America</h3>
+                <p>
+                    Transitioning from an LLM program to H-1B employment as an international lawyer requires careful 
+                    planning, strategic positioning, and expert knowledge of both immigration and employment landscapes. 
+                    This comprehensive guide provides everything you need to successfully navigate this challenging journey.
+                </p>
+                
+                <h4>Who This Guide Helps:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>International law students in LLM programs</li>
+                    <li>Foreign-trained attorneys seeking US employment</li>
+                    <li>Recent LLM graduates on OPT</li>
+                    <li>International lawyers planning their US career</li>
+                    <li>Law firms hiring international talent</li>
+                    <li>Career services professionals at law schools</li>
+                </ul>
+                
+                <h4>Key Outcomes:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>Understand H-1B requirements for legal positions</li>
+                    <li>Develop a compelling candidacy for US employers</li>
+                    <li>Navigate bar exam requirements as a foreign attorney</li>
+                    <li>Master the job search in the US legal market</li>
+                    <li>Negotiate H-1B sponsorship effectively</li>
+                    <li>Build a long-term career strategy in US law</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="roadmap">
+                <h3>Complete LLM to H-1B Roadmap</h3>
+                <div class="module-list">
+                    <div class="module-item">
+                        <div class="module-number">1</div>
+                        <div class="module-content">
+                            <h5>Pre-LLM Preparation</h5>
+                            <p>School selection strategy, specialization choices, bar exam planning, and building your US legal profile</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">2</div>
+                        <div class="module-content">
+                            <h5>During Your LLM Program</h5>
+                            <p>Networking strategies, internship tactics, academic excellence tips, and building US legal experience</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">3</div>
+                        <div class="module-content">
+                            <h5>OPT Optimization</h5>
+                            <p>Application timing, employer selection, maximizing your 12-month period, and STEM OPT possibilities</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">4</div>
+                        <div class="module-content">
+                            <h5>Job Search Mastery</h5>
+                            <p>Target employer identification, application strategies, interview preparation, and salary negotiation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">5</div>
+                        <div class="module-content">
+                            <h5>H-1B Process Navigation</h5>
+                            <p>Understanding caps and timelines, specialty occupation requirements, employer requirements, and petition strategies</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">6</div>
+                        <div class="module-content">
+                            <h5>Bar Admission Strategy</h5>
+                            <p>State selection, foreign credential evaluation, bar exam preparation, and maintaining status during study</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">7</div>
+                        <div class="module-content">
+                            <h5>Alternative Pathways</h5>
+                            <p>O-1 visa options, in-house counsel positions, academia opportunities, and long-term green card planning</p>
+                        </div>
+                    </div>
+                    
+                    <div class="module-item">
+                        <div class="module-number">8</div>
+                        <div class="module-content">
+                            <h5>Success Strategies</h5>
+                            <p>Building your brand, maintaining dual qualifications, career advancement, and permanent residence pathways</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="resources">
+                <h3>Comprehensive Resources</h3>
+                
+                <h4>Templates & Documents:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>LLM-specific resume templates (Big Law, Mid-size, In-house)</li>
+                    <li>Cover letter templates for H-1B sponsors</li>
+                    <li>Thank you letter templates</li>
+                    <li>Networking email scripts</li>
+                    <li>H-1B support letter templates</li>
+                    <li>Salary negotiation scripts</li>
+                </ul>
+                
+                <h4>Planning Tools:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>12-month OPT timeline planner</li>
+                    <li>H-1B cap timeline calculator</li>
+                    <li>Bar exam eligibility checker</li>
+                    <li>Job search tracker spreadsheet</li>
+                    <li>Networking contact manager</li>
+                    <li>Budget planning worksheet</li>
+                </ul>
+                
+                <h4>Exclusive Content:</h4>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li>List of 500+ H-1B sponsoring law firms</li>
+                    <li>Interview question bank (100+ questions)</li>
+                    <li>Salary data by practice area and location</li>
+                    <li>State bar requirements comparison chart</li>
+                    <li>Success stories and case studies</li>
+                    <li>Monthly update newsletter subscription</li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="reviews">
+                <h3>Success Stories</h3>
+                <div style="margin-top: 2rem;">
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div class="stars" style="color: var(--accent-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Landed My Dream Job!</h5>
+                        <p style="color: var(--text-light); font-style: italic; margin-bottom: 0.5rem;">
+                            "This guide was my bible during my LLM year. Following the networking strategies, I secured 
+                            three H-1B sponsorship offers before graduation. Now working at a top NYC firm!"
+                        </p>
+                        <p style="color: var(--text-dark); font-weight: 500;">- Ana Silva, Brazilian Attorney</p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div class="stars" style="color: var(--accent-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Worth Every Penny</h5>
+                        <p style="color: var(--text-light); font-style: italic; margin-bottom: 0.5rem;">
+                            "The employer list and salary negotiation tactics alone paid for this guide 100 times over. 
+                            I negotiated $30K more than the initial offer using these strategies."
+                        </p>
+                        <p style="color: var(--text-dark); font-weight: 500;">- Raj Patel, Indian LLM Graduate</p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 10px; margin-bottom: 1rem;">
+                        <div class="stars" style="color: var(--accent-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <h5 style="color: var(--primary-color); margin-bottom: 0.5rem;">Comprehensive and Practical</h5>
+                        <p style="color: var(--text-light); font-style: italic; margin-bottom: 0.5rem;">
+                            "As a career counselor, I recommend this to all our international LLM students. It addresses 
+                            every challenge they face with practical, actionable solutions."
+                        </p>
+                        <p style="color: var(--text-dark); font-weight: 500;">- Sarah Johnson, Law School Career Services</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructor Section -->
+    <section class="instructor-section">
+        <div class="instructor-container">
+            <div class="instructor-image">
+                <img src="https://raw.githubusercontent.com/erodion4776/Azol-law-firm-/refs/heads/main/assets/images/Cynthia-Azor.jpg" alt="Attorney Cynthia Azor">
+            </div>
+            <div class="instructor-info">
+                <h3>Attorney Cynthia Azor</h3>
+                <p class="instructor-title">Immigration & International Career Expert</p>
+                <p class="instructor-bio">
+                    Attorney Cynthia Azor specializes in helping international legal professionals build successful 
+                    careers in the United States. With extensive experience in both immigration law and legal recruitment, 
+                    she understands the unique challenges faced by LLM graduates seeking H-1B sponsorship.
+                </p>
+                <p class="instructor-bio">
+                    Having guided hundreds of international lawyers through the transition from student to professional 
+                    status, Attorney Azor has compiled the most effective strategies, insider tips, and practical resources 
+                    into this comprehensive guide. Her unique perspective combines legal expertise with career coaching.
+                </p>
+                <div class="instructor-credentials">
+                    <div class="credential">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>JD, Harvard Law School</span>
+                    </div>
+                    <div class="credential">
+                        <i class="fas fa-passport"></i>
+                        <span>Immigration Law Expert</span>
+                    </div>
+                    <div class="credential">
+                        <i class="fas fa-users"></i>
+                        <span>500+ LLM Success Stories</span>
+                    </div>
+                    <div class="credential">
+                        <i class="fas fa-building"></i>
+                        <span>Former Big Law Recruiter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    When should I start using this guide?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Ideally, you should start before or at the beginning of your LLM program. The guide includes 
+                        pre-LLM strategies that can significantly improve your outcomes. However, it's valuable at any 
+                        stage - even if you're already on OPT or seeking H-1B sponsorship.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    Does this cover all practice areas?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        Yes! The guide covers strategies for all major practice areas including corporate, litigation, 
+                        intellectual property, tax, and more. We provide specific advice for each area, including which 
+                        firms and companies are most likely to sponsor H-1B visas in each field.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    Is the employer list up to date?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        The list of H-1B sponsoring employers is updated quarterly based on actual H-1B filing data 
+                        and user reports. You'll receive free updates to this list for one year after purchase, ensuring 
+                        you always have the most current information.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question">
+                    What if I don't get selected in the H-1B lottery?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        The guide includes a comprehensive section on alternative strategies including O-1 visa options, 
+                        cap-exempt employers, continuing on OPT, pursuing additional degrees, and other creative solutions. 
+                        We also cover how to maintain your relationship with employers for future lottery attempts.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="related-products">
+        <div class="related-container">
+            <h2 class="related-title">You May Also Like</h2>
+            <div class="related-grid">
+                <a href="product-bar-filing-guide.html" class="related-card">
+                    <div class="related-card-image">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="related-card-content">
+                        <h4 class="related-card-title">Bar Exam Filing Guide</h4>
+                        <p class="related-card-price">$59.99</p>
+                    </div>
+                </a>
+                
+                <a href="product-immigration-checklist.html" class="related-card">
+                    <div class="related-card-image">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="related-card-content">
+                        <h4 class="related-card-title">Immigration Filing Checklist</h4>
+                        <p class="related-card-price">$29.99</p>
+                    </div>
+                </a>
+                
+                <a href="product-writing-guide.html" class="related-card">
+                    <div class="related-card-image">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <div class="related-card-content">
+                        <h4 class="related-card-title">Legal Writing Guide</h4>
+                        <p class="related-card-price">$39.99</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope"></i> info@cyazorlaw.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Legal Plaza, Suite 400<br>New York, NY 10001</p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 2:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Law Office of Cynthia Azor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Cart Management
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart') || '[]');
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const cart = getCart();
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCount = document.getElementById('cartCount');
+            
+            if (count > 0) {
+                cartCount.textContent = count;
+                cartCount.style.display = 'flex';
+            } else {
+                cartCount.style.display = 'none';
+            }
+        }
+
+        // Add to Cart Functionality
+        document.getElementById('addToCartBtn').addEventListener('click', function() {
+            const product = {
+                id: 'llm-h1b-guide',
+                name: 'LLM to H-1B: Complete Guide',
+                price: 99.99,
+                quantity: 1,
+                type: 'guide'
+            };
+            
+            let cart = getCart();
+            
+            // Check if product already in cart
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+            
+            saveCart(cart);
+            
+            // Update button state
+            this.classList.add('added');
+            this.innerHTML = '<i class="fas fa-check"></i> Added to Cart';
+            
+            // Show notification
+            const notification = document.getElementById('cartNotification');
+            notification.classList.add('show');
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                this.classList.remove('added');
+                this.innerHTML = '<i class="fas fa-cart-plus"></i> Add to Cart';
+            }, 2000);
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        });
+
+        // Initialize cart count on page load
+        updateCartCount();
+
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Tabs Functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabName = tab.dataset.tab;
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
