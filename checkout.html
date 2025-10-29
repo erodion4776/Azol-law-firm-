@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Law Office of Cynthia Azor</title>
+    <title>Checkout - CY visa help</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -549,7 +549,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>AZOR</span> LAW</a>
+            <a href="index.html" class="logo">CY <span>visa</span> help</a>
             <div class="checkout-indicator">
                 <i class="fas fa-lock"></i>
                 <span>Secure Checkout</span>
@@ -708,7 +708,7 @@
                     <!-- Cart items will be dynamically added here -->
                     <div class="cart-item">
                         <div class="item-details">
-                            <div class="item-name">EB-2 NIW Strategy Webinar</div>
+                            <div class="item-name">EB-2 NIW Visa Strategy Webinar</div>
                             <div class="item-type">Recorded Webinar</div>
                         </div>
                         <div class="item-price">$149.99</div>
@@ -782,7 +782,7 @@
                 Thank you for your purchase. You will receive a confirmation email shortly with your order details and download links.
             </p>
             <p style="font-weight: 500; color: var(--text-dark);">
-                Order #: <span id="orderNumber">CYA-2024-0001</span>
+                Order #: <span id="orderNumber">CVH-2024-0001</span>
             </p>
         </div>
     </div>
@@ -928,7 +928,7 @@
         if (!cartItems || cartItems.length === 0) {
             const defaultCart = [{
                 id: 1,
-                name: 'EB-2 NIW Strategy Webinar',
+                name: 'EB-2 NIW Visa Strategy Webinar',
                 price: 149.99,
                 quantity: 1
             }];
@@ -1000,7 +1000,7 @@
 
     function getDiscountAmount(subtotal) {
         const appliedPromo = sessionStorage.getItem(SESSION_STORAGE_PROMO_KEY);
-        if (appliedPromo === 'SAVE10' || appliedPromo === 'LEGAL10') {
+        if (appliedPromo === 'SAVE10' || appliedPromo === 'VISA10') {
             return subtotal * 0.1;
         }
         return 0;
@@ -1050,7 +1050,7 @@
         const promoCode = promoCodeInput.value.trim().toUpperCase();
         const applyBtn = document.querySelector('.btn-apply');
         
-        if (promoCode === 'SAVE10' || promoCode === 'LEGAL10') {
+        if (promoCode === 'SAVE10' || promoCode === 'VISA10') {
             sessionStorage.setItem(SESSION_STORAGE_PROMO_KEY, promoCode);
             updateTotals();
             
@@ -1133,7 +1133,7 @@
 
         if (paymentResult.success) {
             // Logic for a successful payment
-            const orderNumber = 'CYA-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            const orderNumber = 'CVH-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
             document.getElementById('orderNumber').textContent = orderNumber;
             
             // Collect and store order data (simplified)
