@@ -33,7 +33,6 @@
             color: var(--text-dark);
         }
 
-        /* Admin Header */
         .admin-header {
             background: var(--white);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -119,7 +118,6 @@
             transform: translateY(-2px);
         }
 
-        /* Dashboard Container */
         .dashboard-container {
             max-width: 1400px;
             margin: 2rem auto;
@@ -138,7 +136,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -185,10 +182,6 @@
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         }
 
-        .stat-icon.purple {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-        }
-
         .stat-info h3 {
             font-size: 2rem;
             color: var(--primary-color);
@@ -200,7 +193,6 @@
             font-size: 0.9rem;
         }
 
-        /* Action Buttons */
         .action-buttons {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -241,7 +233,6 @@
             color: var(--white);
         }
 
-        /* Pages List */
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
@@ -299,11 +290,6 @@
             color: #155724;
         }
 
-        .status-draft {
-            background: #fff3cd;
-            color: #856404;
-        }
-
         .table-actions {
             display: flex;
             gap: 0.5rem;
@@ -345,43 +331,87 @@
             background: #c82333;
         }
 
-        /* Quick Links */
-        .quick-links {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-top: 2rem;
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
         }
 
-        .quick-links ul {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+        .loading i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            animation: spin 1s linear infinite;
         }
 
-        .quick-links li a {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-alert {
+            background: #f8d7da;
+            color: #721c24;
             padding: 1rem;
-            color: var(--text-dark);
-            text-decoration: none;
             border-radius: 5px;
-            transition: all 0.3s ease;
+            border-left: 4px solid var(--danger-color);
+            margin-bottom: 1rem;
         }
 
-        .quick-links li a:hover {
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-confirm, .btn-cancel {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-confirm {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+
+        .btn-cancel {
             background: var(--light-bg);
-            color: var(--accent-color);
+            color: var(--text-dark);
         }
 
-        .quick-links li a i {
-            color: var(--accent-color);
-        }
-
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .admin-header-content {
                 flex-direction: column;
@@ -415,12 +445,11 @@
     </style>
 </head>
 <body>
-    <!-- Admin Header -->
     <header class="admin-header">
         <div class="admin-header-content">
             <div class="admin-logo">
                 CY <span>visa</span> help
-                <small>Admin Dashboard</small>
+                <small>Admin Dashboard - Connected to Real Files</small>
             </div>
             <div class="admin-user-info">
                 <div class="user-avatar">A</div>
@@ -435,19 +464,17 @@
         </div>
     </header>
 
-    <!-- Dashboard Container -->
     <div class="dashboard-container">
         <h1 class="page-title">Dashboard</h1>
-        <p class="page-subtitle">Welcome back! Here's what's happening with your website.</p>
+        <p class="page-subtitle">Manage your website pages and content</p>
 
-        <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-icon blue">
                     <i class="fas fa-file"></i>
                 </div>
                 <div class="stat-info">
-                    <h3 id="totalPages">8</h3>
+                    <h3 id="totalPages">...</h3>
                     <p>Total Pages</p>
                 </div>
             </div>
@@ -457,41 +484,26 @@
                     <i class="fas fa-check-circle"></i>
                 </div>
                 <div class="stat-info">
-                    <h3 id="publishedPages">8</h3>
+                    <h3 id="publishedPages">...</h3>
                     <p>Published Pages</p>
                 </div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon orange">
-                    <i class="fas fa-edit"></i>
-                </div>
-                <div class="stat-info">
-                    <h3 id="draftPages">0</h3>
-                    <p>Draft Pages</p>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon purple">
                     <i class="fas fa-clock"></i>
                 </div>
                 <div class="stat-info">
-                    <h3 id="lastUpdated">Today</h3>
+                    <h3 id="lastUpdated">...</h3>
                     <p>Last Update</p>
                 </div>
             </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="action-buttons">
-            <a href="admin-page-editor.html?action=new" class="action-btn">
+            <a href="admin-page-editor-php.html?action=new" class="action-btn">
                 <i class="fas fa-plus-circle"></i>
                 Create New Page
-            </a>
-            <a href="admin-page-editor.html" class="action-btn">
-                <i class="fas fa-edit"></i>
-                Edit Existing Page
             </a>
             <a href="#pages-list" class="action-btn">
                 <i class="fas fa-list"></i>
@@ -501,191 +513,240 @@
                 <i class="fas fa-eye"></i>
                 View Live Site
             </a>
+            <button class="action-btn" id="refreshBtn">
+                <i class="fas fa-sync-alt"></i>
+                Refresh Data
+            </button>
         </div>
 
-        <!-- Pages List -->
         <h2 class="section-title" id="pages-list">
             <i class="fas fa-folder-open"></i> All Pages
         </h2>
 
-        <div class="pages-table">
+        <div id="loadingIndicator" class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Loading pages...</p>
+        </div>
+
+        <div id="errorAlert" class="error-alert" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Error:</strong> <span id="errorText"></span>
+        </div>
+
+        <div class="pages-table" id="pagesTable" style="display: none;">
             <table>
                 <thead>
                     <tr>
                         <th>Page Name</th>
-                        <th>URL</th>
+                        <th>File Name</th>
                         <th>Status</th>
                         <th>Last Modified</th>
+                        <th>Size</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="pagesTableBody">
-                    <tr>
-                        <td><i class="fas fa-home"></i> Home</td>
-                        <td>index.html</td>
-                        <td><span class="page-status status-published">Published</span></td>
-                        <td>2025-01-21</td>
-                        <td class="table-actions">
-                            <button class="btn-view" onclick="window.open('index.html', '_blank')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-edit" onclick="editPage('index.html')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-info-circle"></i> About</td>
-                        <td>about.html</td>
-                        <td><span class="page-status status-published">Published</span></td>
-                        <td>2025-01-21</td>
-                        <td class="table-actions">
-                            <button class="btn-view" onclick="window.open('about.html', '_blank')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-edit" onclick="editPage('about.html')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-concierge-bell"></i> Services</td>
-                        <td>services.html</td>
-                        <td><span class="page-status status-published">Published</span></td>
-                        <td>2025-01-21</td>
-                        <td class="table-actions">
-                            <button class="btn-view" onclick="window.open('services.html', '_blank')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-edit" onclick="editPage('services.html')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-shopping-bag"></i> Shop</td>
-                        <td>shop.html</td>
-                        <td><span class="page-status status-published">Published</span></td>
-                        <td>2025-01-21</td>
-                        <td class="table-actions">
-                            <button class="btn-view" onclick="window.open('shop.html', '_blank')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-edit" onclick="editPage('shop.html')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-star"></i> Testimonials</td>
-                        <td>testimonials.html</td>
-                        <td><span class="page-status status-published">Published</span></td>
-                        <td>2025-01-21</td>
-                        <td class="table-actions">
-                            <button class="btn-view" onclick="window.open('testimonials.html', '_blank')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-edit" onclick="editPage('testimonials.html')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><i class="fas fa-envelope"></i> Contact</td>
-                        <td>contact.html</td>
-                        <td><span class="page-status status-published">Published</span></td>
-                        <td>2025-01-21</td>
-                        <td class="table-actions">
-                            <button class="btn-view" onclick="window.open('contact.html', '_blank')">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="btn-edit" onclick="editPage('contact.html')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
+    </div>
 
-        <!-- Quick Links -->
-        <div class="quick-links">
-            <h2 class="section-title">
-                <i class="fas fa-link"></i> Quick Links
-            </h2>
-            <ul>
-                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-                <li><a href="#"><i class="fas fa-users"></i> User Management</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
-                <li><a href="#"><i class="fas fa-image"></i> Media Library</a></li>
-                <li><a href="#"><i class="fas fa-palette"></i> Theme Settings</a></li>
-                <li><a href="#"><i class="fas fa-plug"></i> Plugins</a></li>
-            </ul>
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <h3><i class="fas fa-trash"></i> Confirm Delete</h3>
+            <p>Are you sure you want to delete <strong id="deletePageName"></strong>?</p>
+            <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 0.5rem;">
+                The page will be moved to trash folder.
+            </p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" id="cancelDelete">Cancel</button>
+                <button class="btn-confirm" id="confirmDelete">Delete</button>
+            </div>
         </div>
     </div>
 
     <script>
+        let currentDeletePage = null;
+
         // Check authentication
         function checkAuth() {
-            const sessionData = sessionStorage.getItem('adminSession') || localStorage.getItem('adminSession');
+            const sessionData = sessionStorage.getItem('adminSession');
             
             if (!sessionData) {
-                window.location.href = 'admin-login.html';
+                window.location.href = 'admin-login-php.html';
                 return false;
             }
 
             try {
                 const session = JSON.parse(sessionData);
                 if (!session.isAuthenticated) {
-                    window.location.href = 'admin-login.html';
+                    window.location.href = 'admin-login-php.html';
                     return false;
                 }
                 document.getElementById('userName').textContent = session.username || 'Admin User';
                 return true;
             } catch (e) {
-                window.location.href = 'admin-login.html';
+                window.location.href = 'admin-login-php.html';
                 return false;
             }
         }
 
-        // Logout function
-        document.getElementById('logoutBtn').addEventListener('click', () => {
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
             if (confirm('Are you sure you want to logout?')) {
+                try {
+                    await fetch('admin-api.php?action=logout');
+                } catch (e) {
+                    console.error('Logout error:', e);
+                }
                 sessionStorage.removeItem('adminSession');
-                localStorage.removeItem('adminSession');
-                window.location.href = 'admin-login.html';
+                window.location.href = 'admin-login-php.html';
             }
         });
 
-        // Edit page function
-        function editPage(pageUrl) {
-            window.location.href = `admin-page-editor.html?page=${pageUrl}`;
+        // Load pages
+        async function loadPages() {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const pagesTable = document.getElementById('pagesTable');
+            const errorAlert = document.getElementById('errorAlert');
+
+            loadingIndicator.style.display = 'block';
+            pagesTable.style.display = 'none';
+            errorAlert.style.display = 'none';
+
+            try {
+                const response = await fetch('admin-api.php?action=list-pages');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load pages');
+                }
+
+                const data = await response.json();
+                displayPages(data.pages);
+                updateStats(data.pages);
+
+                loadingIndicator.style.display = 'none';
+                pagesTable.style.display = 'block';
+            } catch (error) {
+                loadingIndicator.style.display = 'none';
+                errorAlert.style.display = 'block';
+                document.getElementById('errorText').textContent = error.message;
+            }
         }
 
-        // Initialize dashboard
+        // Display pages in table
+        function displayPages(pages) {
+            const tbody = document.getElementById('pagesTableBody');
+            tbody.innerHTML = '';
+
+            if (pages.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-light);">No pages found</td></tr>';
+                return;
+            }
+
+            pages.forEach(page => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><i class="fas fa-file-alt"></i> ${page.name}</td>
+                    <td>${page.filename}</td>
+                    <td><span class="page-status status-${page.status}">${page.status}</span></td>
+                    <td>${page.modified}</td>
+                    <td>${formatBytes(page.size)}</td>
+                    <td class="table-actions">
+                        <button class="btn-view" onclick="window.open('${page.filename}', '_blank')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn-edit" onclick="editPage('${page.filename}')">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn-delete" onclick="confirmDeletePage('${page.filename}', '${page.name}')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Update statistics
+        function updateStats(pages) {
+            document.getElementById('totalPages').textContent = pages.length;
+            document.getElementById('publishedPages').textContent = pages.filter(p => p.status === 'published').length;
+            
+            if (pages.length > 0) {
+                const lastModified = new Date(pages[0].modified);
+                const now = new Date();
+                const diffHours = Math.floor((now - lastModified) / (1000 * 60 * 60));
+                
+                if (diffHours < 1) {
+                    document.getElementById('lastUpdated').textContent = 'Just now';
+                } else if (diffHours < 24) {
+                    document.getElementById('lastUpdated').textContent = diffHours + 'h ago';
+                } else {
+                    document.getElementById('lastUpdated').textContent = Math.floor(diffHours / 24) + 'd ago';
+                }
+            }
+        }
+
+        // Format bytes
+        function formatBytes(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        // Edit page
+        function editPage(filename) {
+            window.location.href = `admin-page-editor-php.html?page=${filename}`;
+        }
+
+        // Confirm delete
+        function confirmDeletePage(filename, pageName) {
+            currentDeletePage = filename;
+            document.getElementById('deletePageName').textContent = pageName;
+            document.getElementById('deleteModal').classList.add('show');
+        }
+
+        // Cancel delete
+        document.getElementById('cancelDelete').addEventListener('click', () => {
+            document.getElementById('deleteModal').classList.remove('show');
+            currentDeletePage = null;
+        });
+
+        // Confirm delete
+        document.getElementById('confirmDelete').addEventListener('click', async () => {
+            if (!currentDeletePage) return;
+
+            try {
+                const response = await fetch(`admin-api.php?action=delete-page&page=${currentDeletePage}`);
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    document.getElementById('deleteModal').classList.remove('show');
+                    loadPages(); // Reload pages
+                    alert('Page deleted successfully!');
+                } else {
+                    throw new Error(data.error || 'Failed to delete page');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+
+            currentDeletePage = null;
+        });
+
+        // Refresh button
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            loadPages();
+        });
+
+        // Initialize
         window.addEventListener('load', () => {
             if (checkAuth()) {
-                // Load dynamic stats if needed
-                updateDashboardStats();
+                loadPages();
             }
         });
-
-        // Update dashboard stats
-        function updateDashboardStats() {
-            // This would normally fetch from a database
-            // For now, we'll use static values
-            const stats = {
-                totalPages: 8,
-                publishedPages: 8,
-                draftPages: 0,
-                lastUpdated: 'Today'
-            };
-
-            document.getElementById('totalPages').textContent = stats.totalPages;
-            document.getElementById('publishedPages').textContent = stats.publishedPages;
-            document.getElementById('draftPages').textContent = stats.draftPages;
-            document.getElementById('lastUpdated').textContent = stats.lastUpdated;
-        }
     </script>
 </body>
 </html>
