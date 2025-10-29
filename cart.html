@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - Law Office of Cynthia Azor</title>
+    <title>Shopping Cart - CY visa help</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -875,7 +875,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>AZOR</span> LAW</a>
+            <a href="index.html" class="logo">CY <span>visa</span> help</a>
             <nav id="nav">
                 <ul>
                     <li><a href="about.html">About</a></li>
@@ -908,7 +908,7 @@
                 <span>Cart</span>
             </div>
             <h1>Shopping Cart</h1>
-            <p>Review your selected legal resources</p>
+            <p>Review your selected immigration resources</p>
         </div>
     </section>
 
@@ -931,7 +931,7 @@
                         </div>
                         <div class="item-details">
                             <div class="item-category">Immigration Training</div>
-                            <h3 class="item-title">EB-2 NIW Strategy Webinar</h3>
+                            <h3 class="item-title">EB-2 NIW Visa Strategy Webinar</h3>
                             <p class="item-type">Recorded Webinar - 2.5 Hours</p>
                             <div class="item-features">
                                 <span class="feature-tag">
@@ -975,8 +975,8 @@
                             <i class="fas fa-file-contract"></i>
                         </div>
                         <div class="item-details">
-                            <div class="item-category">Legal Templates</div>
-                            <h3 class="item-title">Contract Papers & Templates</h3>
+                            <div class="item-category">Document Templates</div>
+                            <h3 class="item-title">Visa Application Templates & Forms</h3>
                             <p class="item-type">Digital Download - 25+ Templates</p>
                             <div class="item-features">
                                 <span class="feature-tag">
@@ -1013,8 +1013,8 @@
                             <i class="fas fa-graduation-cap"></i>
                         </div>
                         <div class="item-details">
-                            <div class="item-category">Bar Prep Guide</div>
-                            <h3 class="item-title">Filing for the U.S. Bar Exam</h3>
+                            <div class="item-category">Immigration Guide</div>
+                            <h3 class="item-title">Complete U.S. Immigration Guide</h3>
                             <p class="item-type">eBook - 150 Pages</p>
                             <div class="item-features">
                                 <span class="feature-tag">
@@ -1156,7 +1156,7 @@
                         <i class="fas fa-clipboard-check"></i>
                     </div>
                     <div class="recommended-content">
-                        <h3 class="recommended-title">Immigration Filing Checklist</h3>
+                        <h3 class="recommended-title">Visa Application Checklist</h3>
                         <div class="recommended-price">$29.99</div>
                         <button class="btn-add-recommended" data-product-id="4">
                             <i class="fas fa-plus"></i> Add to Cart
@@ -1169,7 +1169,7 @@
                         <i class="fas fa-pen-fancy"></i>
                     </div>
                     <div class="recommended-content">
-                        <h3 class="recommended-title">IRAC & CIRAC Writing Guide</h3>
+                        <h3 class="recommended-title">Immigration Document Preparation Guide</h3>
                         <div class="recommended-price">$39.99</div>
                         <button class="btn-add-recommended" data-product-id="5">
                             <i class="fas fa-plus"></i> Add to Cart
@@ -1182,7 +1182,7 @@
                         <i class="fas fa-user-graduate"></i>
                     </div>
                     <div class="recommended-content">
-                        <h3 class="recommended-title">LLM to H-1B: Complete Guide</h3>
+                        <h3 class="recommended-title">F-1 to H-1B: Complete Transition Guide</h3>
                         <div class="recommended-price">$99.99</div>
                         <button class="btn-add-recommended" data-product-id="6">
                             <i class="fas fa-plus"></i> Add to Cart
@@ -1195,7 +1195,7 @@
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <div class="recommended-content">
-                        <h3 class="recommended-title">Monthly Bar Prep Webinars</h3>
+                        <h3 class="recommended-title">Monthly Immigration Updates Webinars</h3>
                         <div class="recommended-price">$49.99/mo</div>
                         <button class="btn-add-recommended" data-product-id="7">
                             <i class="fas fa-plus"></i> Add to Cart
@@ -1223,9 +1223,9 @@
     <script>
         // Cart functionality
         let cartItems = [
-            { id: 1, name: 'EB-2 NIW Strategy Webinar', price: 149.99, quantity: 1 },
-            { id: 2, name: 'Contract Papers & Templates', price: 79.99, quantity: 1 },
-            { id: 3, name: 'Filing for the U.S. Bar Exam', price: 49.99, quantity: 1 }
+            { id: 1, name: 'EB-2 NIW Visa Strategy Webinar', price: 149.99, quantity: 1 },
+            { id: 2, name: 'Visa Application Templates & Forms', price: 79.99, quantity: 1 },
+            { id: 3, name: 'Complete U.S. Immigration Guide', price: 49.99, quantity: 1 }
         ];
 
         // Initialize cart
@@ -1368,7 +1368,7 @@
             const promoInput = document.getElementById('promoCode');
             const promoCode = promoInput.value.trim().toUpperCase();
             
-            if (promoCode === 'SAVE10' || promoCode === 'LEGAL10') {
+            if (promoCode === 'SAVE10' || promoCode === 'VISA10') {
                 // Store promo code in sessionStorage
                 sessionStorage.setItem('appliedPromo', promoCode);
                 
@@ -1422,59 +1422,4 @@
             const btn = e.currentTarget;
             const productId = btn.dataset.productId;
             
-            btn.innerHTML = '<i class="fas fa-check"></i> Added!';
-            btn.style.background = 'var(--success-color)';
-            btn.style.color = 'var(--white)';
-            
-            showToast('Item added to cart', 'success');
-            
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-plus"></i> Add to Cart';
-                btn.style.background = '';
-                btn.style.color = '';
-            }, 2000);
-        }
-
-        // Show toast notification
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastMessage = toast.querySelector('.toast-message');
-            const toastIcon = toast.querySelector('.toast-icon i');
-            
-            toastMessage.textContent = message;
-            toast.className = `toast ${type} show`;
-            
-            if (type === 'error') {
-                toastIcon.className = 'fas fa-exclamation';
-                toast.querySelector('.toast-title').textContent = 'Error';
-            } else {
-                toastIcon.className = 'fas fa-check';
-                toast.querySelector('.toast-title').textContent = 'Success!';
-            }
-            
-            setTimeout(() => {
-                hideToast();
-            }, 3000);
-        }
-
-        // Hide toast
-        function hideToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.remove('show');
-        }
-
-        // Hamburger menu
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.getElementById('nav');
-
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            hamburger.classList.toggle('active');
-            nav.classList.toggle('active');
-        });
-
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', initCart);
-    </script>
-</body>
-</html>
+            btn.innerHTML = '<i class="fas 
