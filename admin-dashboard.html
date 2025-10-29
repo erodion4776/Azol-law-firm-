@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CY visa help</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a2342;
+            --accent-color: #d4af37;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-dark);
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .admin-header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .admin-logo span {
+            color: var(--accent-color);
+        }
+
+        .admin-logo small {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+            font-family: 'Roboto', sans-serif;
+            opacity: 0.7;
+        }
+
+        .admin-user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-details span {
+            display: block;
+            font-size: 0.85rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .user-role {
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+
+        .btn-logout {
+            padding: 0.6rem 1.5rem;
+            background: var(--danger-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem 2rem;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--white);
+        }
+
+        .stat-icon.blue {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .stat-icon.green {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .stat-icon.orange {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .stat-icon.purple {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-btn {
+            padding: 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .action-btn i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(10, 35, 66, 0.2);
+        }
+
+        .action-btn:hover i {
+            color: var(--white);
+        }
+
+        /* Pages List */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .pages-table {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        thead th {
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--light-bg);
+        }
+
+        tbody td {
+            padding: 1.2rem;
+        }
+
+        .page-status {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-published {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit, .btn-delete, .btn-view {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: var(--info-color);
+            color: var(--white);
+        }
+
+        .btn-edit:hover {
+            background: #138496;
+        }
+
+        .btn-view {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
+        .btn-view:hover {
+            background: #218838;
+        }
+
+        .btn-delete {
+            background: var(--danger-color);
+            color: var(--white);
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+        }
+
+        .quick-links ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-links li a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .quick-links li a:hover {
+            background: var(--light-bg);
+            color: var(--accent-color);
+        }
+
+        .quick-links li a i {
+            color: var(--accent-color);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .admin-header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            thead th, tbody td {
+                padding: 0.8rem 0.5rem;
+            }
+
+            .table-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-logo">
+                CY <span>visa</span> help
+                <small>Admin Dashboard</small>
+            </div>
+            <div class="admin-user-info">
+                <div class="user-avatar">A</div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Admin User</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Welcome back! Here's what's happening with your website.</p>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-file"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalPages">8</h3>
+                    <p>Total Pages</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="publishedPages">8</h3>
+                    <p>Published Pages</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="draftPages">0</h3>
+                    <p>Draft Pages</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="lastUpdated">Today</h3>
+                    <p>Last Update</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="admin-page-editor.html?action=new" class="action-btn">
+                <i class="fas fa-plus-circle"></i>
+                Create New Page
+            </a>
+            <a href="admin-page-editor.html" class="action-btn">
+                <i class="fas fa-edit"></i>
+                Edit Existing Page
+            </a>
+            <a href="#pages-list" class="action-btn">
+                <i class="fas fa-list"></i>
+                Manage All Pages
+            </a>
+            <a href="index.html" target="_blank" class="action-btn">
+                <i class="fas fa-eye"></i>
+                View Live Site
+            </a>
+        </div>
+
+        <!-- Pages List -->
+        <h2 class="section-title" id="pages-list">
+            <i class="fas fa-folder-open"></i> All Pages
+        </h2>
+
+        <div class="pages-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Page Name</th>
+                        <th>URL</th>
+                        <th>Status</th>
+                        <th>Last Modified</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="pagesTableBody">
+                    <tr>
+                        <td><i class="fas fa-home"></i> Home</td>
+                        <td>index.html</td>
+                        <td><span class="page-status status-published">Published</span></td>
+                        <td>2025-01-21</td>
+                        <td class="table-actions">
+                            <button class="btn-view" onclick="window.open('index.html', '_blank')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-edit" onclick="editPage('index.html')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-info-circle"></i> About</td>
+                        <td>about.html</td>
+                        <td><span class="page-status status-published">Published</span></td>
+                        <td>2025-01-21</td>
+                        <td class="table-actions">
+                            <button class="btn-view" onclick="window.open('about.html', '_blank')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-edit" onclick="editPage('about.html')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-concierge-bell"></i> Services</td>
+                        <td>services.html</td>
+                        <td><span class="page-status status-published">Published</span></td>
+                        <td>2025-01-21</td>
+                        <td class="table-actions">
+                            <button class="btn-view" onclick="window.open('services.html', '_blank')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-edit" onclick="editPage('services.html')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-shopping-bag"></i> Shop</td>
+                        <td>shop.html</td>
+                        <td><span class="page-status status-published">Published</span></td>
+                        <td>2025-01-21</td>
+                        <td class="table-actions">
+                            <button class="btn-view" onclick="window.open('shop.html', '_blank')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-edit" onclick="editPage('shop.html')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-star"></i> Testimonials</td>
+                        <td>testimonials.html</td>
+                        <td><span class="page-status status-published">Published</span></td>
+                        <td>2025-01-21</td>
+                        <td class="table-actions">
+                            <button class="btn-view" onclick="window.open('testimonials.html', '_blank')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-edit" onclick="editPage('testimonials.html')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-envelope"></i> Contact</td>
+                        <td>contact.html</td>
+                        <td><span class="page-status status-published">Published</span></td>
+                        <td>2025-01-21</td>
+                        <td class="table-actions">
+                            <button class="btn-view" onclick="window.open('contact.html', '_blank')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="btn-edit" onclick="editPage('contact.html')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+            <h2 class="section-title">
+                <i class="fas fa-link"></i> Quick Links
+            </h2>
+            <ul>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="#"><i class="fas fa-image"></i> Media Library</a></li>
+                <li><a href="#"><i class="fas fa-palette"></i> Theme Settings</a></li>
+                <li><a href="#"><i class="fas fa-plug"></i> Plugins</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        function checkAuth() {
+            const sessionData = sessionStorage.getItem('adminSession') || localStorage.getItem('adminSession');
+            
+            if (!sessionData) {
+                window.location.href = 'admin-login.html';
+                return false;
+            }
+
+            try {
+                const session = JSON.parse(sessionData);
+                if (!session.isAuthenticated) {
+                    window.location.href = 'admin-login.html';
+                    return false;
+                }
+                document.getElementById('userName').textContent = session.username || 'Admin User';
+                return true;
+            } catch (e) {
+                window.location.href = 'admin-login.html';
+                return false;
+            }
+        }
+
+        // Logout function
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('adminSession');
+                localStorage.removeItem('adminSession');
+                window.location.href = 'admin-login.html';
+            }
+        });
+
+        // Edit page function
+        function editPage(pageUrl) {
+            window.location.href = `admin-page-editor.html?page=${pageUrl}`;
+        }
+
+        // Initialize dashboard
+        window.addEventListener('load', () => {
+            if (checkAuth()) {
+                // Load dynamic stats if needed
+                updateDashboardStats();
+            }
+        });
+
+        // Update dashboard stats
+        function updateDashboardStats() {
+            // This would normally fetch from a database
+            // For now, we'll use static values
+            const stats = {
+                totalPages: 8,
+                publishedPages: 8,
+                draftPages: 0,
+                lastUpdated: 'Today'
+            };
+
+            document.getElementById('totalPages').textContent = stats.totalPages;
+            document.getElementById('publishedPages').textContent = stats.publishedPages;
+            document.getElementById('draftPages').textContent = stats.draftPages;
+            document.getElementById('lastUpdated').textContent = stats.lastUpdated;
+        }
+    </script>
+</body>
+</html>
