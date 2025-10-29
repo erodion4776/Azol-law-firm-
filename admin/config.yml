@@ -1,0 +1,91 @@
+backend:
+  name: git-gateway
+  branch: main # or master, depending on your default branch
+
+# Enable editorial workflow (drafts)
+publish_mode: editorial_workflow
+
+# Media folder for uploads
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+# Collections (Pages you can edit)
+collections:
+  # Home Page
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "index.html"
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Meta Description", name: "description", widget: "text"}
+          - {label: "Body Content", name: "body", widget: "markdown"}
+          
+      - label: "About Page"
+        name: "about"
+        file: "about.html"
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Meta Description", name: "description", widget: "text"}
+          - {label: "Body Content", name: "body", widget: "markdown"}
+          
+      - label: "Services Page"
+        name: "services"
+        file: "services.html"
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Meta Description", name: "description", widget: "text"}
+          - {label: "Body Content", name: "body", widget: "markdown"}
+          
+      - label: "Contact Page"
+        name: "contact"
+        file: "contact.html"
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Meta Description", name: "description", widget: "text"}
+          - {label: "Body Content", name: "body", widget: "markdown"}
+          
+      - label: "Shop Page"
+        name: "shop"
+        file: "shop.html"
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Meta Description", name: "description", widget: "text"}
+          - {label: "Body Content", name: "body", widget: "markdown"}
+          
+      - label: "Testimonials Page"
+        name: "testimonials"
+        file: "testimonials.html"
+        fields:
+          - {label: "Page Title", name: "title", widget: "string"}
+          - {label: "Meta Description", name: "description", widget: "text"}
+          - {label: "Body Content", name: "body", widget: "markdown"}
+
+  # Testimonials Collection
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Client Name", name: "title", widget: "string"}
+      - {label: "Service Type", name: "service", widget: "string"}
+      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5}
+      - {label: "Testimonial", name: "body", widget: "text"}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
+
+  # Blog/News (Optional)
+  - name: "blog"
+    label: "Blog Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Author", name: "author", widget: "string", default: "CY visa help"}
+      - {label: "Featured Image", name: "thumbnail", widget: "image"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Tags", name: "tags", widget: "list", default: ["immigration", "visa"]}
