@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Law Office of Cynthia Azor</title>
+    <title>Contact Us - CY visa help</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -200,6 +200,16 @@
             margin: 0;
         }
 
+        .info-content a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .info-content a:hover {
+            color: var(--accent-color);
+        }
+
         /* Contact Form */
         .contact-form {
             background: var(--light-bg);
@@ -284,9 +294,9 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             background: var(--white);
-            display: flex; /* Important for centering map if it were just text */
-            align-items: center; /* Important for centering map if it were just text */
-            justify-content: center; /* Important for centering map if it were just text */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--text-light);
         }
 
@@ -407,7 +417,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>AZOR</span> LAW</a>
+            <a href="index.html" class="logo">CY <span>visa</span> help</a>
             <nav id="nav">
                 <ul>
                     <li><a href="about.html">About</a></li>
@@ -428,7 +438,7 @@
     <!-- Page Header -->
     <section class="page-header">
         <h1>Get in Touch</h1>
-        <p>We're here to help with all your legal needs</p>
+        <p>We're here to help with all your immigration and visa needs</p>
     </section>
 
     <!-- Contact Section -->
@@ -436,7 +446,7 @@
         <div class="contact-grid">
             <div class="contact-info">
                 <h2>Contact Information</h2>
-                <p>Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                <p>Have questions about your visa application or immigration process? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
 
                 <div class="info-item">
                     <div class="info-icon">
@@ -444,7 +454,7 @@
                     </div>
                     <div class="info-content">
                         <h3>Phone</h3>
-                        <p>(555) 123-4567</p>
+                        <p><a href="tel:+16292022006">+1 (629) 202-2006</a></p>
                         <p>Mon-Fri: 9AM - 6PM</p>
                     </div>
                 </div>
@@ -455,7 +465,7 @@
                     </div>
                     <div class="info-content">
                         <h3>Email</h3>
-                        <p>info@cyazorlaw.com</p>
+                        <p><a href="mailto:info@cyvisahelp.com">info@cyvisahelp.com</a></p>
                         <p>We'll respond within 24 hours</p>
                     </div>
                 </div>
@@ -466,8 +476,7 @@
                     </div>
                     <div class="info-content">
                         <h3>Office</h3>
-                        <p>123 Legal Plaza, Suite 400</p>
-                        <p>New York, NY 10001</p>
+                        <p><a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
                     </div>
                 </div>
 
@@ -487,7 +496,7 @@
             <div class="contact-form">
                 <h2>Send Us a Message</h2>
                 <div class="success-message" id="successMessage">
-                    Thank you! Your message has been sent successfully.
+                    Thank you! Your message has been sent successfully. We'll get back to you soon.
                 </div>
                 <form id="contactForm">
                     <div class="form-group">
@@ -509,17 +518,20 @@
                         <label for="service">Service Needed</label>
                         <select id="service" name="service">
                             <option value="">Select a service</option>
-                            <option value="immigration">Immigration Law</option>
-                            <option value="bar-prep">Bar Exam Preparation</option>
-                            <option value="ip">Intellectual Property</option>
-                            <option value="consultation">General Consultation</option>
-                            <option value="other">Other</option>
+                            <option value="visa-application">Visa Application Assistance</option>
+                            <option value="immigration-consultation">Immigration Consultation</option>
+                            <option value="green-card">Green Card Application</option>
+                            <option value="citizenship">Citizenship & Naturalization</option>
+                            <option value="business-visa">Business Visa Services</option>
+                            <option value="family-immigration">Family-Based Immigration</option>
+                            <option value="document-preparation">Document Preparation</option>
+                            <option value="other">Other Immigration Services</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="message">Message *</label>
-                        <textarea id="message" name="message" required></textarea>
+                        <textarea id="message" name="message" required placeholder="Please describe your immigration needs or questions..."></textarea>
                     </div>
 
                     <button type="submit" class="submit-button">Send Message</button>
@@ -549,15 +561,10 @@
         <div class="footer-container">
             <div class="footer-section">
                 <h3>Contact Us</h3>
-                <div class="footer-section">
-    <h3>Contact Us</h3>
-    <!-- UPDATED Phone Number -->
-    <p><i class="fas fa-phone"></i> <a href="tel:+16292022006">+1 (629) 202-2006</a></p>
-    <!-- Email link -->
-    <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlaw.com">info@cyazorlaw.com</a></p>
-    <!-- UPDATED Address link to Google Maps search -->
-    <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
-</div>
+                <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
+            </div>
             <div class="footer-section">
                 <h3>Office Hours</h3>
                 <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
@@ -576,7 +583,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Law Office of Cynthia Azor. All rights reserved.</p>
+            <p>&copy; 2025 CY visa help. All rights reserved.</p>
         </div>
     </footer>
 
