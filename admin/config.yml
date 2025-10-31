@@ -2,13 +2,10 @@ backend:
   name: git-gateway
   branch: main
 
-publish_mode: editorial_workflow
-
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
 collections:
-  # Homepage Content
   - name: "homepage"
     label: "Homepage"
     files:
@@ -23,7 +20,6 @@ collections:
               - {label: "Heading", name: "heading", widget: "string"}
               - {label: "Description", name: "description", widget: "text"}
               - {label: "Button Text", name: "button", widget: "string"}
-              - {label: "Button Link", name: "link", widget: "string", default: "contact.html"}
           
           - label: "Slide 2"
             name: "slide2"
@@ -32,7 +28,6 @@ collections:
               - {label: "Heading", name: "heading", widget: "string"}
               - {label: "Description", name: "description", widget: "text"}
               - {label: "Button Text", name: "button", widget: "string"}
-              - {label: "Button Link", name: "link", widget: "string", default: "services.html#business"}
           
           - label: "Slide 3"
             name: "slide3"
@@ -41,37 +36,7 @@ collections:
               - {label: "Heading", name: "heading", widget: "string"}
               - {label: "Description", name: "description", widget: "text"}
               - {label: "Button Text", name: "button", widget: "string"}
-              - {label: "Button Link", name: "link", widget: "string", default: "shop.html"}
-          
-          - label: "About Section"
-            name: "about"
-            widget: "object"
-            fields:
-              - {label: "Paragraph 1", name: "para1", widget: "text"}
-              - {label: "Paragraph 2", name: "para2", widget: "text"}
-          
-          - label: "FAQ 1"
-            name: "faq1"
-            widget: "object"
-            fields:
-              - {label: "Question", name: "question", widget: "string"}
-              - {label: "Answer", name: "answer", widget: "text"}
-          
-          - label: "FAQ 2"
-            name: "faq2"
-            widget: "object"
-            fields:
-              - {label: "Question", name: "question", widget: "string"}
-              - {label: "Answer", name: "answer", widget: "text"}
-          
-          - label: "FAQ 3"
-            name: "faq3"
-            widget: "object"
-            fields:
-              - {label: "Question", name: "question", widget: "string"}
-              - {label: "Answer", name: "answer", widget: "text"}
 
-  # Contact Information
   - name: "contact"
     label: "Contact Info"
     files:
@@ -81,18 +46,8 @@ collections:
         fields:
           - {label: "Phone", name: "phone", widget: "string"}
           - {label: "Email", name: "email", widget: "string"}
-          - {label: "Address Line 1", name: "address1", widget: "string"}
-          - {label: "Address Line 2", name: "address2", widget: "string"}
-          - {label: "Google Maps Link", name: "maps_link", widget: "string"}
-          - label: "Office Hours"
-            name: "hours"
-            widget: "object"
-            fields:
-              - {label: "Weekdays", name: "weekdays", widget: "string"}
-              - {label: "Saturday", name: "saturday", widget: "string"}
-              - {label: "Sunday", name: "sunday", widget: "string"}
+          - {label: "Address", name: "address", widget: "text"}
 
-  # Testimonials
   - name: "testimonials"
     label: "Testimonials"
     files:
@@ -105,42 +60,4 @@ collections:
             widget: "list"
             fields:
               - {label: "Quote", name: "quote", widget: "text"}
-              - {label: "Author Name", name: "author", widget: "string"}
-              - {label: "Show on Homepage", name: "featured", widget: "boolean", default: true}
-
-  # Services
-  - name: "services"
-    label: "Services"
-    files:
-      - label: "Service Cards"
-        name: "services"
-        file: "content/services.json"
-        fields:
-          - label: "Services List"
-            name: "items"
-            widget: "list"
-            fields:
-              - {label: "Service Title", name: "title", widget: "string"}
-              - {label: "Description", name: "description", widget: "text"}
-              - {label: "Font Awesome Icon", name: "icon", widget: "string", hint: "e.g., fas fa-passport"}
-              - {label: "Link", name: "link", widget: "string"}
-
-  # Shop Products
-  - name: "products"
-    label: "Shop Products"
-    folder: "content/products"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - {label: "Product Name", name: "title", widget: "string"}
-      - {label: "Price", name: "price", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Long Description", name: "long_description", widget: "markdown"}
-      - {label: "Product Image", name: "image", widget: "image"}
-      - {label: "Icon", name: "icon", widget: "string", hint: "Font Awesome icon class"}
-      - {label: "Featured", name: "featured", widget: "boolean", default: false}
-      - label: "What's Included"
-        name: "includes"
-        widget: "list"
-        field: {label: "Item", name: "item", widget: "string"}
-      - {label: "Stripe Product ID", name: "stripe_id", widget: "string", required: false}
+              - {label: "Author", name: "author", widget: "string"}
