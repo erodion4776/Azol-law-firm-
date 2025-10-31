@@ -1,91 +1,146 @@
 backend:
   name: git-gateway
-  branch: main # or master, depending on your default branch
+  branch: main
 
-# Enable editorial workflow (drafts)
 publish_mode: editorial_workflow
 
-# Media folder for uploads
 media_folder: "assets/images"
 public_folder: "/assets/images"
 
-# Collections (Pages you can edit)
 collections:
-  # Home Page
-  - name: "pages"
-    label: "Pages"
+  # Homepage Content
+  - name: "homepage"
+    label: "Homepage"
     files:
-      - label: "Home Page"
-        name: "home"
-        file: "index.html"
+      - label: "Hero Carousel"
+        name: "hero"
+        file: "content/homepage.json"
         fields:
-          - {label: "Page Title", name: "title", widget: "string"}
-          - {label: "Meta Description", name: "description", widget: "text"}
-          - {label: "Body Content", name: "body", widget: "markdown"}
+          - label: "Slide 1"
+            name: "slide1"
+            widget: "object"
+            fields:
+              - {label: "Heading", name: "heading", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Button Text", name: "button", widget: "string"}
+              - {label: "Button Link", name: "link", widget: "string", default: "contact.html"}
           
-      - label: "About Page"
-        name: "about"
-        file: "about.html"
-        fields:
-          - {label: "Page Title", name: "title", widget: "string"}
-          - {label: "Meta Description", name: "description", widget: "text"}
-          - {label: "Body Content", name: "body", widget: "markdown"}
+          - label: "Slide 2"
+            name: "slide2"
+            widget: "object"
+            fields:
+              - {label: "Heading", name: "heading", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Button Text", name: "button", widget: "string"}
+              - {label: "Button Link", name: "link", widget: "string", default: "services.html#business"}
           
-      - label: "Services Page"
-        name: "services"
-        file: "services.html"
-        fields:
-          - {label: "Page Title", name: "title", widget: "string"}
-          - {label: "Meta Description", name: "description", widget: "text"}
-          - {label: "Body Content", name: "body", widget: "markdown"}
+          - label: "Slide 3"
+            name: "slide3"
+            widget: "object"
+            fields:
+              - {label: "Heading", name: "heading", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Button Text", name: "button", widget: "string"}
+              - {label: "Button Link", name: "link", widget: "string", default: "shop.html"}
           
-      - label: "Contact Page"
-        name: "contact"
-        file: "contact.html"
-        fields:
-          - {label: "Page Title", name: "title", widget: "string"}
-          - {label: "Meta Description", name: "description", widget: "text"}
-          - {label: "Body Content", name: "body", widget: "markdown"}
+          - label: "About Section"
+            name: "about"
+            widget: "object"
+            fields:
+              - {label: "Paragraph 1", name: "para1", widget: "text"}
+              - {label: "Paragraph 2", name: "para2", widget: "text"}
           
-      - label: "Shop Page"
-        name: "shop"
-        file: "shop.html"
-        fields:
-          - {label: "Page Title", name: "title", widget: "string"}
-          - {label: "Meta Description", name: "description", widget: "text"}
-          - {label: "Body Content", name: "body", widget: "markdown"}
+          - label: "FAQ 1"
+            name: "faq1"
+            widget: "object"
+            fields:
+              - {label: "Question", name: "question", widget: "string"}
+              - {label: "Answer", name: "answer", widget: "text"}
           
-      - label: "Testimonials Page"
-        name: "testimonials"
-        file: "testimonials.html"
-        fields:
-          - {label: "Page Title", name: "title", widget: "string"}
-          - {label: "Meta Description", name: "description", widget: "text"}
-          - {label: "Body Content", name: "body", widget: "markdown"}
+          - label: "FAQ 2"
+            name: "faq2"
+            widget: "object"
+            fields:
+              - {label: "Question", name: "question", widget: "string"}
+              - {label: "Answer", name: "answer", widget: "text"}
+          
+          - label: "FAQ 3"
+            name: "faq3"
+            widget: "object"
+            fields:
+              - {label: "Question", name: "question", widget: "string"}
+              - {label: "Answer", name: "answer", widget: "text"}
 
-  # Testimonials Collection
+  # Contact Information
+  - name: "contact"
+    label: "Contact Info"
+    files:
+      - label: "Contact Details"
+        name: "contact"
+        file: "content/contact.json"
+        fields:
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Address Line 1", name: "address1", widget: "string"}
+          - {label: "Address Line 2", name: "address2", widget: "string"}
+          - {label: "Google Maps Link", name: "maps_link", widget: "string"}
+          - label: "Office Hours"
+            name: "hours"
+            widget: "object"
+            fields:
+              - {label: "Weekdays", name: "weekdays", widget: "string"}
+              - {label: "Saturday", name: "saturday", widget: "string"}
+              - {label: "Sunday", name: "sunday", widget: "string"}
+
+  # Testimonials
   - name: "testimonials"
     label: "Testimonials"
-    folder: "content/testimonials"
+    files:
+      - label: "All Testimonials"
+        name: "testimonials"
+        file: "content/testimonials.json"
+        fields:
+          - label: "Testimonials List"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Quote", name: "quote", widget: "text"}
+              - {label: "Author Name", name: "author", widget: "string"}
+              - {label: "Show on Homepage", name: "featured", widget: "boolean", default: true}
+
+  # Services
+  - name: "services"
+    label: "Services"
+    files:
+      - label: "Service Cards"
+        name: "services"
+        file: "content/services.json"
+        fields:
+          - label: "Services List"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Service Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Font Awesome Icon", name: "icon", widget: "string", hint: "e.g., fas fa-passport"}
+              - {label: "Link", name: "link", widget: "string"}
+
+  # Shop Products
+  - name: "products"
+    label: "Shop Products"
+    folder: "content/products"
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Client Name", name: "title", widget: "string"}
-      - {label: "Service Type", name: "service", widget: "string"}
-      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5}
-      - {label: "Testimonial", name: "body", widget: "text"}
+      - {label: "Product Name", name: "title", widget: "string"}
+      - {label: "Price", name: "price", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Long Description", name: "long_description", widget: "markdown"}
+      - {label: "Product Image", name: "image", widget: "image"}
+      - {label: "Icon", name: "icon", widget: "string", hint: "Font Awesome icon class"}
       - {label: "Featured", name: "featured", widget: "boolean", default: false}
-
-  # Blog/News (Optional)
-  - name: "blog"
-    label: "Blog Posts"
-    folder: "content/blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Publish Date", name: "date", widget: "datetime"}
-      - {label: "Author", name: "author", widget: "string", default: "CY visa help"}
-      - {label: "Featured Image", name: "thumbnail", widget: "image"}
-      - {label: "Body", name: "body", widget: "markdown"}
-      - {label: "Tags", name: "tags", widget: "list", default: ["immigration", "visa"]}
+      - label: "What's Included"
+        name: "includes"
+        widget: "list"
+        field: {label: "Item", name: "item", widget: "string"}
+      - {label: "Stripe Product ID", name: "stripe_id", widget: "string", required: false}
