@@ -7,6 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -1229,6 +1232,10 @@
         </div>
     </footer>
 
+    <!-- CMS Content Loader -->
+    <script src="/js/cms-loader.js"></script>
+
+    <!-- Page Scripts -->
     <script>
         // Hamburger Menu Toggle with Fix
         const hamburger = document.getElementById('hamburger');
@@ -1507,6 +1514,19 @@
                 resetAutoPlay();
             }
         });
+    </script>
+
+    <!-- Netlify Identity Widget Script -->
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
