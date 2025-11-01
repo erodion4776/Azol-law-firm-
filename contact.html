@@ -261,6 +261,11 @@
             min-height: 150px;
         }
 
+        .form-group select {
+            cursor: pointer;
+            background-color: var(--white);
+        }
+
         .submit-button {
             width: 100%;
             padding: 1rem 2rem;
@@ -515,7 +520,7 @@
                 <h2>Send Us a Message</h2>
                 <div id="formMessage" class="form-message"></div>
                 
-                <!-- MAILCHIMP FORM - IFRAME METHOD (RELIABLE) -->
+                <!-- MAILCHIMP FORM WITH MESSAGE & SERVICE DROPDOWN -->
                 <form 
                     action="https://gmail.us10.list-manage.com/subscribe/post?u=8f5491b30629cbc87e83a7bfa&amp;id=55e1e6fa8d" 
                     method="POST" 
@@ -553,10 +558,34 @@
                         <input type="tel" id="phone" name="PHONE" placeholder="+1 (123) 456-7890">
                     </div>
 
-                    <!-- Company/Service Type -->
+                    <!-- Service Type Dropdown -->
                     <div class="form-group">
-                        <label for="company">Service Needed / Company</label>
-                        <input type="text" id="company" name="COMPANY" placeholder="e.g., Family Visa, Work Visa, Business Immigration">
+                        <label for="service">Service Needed *</label>
+                        <select id="service" name="COMPANY" required>
+                            <option value="">-- Select a Service --</option>
+                            <option value="Family Visa">Family Visa / Family-Based Immigration</option>
+                            <option value="Work Visa">Work Visa / Employment-Based Immigration</option>
+                            <option value="Student Visa">Student Visa (F-1, M-1, J-1)</option>
+                            <option value="Business Immigration">Business Immigration / Investor Visa</option>
+                            <option value="Green Card">Green Card / Permanent Residency</option>
+                            <option value="Citizenship">Citizenship / Naturalization</option>
+                            <option value="Deportation Defense">Deportation Defense</option>
+                            <option value="Asylum Application">Asylum / Refugee Status</option>
+                            <option value="Document Preparation">Document Preparation & Review</option>
+                            <option value="Immigration Consultation">General Immigration Consultation</option>
+                            <option value="Other">Other Immigration Services</option>
+                        </select>
+                    </div>
+
+                    <!-- Message Field -->
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea 
+                            id="message" 
+                            name="MMERGE7" 
+                            required 
+                            placeholder="Please describe your immigration needs, questions, or concerns. Include any relevant details about your situation..."
+                        ></textarea>
                     </div>
 
                     <!-- Submit Button -->
@@ -640,7 +669,7 @@
             setTimeout(function() {
                 // Show success message
                 formMessage.className = 'form-message success';
-                formMessage.textContent = '✓ Thank you! Your message has been sent to our team. We\'ll get back to you within 24 hours.';
+                formMessage.textContent = '✓ Thank you! Your message has been sent to our immigration team. We\'ll review your inquiry and get back to you within 24 hours.';
                 formMessage.style.display = 'block';
                 
                 // Reset form
@@ -653,10 +682,10 @@
                 submitBtn.textContent = 'Send Message';
                 submitBtn.disabled = false;
                 
-                // Hide message after 7 seconds
+                // Hide message after 10 seconds
                 setTimeout(function() {
                     formMessage.style.display = 'none';
-                }, 7000);
+                }, 10000);
             }, 2000);
             
             // Return true to allow form to submit
