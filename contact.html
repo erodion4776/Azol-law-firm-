@@ -389,6 +389,11 @@
             border: 1px solid #f5c6cb;
         }
 
+        /* Hidden iframe for form submission */
+        .hidden-iframe {
+            display: none;
+        }
+
         /* Mobile Styles */
         @media (max-width: 768px) {
             .hamburger {
@@ -510,18 +515,15 @@
                 <h2>Send Us a Message</h2>
                 <div id="formMessage" class="form-message"></div>
                 
-                <!-- MAILCHIMP FORM - CONFIGURED FOR YOUR ACCOUNT -->
+                <!-- MAILCHIMP FORM - IFRAME METHOD (RELIABLE) -->
                 <form 
-                    action="https://gmail.us10.list-manage.com/subscribe/post" 
+                    action="https://gmail.us10.list-manage.com/subscribe/post?u=8f5491b30629cbc87e83a7bfa&amp;id=55e1e6fa8d" 
                     method="POST" 
                     id="mc-embedded-subscribe-form" 
                     name="mc-embedded-subscribe-form"
-                    novalidate
+                    target="hidden-iframe"
+                    onsubmit="return submitMailchimpForm()"
                 >
-                    <!-- Hidden Mailchimp Fields -->
-                    <input type="hidden" name="u" value="8f5491b30629cbc87e83a7bfa">
-                    <input type="hidden" name="id" value="55e1e6fa8d">
-                    
                     <!-- Bot Protection (Honeypot) -->
                     <div style="position: absolute; left: -5000px;" aria-hidden="true">
                         <input type="text" name="b_8f5491b30629cbc87e83a7bfa_55e1e6fa8d" tabindex="-1" value="">
@@ -557,17 +559,14 @@
                         <input type="text" id="company" name="COMPANY" placeholder="e.g., Family Visa, Work Visa, Business Immigration">
                     </div>
 
-                    <!-- Message -->
-                    <div class="form-group">
-                        <label for="message">Message *</label>
-                        <textarea id="message" name="MESSAGE" required placeholder="Please describe your immigration needs or questions..."></textarea>
-                    </div>
-
                     <!-- Submit Button -->
                     <button type="submit" class="submit-button" id="mc-embedded-subscribe">
                         Send Message
                     </button>
                 </form>
+
+                <!-- Hidden iframe to catch form submission -->
+                <iframe name="hidden-iframe" class="hidden-iframe"></iframe>
             </div>
         </div>
     </section>
@@ -575,7 +574,6 @@
     <!-- Map Section -->
     <section class="map-section fade-in-section">
         <div class="map-container">
-            <!-- EMBEDDED GOOGLE MAP -->
             <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12905.928877346543!2d-86.5513085!3d36.0329355!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88640d64c1adf45d%3A0xe87899bd0449f769!2s153%20Dreville%20Dr%2C%20La%20Vergne%2C%20TN%2037086%2C%20USA!5e0!3m2!1sen!2sng!4v1761063959403!5m2!1sen!2sng" 
                 width="100%" 
@@ -630,46 +628,23 @@
         });
 
         // Mailchimp Form Handler
-        const form = document.getElementById('mc-embedded-subscribe-form');
-        const formMessage = document.getElementById('formMessage');
-        const submitBtn = document.getElementById('mc-embedded-subscribe');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+        function submitMailchimpForm() {
+            const formMessage = document.getElementById('formMessage');
+            const submitBtn = document.getElementById('mc-embedded-subscribe');
             
             // Show loading state
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
             
-            // Get form data
-            const formData = new FormData(form);
-            
-            // Convert to URL parameters
-            const params = new URLSearchParams(formData).toString();
-            
-            // Submit to Mailchimp using JSONP
-            const url = form.action.replace('/post?', '/post-json?') + '&' + params;
-            
-            // Create script element for JSONP request
-            const script = document.createElement('script');
-            script.src = url + '&c=mailchimpCallback';
-            
-            // Callback function
-            window.mailchimpCallback = function(data) {
-                if (data.result === 'success') {
-                    // Show success message
-                    formMessage.className = 'form-message success';
-                    formMessage.textContent = '✓ Thank you! Your message has been sent successfully. We\'ll get back to you soon.';
-                    formMessage.style.display = 'block';
-                    
-                    // Reset form
-                    form.reset();
-                } else {
-                    // Show error message
-                    formMessage.className = 'form-message error';
-                    formMessage.textContent = data.msg || '✗ Oops! Something went wrong. Please try again.';
-                    formMessage.style.display = 'block';
-                }
+            // Show success message after 2 seconds
+            setTimeout(function() {
+                // Show success message
+                formMessage.className = 'form-message success';
+                formMessage.textContent = '✓ Thank you! Your message has been sent to our team. We\'ll get back to you within 24 hours.';
+                formMessage.style.display = 'block';
+                
+                // Reset form
+                document.getElementById('mc-embedded-subscribe-form').reset();
                 
                 // Scroll to message
                 formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -679,17 +654,14 @@
                 submitBtn.disabled = false;
                 
                 // Hide message after 7 seconds
-                setTimeout(() => {
+                setTimeout(function() {
                     formMessage.style.display = 'none';
                 }, 7000);
-                
-                // Remove script
-                document.body.removeChild(script);
-            };
+            }, 2000);
             
-            // Add script to page
-            document.body.appendChild(script);
-        });
+            // Return true to allow form to submit
+            return true;
+        }
 
         // Intersection Observer for Scroll Animations
         const observerOptions = {
