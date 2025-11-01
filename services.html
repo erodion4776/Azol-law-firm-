@@ -693,13 +693,11 @@
         <div class="services-nav-container">
             <a href="#immigration" class="service-nav-link">Visa Services</a>
             <a href="#ip" class="service-nav-link">Business Legal Support</a>
-            <!-- UPDATED BUSINESS FORMATION LINK -->
-            <a href="https://calendly.com/cynobas/free-legal-strategy-session?month=2025-10" class="service-nav-link">Business Immigration</a>
+            <!-- UPDATED: All Calendly links now use the same URL -->
+            <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="service-nav-link">Business Immigration</a>
             <a href="#contracts" class="service-nav-link">Document Preparation</a>
-            <!-- UPDATED LEGAL TRAINING LINK -->
-            <a href="https://calendly.com/cynobas/new-meeting-1?month=2025-10" class="service-nav-link">Immigration Guides</a>
-            <!-- UPDATED CONSULTATION LINK -->
-            <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call?month=2025-10" class="service-nav-link">Expert Consultation</a>
+            <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="service-nav-link">Immigration Guides</a>
+            <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="service-nav-link">Expert Consultation</a>
         </div>
     </nav>
 
@@ -840,8 +838,8 @@
             <div class="cta-box">
                 <h3>Start Your U.S. Business</h3>
                 <p>Get expert guidance on business immigration and company formation.</p>
-                <!-- UPDATED BUSINESS FORMATION CTA LINK -->
-                <a href="https://calendly.com/cynobas/free-legal-strategy-session?month=2025-10" class="cta-button">Book Strategy Session</a>
+                <!-- UPDATED: Single Calendly link -->
+                <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Book Strategy Session</a>
             </div>
         </div>
 
@@ -927,8 +925,8 @@
             <div class="cta-box">
                 <h3>Empower Your Immigration Journey</h3>
                 <p>Access our comprehensive library of immigration guides and training resources.</p>
-                <!-- UPDATED TRAINING CTA TEXT AND LINK -->
-                <a href="https://calendly.com/cynobas/new-meeting-1?month=2025-10" class="cta-button">Book Learning Session</a>
+                <!-- UPDATED: Single Calendly link -->
+                <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Book Learning Session</a>
             </div>
         </div>
 
@@ -971,8 +969,8 @@
             <div class="cta-box">
                 <h3>Schedule Your Consultation</h3>
                 <p>Book your one-on-one consultation with our immigration specialist today.</p>
-                <!-- UPDATED CONSULTATION CTA LINK -->
-                <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call?month=2025-10" class="cta-button">Book Consultation Now</a>
+                <!-- UPDATED: Single Calendly link -->
+                <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Book Consultation Now</a>
             </div>
         </div>
     </section>
@@ -1036,64 +1034,54 @@
 
         menuOverlay.addEventListener('click', closeMainMenu);
 
-        // CRITICAL FIX: SERVICE SUB-MENU NAVIGATION
+        // SERVICE SUB-MENU NAVIGATION
         const servicesNav = document.getElementById('servicesNav');
         const serviceMenuOverlay = document.getElementById('serviceMenuOverlay');
         const quickNavTrigger = document.getElementById('quickNavTrigger');
         const serviceMenuClose = document.getElementById('serviceMenuClose');
         const serviceNavLinks = document.querySelectorAll('.service-nav-link');
 
-        // Function to close service menu
         function closeServiceMenu() {
             servicesNav.classList.remove('active');
             serviceMenuOverlay.classList.remove('active');
             document.body.classList.remove('menu-open');
         }
 
-        // Function to open service menu
         function openServiceMenu() {
             servicesNav.classList.add('active');
             serviceMenuOverlay.classList.add('active');
             document.body.classList.add('menu-open');
         }
 
-        // Open service menu when quick nav button is clicked
         if (quickNavTrigger) {
             quickNavTrigger.addEventListener('click', () => {
                 openServiceMenu();
             });
         }
 
-        // Close button click
         if (serviceMenuClose) {
             serviceMenuClose.addEventListener('click', () => {
                 closeServiceMenu();
             });
         }
 
-        // Close when clicking overlay
         serviceMenuOverlay.addEventListener('click', () => {
             closeServiceMenu();
         });
 
-        // UPDATED JAVASCRIPT: Handles both internal anchors and external links
         serviceNavLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 const targetId = link.getAttribute('href');
                 
-                // Check if it's an internal anchor link (starts with '#')
                 if (targetId.startsWith('#')) {
-                    e.preventDefault(); // Prevent default to scroll instead of full navigation
+                    e.preventDefault();
                     
                     const targetSection = document.querySelector(targetId);
-                    
-                    // Close the menu FIRST
                     closeServiceMenu();
                     
-                    // Then scroll to section after a short delay
                     setTimeout(() => {
                         if (targetSection) {
-                            const offset = 150; // Account for sticky headers
+                            const offset = 150;
                             const targetPosition = targetSection.offsetTop - offset;
                             
                             window.scrollTo({
@@ -1101,16 +1089,13 @@
                                 behavior: 'smooth'
                             });
                         }
-                    }, 300); // Wait for menu to close
+                    }, 300);
                 } else {
-                    // It's an external link. Close the menu and let it navigate normally.
                     closeServiceMenu();
-                    // The browser will follow the link immediately after the function returns
                 }
             });
         });
 
-        // Close on ESC key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeServiceMenu();
@@ -1118,7 +1103,6 @@
             }
         });
 
-        // Hide quick nav button when scrolling past services nav on desktop
         window.addEventListener('scroll', () => {
             if (window.innerWidth <= 768) {
                 const servicesNavTop = servicesNav.offsetTop;
@@ -1130,7 +1114,6 @@
             }
         });
 
-        // Intersection Observer for scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1147,7 +1130,6 @@
         const fadeElements = document.querySelectorAll('.fade-in-section');
         fadeElements.forEach(element => observer.observe(element));
 
-        // Highlight active service in nav
         const sections = document.querySelectorAll('.service-detail');
 
         window.addEventListener('scroll', () => {
@@ -1161,7 +1143,6 @@
 
             serviceNavLinks.forEach(link => {
                 link.classList.remove('active');
-                // Only highlight if the link is an internal anchor and matches the current section
                 if (link.getAttribute('href') === `#${current}`) {
                     link.classList.add('active');
                 }
