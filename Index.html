@@ -579,29 +579,6 @@
             text-align: center;
         }
 
-        .blog-placeholder {
-            background: var(--light-bg);
-            border-radius: 10px;
-            padding: 3rem;
-            text-align: center;
-            color: var(--text-light);
-        }
-
-        .loading-spinner {
-            border: 3px solid var(--light-bg);
-            border-top: 3px solid var(--accent-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Enhanced Testimonials Section with Slide Effect */
         .testimonials {
             padding: 5rem 2rem;
@@ -770,4 +747,511 @@
             align-items: center;
             font-weight: 500;
             color: var(--primary-color);
-            transition: all 0.3s 
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: var(--light-bg);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: var(--accent-color);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section ul {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Scroll Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .testimonial-nav.prev {
+                left: 1rem;
+            }
+            
+            .testimonial-nav.next {
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                padding: 5rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .slide-content h1 {
+                font-size: 2rem;
+            }
+
+            .slide-content p {
+                font-size: 1rem;
+            }
+
+            .carousel-arrow {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            .carousel-arrow.left {
+                left: 1rem;
+            }
+
+            .carousel-arrow.right {
+                right: 1rem;
+            }
+
+            .carousel-indicators {
+                bottom: 2rem;
+            }
+
+            .unmute-btn {
+                bottom: 5rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .thumbnail i {
+                font-size: 1.5rem;
+            }
+
+            .slide-thumbnails {
+                gap: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .testimonial-text {
+                font-size: 1.1rem;
+            }
+            
+            .testimonial-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .testimonial-nav.prev {
+                left: 0.5rem;
+            }
+            
+            .testimonial-nav.next {
+                right: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .slide-content p {
+                font-size: 0.9rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+            }
+
+            .thumbnail {
+                width: 50px;
+                height: 50px;
+            }
+
+            .thumbnail i {
+                font-size: 1.2rem;
+            }
+            
+            .testimonial-text {
+                font-size: 1rem;
+            }
+            
+            .testimonial-author {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">CY <span>visa</span> help</a>
+            <nav id="nav">
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Carousel Section -->
+    <section class="hero-carousel">
+        <!-- Continuous Video Background (Behind All Slides) -->
+        <div class="hero-video-background">
+            <video 
+                class="hero-video" 
+                autoplay 
+                muted 
+                loop 
+                playsinline
+                poster="assets/images/video-poster.jpg"
+                id="heroVideo">
+                <source src="assets/videos/hero-video.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Fixed Overlay -->
+        <div class="hero-overlay"></div>
+
+        <!-- Unmute Button (Always Visible) -->
+        <button class="unmute-btn" id="unmuteBtn" aria-label="Unmute video">
+            <i class="fas fa-volume-mute" id="volumeIcon"></i>
+        </button>
+
+        <!-- Carousel Content Container -->
+        <div class="carousel-container">
+            <!-- Slide 1: Immigration Services -->
+            <div class="carousel-slide active">
+                <div class="slide-content">
+                    <h1>Your Trusted Partner for U.S. Immigration & Visa Solutions</h1>
+                    <p>Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support to help you achieve your American dream with confidence.</p>
+                    <a href="https://calendly.com/cynobas/document-review-consultation" class="cta-button">Book Now</a>
+                    <div class="slide-thumbnails">
+                        <div class="thumbnail">
+                            <i class="fas fa-passport"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Document Assessment Consultation - UPDATED -->
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <h1>Document Assessment Consultation</h1>
+                    <p>We help clients who previously filed, received denials, or have new documents they want evaluated. Our focus is to review what was submitted, identify gaps, and guide you toward the right next step with clarity.</p>
+                    <a href="https://calendly.com/cynobas/document-review-consultation" class="cta-button">Book Now</a>
+                    <div class="slide-thumbnails">
+                        <div class="thumbnail">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Immigration Guides -->
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <h1>Immigration Guides, Templates & Resources</h1>
+                    <p>Access expert immigration guides, visa application templates, and comprehensive resources. Equip yourself with the knowledge and tools needed for a successful immigration journey.</p>
+                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Book Now</a>
+                    <div class="slide-thumbnails">
+                        <div class="thumbnail">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Weekend Consultation -->
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <h1>Weekend Visa Consultation Services</h1>
+                    <p>Can't make it during the week? We offer flexible weekend consultation sessions to accommodate your schedule. Get expert visa advice and personalized immigration guidance at a time that works best for you and your family.</p>
+                    <a href="https://calendly.com/cynobas/new-meeting-1" class="cta-button">Book Now</a>
+                    <div class="slide-thumbnails">
+                        <div class="thumbnail">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="thumbnail">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button class="carousel-arrow left" id="prevBtn">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-arrow right" id="nextBtn">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Slide Indicators -->
+        <div class="carousel-indicators">
+            <span class="indicator-dot active" data-slide="0"></span>
+            <span class="indicator-dot" data-slide="1"></span>
+            <span class="indicator-dot" data-slide="2"></span>
+            <span class="indicator-dot" data-slide="3"></span>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services fade-in-section">
+        <div class="section-container">
+            <h2 class="section-title">Our Visa & Immigration Services</h2>
+            <p class="section-subtitle">Comprehensive immigration solutions for individuals and businesses</p>
+            <div class="services-grid">
+                <!-- Immigration Services -->
+                <a href="services.html#immigration" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-passport"></i>
+                        <h3>Visa Applications</h3>
+                        <p>Expert assistance with all visa types including family, work, student visas, green cards, citizenship, and deportation defense.</p>
+                    </div>
+                </a>
+
+                <!-- Intellectual Property Law -->
+                <a href="services.html#ip" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Business Legal Support</h3>
+                        <p>Trademark registration, copyright protection, patents, and corporate legal services for international businesses.</p>
+                    </div>
+                </a>
+
+                <!-- Business Formation -->
+                <a href="services.html#business" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-building"></i>
+                        <h3>Business Immigration</h3>
+                        <p>Business visas, investor immigration, and company formation support for U.S. and international entrepreneurs.</p>
+                    </div>
+                </a>
+
+                <!-- Contract Drafting -->
+                <a href="services.html#contracts" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-file-signature"></i>
+                        <h3>Document Preparation</h3>
+                        <p>Professional visa application documents, affidavits, employment letters, and immigration form assistance.</p>
+                    </div>
+                </a>
+
+                <!-- Legal Guides & Training -->
+                <a href="services.html#training" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Immigration Guides</h3>
+                        <p>Comprehensive immigration resources, step-by-step guides, webinars, and educational materials for visa applicants.</p>
+                    </div>
+                </a>
+
+                <!-- Legal Consultation -->
+                <a href="services.html#consultation" class="service-card-link">
+                    <div class="service-card">
+                        <i class="fas fa-comments"></i>
+                        <h3>Expert Consultation</h3>
+                        <p>One-on-one personalized immigration consultation tailored to your specific visa and citizenship needs.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about fade-in-section">
+        <div class="section-container">
+            <h2 class="section-title">About CY visa help</h2>
+            <div class="about-content">
+                <p>CY visa help is dedicated to making your U.S. immigration journey smooth, stress-free, and successful. With extensive experience in immigration law, visa processing, and business immigration, we understand the unique challenges faced by individuals and families navigating the complex U.S. immigration system.</p>
+                <p>Our mission is to provide expert guidance, personalized support, and comprehensive solutions for all your immigration needs. Whether you're seeking family reunification, pursuing work opportunities, or building your business in America, we're here to help you every step of the way with professionalism, compassion, and dedication.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog fade-in-section">
+        <div class="section-container">
+            <h2 class="section-title">Latest Immigration News & Updates</h2>
+            <p class="section-subtitle">Stay informed with our expert insights and immigration tips</p>
+            
+            <div class="blog-grid" id="blogGrid">
+                <!-- Sample blog posts (replace with dynamic content later) -->
+                <a href="blog.html" class="blog-card">
+                    <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Immigration+News" alt="Blog post" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-card-date">January 15, 2025</span>
+                        <h3 class="blog-card-title">New Immigration Policy Changes for 2025</h3>
+                        <p class="blog-card-excerpt">Understanding the latest updates to U.S. immigration policies and how they might affect your visa application process.</p>
+                        <span class="blog-card-link">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <a href="blog.html" class="blog-card">
+                    <img src="https://via.placeholder.com/400x200/d4af37/ffffff?text=Visa+Tips" alt="Blog post" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-card-date">January 10, 2025</span>
+                        <h3 class="blog-card-title">Top 5 Mistakes to Avoid in Your Visa Application</h3>
+                        <p class="blog-card-excerpt">Learn about common errors that can delay or derail your visa application and how to avoid them.</p>
+                        <span class="blog-card-link">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+
+                <a href="blog.html" class="blog-card">
+                    <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Success+Story" alt="Blog post" class="blog-card-image">
+                    <div class="blog-card-content">
+                        <span class="blog-card-date">January 5, 2025</span>
+                        
