@@ -1,1 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - CY Visa Help</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary-color: #0a2342;
+            --accent-color: #d4af37;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Blog Hero */
+        .blog-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, rgba(10, 35, 66, 0.8) 100%);
+            padding: 8rem 2rem 4rem;
+            color: var(--white);
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .blog-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Blog Content */
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .blog-main {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .blog-post-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+        }
+
+        .blog-post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .blog-post-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: var(--light-bg);
+        }
+
+        .blog-post-content {
+            padding: 2rem;
+        }
+
+        .blog-post-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .blog-post-category {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .blog-post-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .blog-post-excerpt {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: var(--accent-color);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Sidebar */
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .sidebar-widget h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .category-list a {
+            color: var(--text-dark);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-list a:hover {
+            color: var(--accent-color);
+        }
+
+        .category-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .search-button {
+            padding: 0.8rem 1.5rem;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-button:hover {
+            background: #c4a137;
+        }
+
+        /* Newsletter */
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .newsletter-button {
+            padding: 0.8rem;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .newsletter-button:hover {
+            background: #0c2d52;
+        }
+
+        /* Loading and Empty States */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+
+        .loading-spinner {
+            border: 3px solid var(--light-bg);
+            border-top: 3px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 10px;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 0.5rem 1rem;
+            background: var(--white);
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .pagination a:hover,
+        .pagination .active {
+            background: var(--accent-color);
+            color: var(--white);
+            border-color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section ul {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 968px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-post-card {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-post-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--white);
+                padding: 5rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">CY <span>visa</span> help</a>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <h1>Immigration News & Insights</h1>
+        <p>Expert guidance and latest updates on U.S. immigration</p>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="blog-container">
+        <!-- Main Blog Posts -->
+        <main class="blog-main" id="blogMain">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading blog posts...</p>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+            <!-- Search Widget -->
+            <div class="sidebar-widget">
+                <h3>Search</h3>
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search articles..." id="searchInput">
+                    <button class="search-button" onclick="searchPosts()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="sidebar-widget">
+                <h3>Categories</h3>
+                <ul class="category-list" id="categoryList">
+                    <li>
+                        <a onclick="filterByCategory('all')">
+                            <span>All Posts</span>
+                            <span class="category-count" id="allCount">0</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="filterByCategory('Immigration News')">
+                            <span>Immigration News</span>
+                            <span class="category-count" id="immigrationCount">0</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="filterByCategory('Visa Updates')">
+                            <span>Visa Updates</span>
+                            <span class="category-count" id="visaCount">0</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="filterByCategory('Success Stories')">
+                            <span>Success Stories</span>
+                            <span class="category-count" id="successCount">0</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="filterByCategory('Legal Advice')">
+                            <span>Legal Advice</span>
+                            <span class="category-count" id="legalCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Widget -->
+            <div class="sidebar-widget">
+                <h3>Newsletter</h3>
+                <p style="margin-bottom: 1rem; color: var(--text-light);">Subscribe to get the latest immigration updates</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-button">Subscribe</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> 153 Dreville Dr<br>LA Vergne, Tennessee 37086</p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 2:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CY visa help. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let allPosts = [];
+        let currentFilter = 'all';
+
+        // Load blog posts from Supabase
+        async function loadBlogPosts() {
+            const blogMain = document.getElementById('blogMain');
+            blogMain.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Loading blog posts...</p></div>';
+
+            try {
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('status', 'published')
+                    .order('published_at', { ascending: false });
+
+                if (error) throw error;
+
+                allPosts = data || [];
+                
+                if (allPosts.length === 0) {
+                    blogMain.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-newspaper"></i>
+                            <h2>No Blog Posts Yet</h2>
+                            <p>Check back soon for immigration updates and insights!</p>
+                        </div>
+                    `;
+                } else {
+                    displayPosts(allPosts);
+                }
+                
+                updateCategoryCounts();
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                blogMain.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h2>Error Loading Posts</h2>
+                        <p>Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display posts
+        function displayPosts(posts) {
+            const blogMain = document.getElementById('blogMain');
+            
+            if (posts.length === 0) {
+                blogMain.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h2>No Posts Found</h2>
+                        <p>Try a different search term or category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            blogMain.innerHTML = '';
+            posts.forEach(post => {
+                const postCard = createBlogPostCard(post);
+                blogMain.innerHTML += postCard;
+            });
+        }
+
+        // Create blog post card
+        function createBlogPostCard(post) {
+            const defaultImage = 'https://via.placeholder.com/300x200/0a2342/ffffff?text=' + encodeURIComponent(post.category || 'Blog');
+            const imageUrl = post.image_url || defaultImage;
+            const date = new Date(post.published_at || post.created_at);
+
+            return `
+                <a href="blog-post.html?slug=${post.slug}" class="blog-post-card">
+                    <img src="${imageUrl}" 
+                         alt="${post.title}" 
+                         class="blog-post-image"
+                         onerror="this.src='${defaultImage}'">
+                    <div class="blog-post-content">
+                        <div class="blog-post-meta">
+                            <span class="blog-post-category">${post.category}</span>
+                            <span>•</span>
+                            <span>${formatDate(date)}</span>
+                            <span>•</span>
+                            <span>${post.author || 'CY Visa Help Team'}</span>
+                        </div>
+                        <h2 class="blog-post-title">${post.title}</h2>
+                        <p class="blog-post-excerpt">${post.excerpt}</p>
+                        <span class="read-more">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+            `;
+        }
+
+        // Format date
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        // Search functionality
+        async function searchPosts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                displayPosts(allPosts);
+                return;
+            }
+
+            const filteredPosts = allPosts.filter(post => 
+                post.title.toLowerCase().includes(searchTerm) || 
+                post.excerpt.toLowerCase().includes(searchTerm) ||
+                (post.content && post.content.toLowerCase().includes(searchTerm))
+            );
+            
+            displayPosts(filteredPosts);
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            currentFilter = category;
+            
+            if (category === 'all') {
+                displayPosts(allPosts);
+            } else {
+                const filteredPosts = allPosts.filter(post => post.category === category);
+                displayPosts(filteredPosts);
+            }
+        }
+
+        // Update category counts
+        function updateCategoryCounts() {
+            document.getElementById('allCount').textContent = allPosts.length;
+            
+            const categories = {
+                'Immigration News': 0,
+                'Visa Updates': 0,
+                'Success Stories': 0,
+                'Legal Advice': 0
+            };
+            
+            allPosts.forEach(post => {
+                if (categories.hasOwnProperty(post.category)) {
+                    categories[post.category]++;
+                }
+            });
+            
+            document.getElementById('immigrationCount').textContent = categories['Immigration News'];
+            document.getElementById('visaCount').textContent = categories['Visa Updates'];
+            document.getElementById('successCount').textContent = categories['Success Stories'];
+            document.getElementById('legalCount').textContent = categories['Legal Advice'];
+        }
+
+        // Newsletter subscription
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            alert('Thank you for subscribing! You will receive our latest updates.');
+            event.target.reset();
+        }
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        // Load posts on page load
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+        
+        // Allow search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchPosts();
+            }
+        });
+    </script>
+</body>
+                  </html>
