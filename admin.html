@@ -141,6 +141,11 @@
             transform: translateY(-2px);
         }
 
+        .btn-success {
+            background: var(--success-color);
+            color: var(--white);
+        }
+
         .btn-danger {
             background: var(--danger-color);
             color: var(--white);
@@ -230,6 +235,13 @@
 
         .posts-table tr:hover {
             background: var(--light-bg);
+        }
+
+        .post-thumbnail {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
         }
 
         .status-badge {
@@ -337,10 +349,122 @@
             margin-bottom: 1rem;
         }
 
+        /* Image Upload Styles */
+        .image-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            background: var(--light-bg);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--accent-color);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .image-upload-area.dragover {
+            border-color: var(--accent-color);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .image-upload-icon {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .image-upload-text {
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-upload-subtext {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .image-preview-container {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .image-preview-container.show {
+            display: block;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .image-preview-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-progress {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .upload-progress.show {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--light-bg);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .upload-status {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
         .loading {
             text-align: center;
             color: var(--text-light);
             padding: 2rem;
+        }
+
+        .loading-spinner {
+            border: 3px solid var(--light-bg);
+            border-top: 3px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .toast {
@@ -369,13 +493,25 @@
             background: var(--danger-color);
         }
 
-        .info-box {
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
-            color: #92400e;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+            padding: 5px;
+            z-index: 1;
+        }
+
+        .password-toggle-btn:hover {
+            color: var(--accent-color);
         }
     </style>
 </head>
@@ -388,21 +524,19 @@
             </div>
             <h2 class="login-title">Admin Login</h2>
             
-            <div class="info-box">
-                <i class="fas fa-info-circle"></i>
-                <strong>Login Credentials:</strong><br>
-                Username: Azor Cynthia<br>
-                Password: 2004
-            </div>
-            
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" class="form-input" placeholder="Enter username" value="Azor Cynthia" required>
+                    <input type="text" id="username" class="form-input" placeholder="Enter your username" required autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-input" placeholder="Enter password" value="2004" required>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="password" class="form-input" placeholder="Enter your password" required autocomplete="current-password">
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="error-message" id="loginError">Invalid username or password</div>
                 <button type="submit" class="btn btn-primary btn-full">
@@ -419,7 +553,7 @@
         <header class="admin-header">
             <div class="admin-logo">CY <span>visa</span> help - Admin</div>
             <div class="admin-nav">
-                <span style="color: var(--text-dark);">Welcome, <strong>Azor Cynthia</strong></span>
+                <span style="color: var(--text-dark);">Welcome, <strong>Admin</strong></span>
                 <button class="btn btn-primary" onclick="showPostModal()">
                     <i class="fas fa-plus"></i>
                     New Post
@@ -458,6 +592,7 @@
                 </div>
                 <div id="postsTableContainer">
                     <div class="loading">
+                        <div class="loading-spinner"></div>
                         <p>Loading posts...</p>
                     </div>
                 </div>
@@ -475,6 +610,7 @@
             <div class="modal-body">
                 <form id="postForm">
                     <input type="hidden" id="postId">
+                    <input type="hidden" id="currentImageUrl">
                     
                     <div class="form-group">
                         <label class="form-label">Title *</label>
@@ -500,12 +636,40 @@
                             <option value="Visa Updates">Visa Updates</option>
                             <option value="Success Stories">Success Stories</option>
                             <option value="Legal Advice">Legal Advice</option>
+                            <option value="How-To Guides">How-To Guides</option>
+                            <option value="Policy Changes">Policy Changes</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Featured Image URL</label>
-                        <input type="url" id="postImageUrl" class="form-input" placeholder="https://example.com/image.jpg">
+                        <label class="form-label">Featured Image</label>
+                        <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('imageFile').click()">
+                            <input type="file" id="imageFile" class="file-input" accept="image/*" onchange="handleImageSelect(event)">
+                            <div class="image-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="image-upload-text">Click to upload or drag and drop</div>
+                            <div class="image-upload-subtext">PNG, JPG, GIF up to 10MB</div>
+                        </div>
+                        
+                        <div class="image-preview-container" id="imagePreviewContainer">
+                            <img id="imagePreview" class="image-preview" src="" alt="Preview">
+                            <div class="image-preview-actions">
+                                <button type="button" class="btn btn-small" onclick="document.getElementById('imageFile').click()">
+                                    <i class="fas fa-edit"></i> Change Image
+                                </button>
+                                <button type="button" class="btn btn-small btn-danger" onclick="removeImage()">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="upload-progress" id="uploadProgress">
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" id="progressBarFill"></div>
+                            </div>
+                            <div class="upload-status" id="uploadStatus">Uploading...</div>
+                        </div>
                     </div>
                     
                     <div class="form-group">
@@ -524,7 +688,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" onclick="closePostModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="savePost()">
+                <button class="btn btn-primary" onclick="savePost()" id="savePostBtn">
                     <i class="fas fa-save"></i>
                     Save Post
                 </button>
@@ -549,6 +713,24 @@
         let quill = null;
         let posts = [];
         let editingPostId = null;
+        let selectedImageFile = null;
+        let uploadedImageUrl = null;
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
 
         // Initialize Quill
         function initQuill() {
@@ -568,6 +750,133 @@
                 });
             }
         }
+
+        // Handle image selection
+        function handleImageSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Check file size (10MB limit)
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast('Image size must be less than 10MB', 'error');
+                    return;
+                }
+
+                // Check file type
+                if (!file.type.startsWith('image/')) {
+                    showToast('Please select a valid image file', 'error');
+                    return;
+                }
+
+                selectedImageFile = file;
+                
+                // Show preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreviewContainer').classList.add('show');
+                    document.getElementById('imageUploadArea').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Remove image
+        function removeImage() {
+            selectedImageFile = null;
+            uploadedImageUrl = null;
+            document.getElementById('imageFile').value = '';
+            document.getElementById('imagePreview').src = '';
+            document.getElementById('imagePreviewContainer').classList.remove('show');
+            document.getElementById('imageUploadArea').style.display = 'block';
+            document.getElementById('currentImageUrl').value = '';
+        }
+
+        // Upload image to Supabase Storage
+        async function uploadImage() {
+            if (!selectedImageFile) return null;
+
+            try {
+                // Show upload progress
+                document.getElementById('uploadProgress').classList.add('show');
+                document.getElementById('uploadStatus').textContent = 'Uploading image...';
+                document.getElementById('progressBarFill').style.width = '30%';
+
+                // Generate unique filename
+                const fileExt = selectedImageFile.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+                const filePath = `${fileName}`;
+
+                // Upload to Supabase Storage
+                document.getElementById('progressBarFill').style.width = '60%';
+                const { data, error } = await supabase.storage
+                    .from('blog-images')
+                    .upload(filePath, selectedImageFile);
+
+                if (error) throw error;
+
+                document.getElementById('progressBarFill').style.width = '90%';
+
+                // Get public URL
+                const { data: { publicUrl } } = supabase.storage
+                    .from('blog-images')
+                    .getPublicUrl(filePath);
+
+                document.getElementById('progressBarFill').style.width = '100%';
+                document.getElementById('uploadStatus').textContent = 'Upload complete!';
+                
+                setTimeout(() => {
+                    document.getElementById('uploadProgress').classList.remove('show');
+                }, 2000);
+
+                return publicUrl;
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                document.getElementById('uploadProgress').classList.remove('show');
+                showToast('Error uploading image: ' + error.message, 'error');
+                return null;
+            }
+        }
+
+        // Drag and drop functionality
+        const setupDragAndDrop = () => {
+            const uploadArea = document.getElementById('imageUploadArea');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+                uploadArea.classList.add('dragover');
+            }
+
+            function unhighlight(e) {
+                uploadArea.classList.remove('dragover');
+            }
+
+            uploadArea.addEventListener('drop', handleDrop, false);
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                if (files.length > 0) {
+                    document.getElementById('imageFile').files = files;
+                    handleImageSelect({ target: { files: files } });
+                }
+            }
+        };
 
         // Check authentication
         function checkAuth() {
@@ -592,19 +901,24 @@
             document.getElementById('adminContainer').style.display = 'block';
         }
 
-        // Simple login (hardcoded for now)
+        // Simple login
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            // Simple hardcoded check (since Supabase auth might be complex to set up quickly)
+            // Clear previous error messages
+            document.getElementById('loginError').style.display = 'none';
+            
+            // Simple hardcoded check
             if (username === 'Azor Cynthia' && password === '2004') {
                 sessionStorage.setItem('isLoggedIn', 'true');
                 showToast('Login successful!', 'success');
                 showDashboard();
                 await loadPosts();
+                // Clear the form
+                document.getElementById('loginForm').reset();
             } else {
                 document.getElementById('loginError').style.display = 'block';
                 showToast('Invalid credentials', 'error');
@@ -633,7 +947,6 @@
                 updateStats();
             } catch (error) {
                 console.error('Error loading posts:', error);
-                // If table doesn't exist, show empty state
                 posts = [];
                 displayPosts();
                 updateStats();
@@ -653,6 +966,7 @@
                 <table class="posts-table">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Status</th>
@@ -664,8 +978,13 @@
 
             posts.forEach(post => {
                 const date = new Date(post.created_at).toLocaleDateString();
+                const imageHtml = post.image_url 
+                    ? `<img src="${post.image_url}" class="post-thumbnail" alt="${post.title}">`
+                    : '<div class="post-thumbnail" style="background: var(--light-bg); display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="color: var(--text-light);"></i></div>';
+                
                 tableHTML += `
                     <tr>
+                        <td>${imageHtml}</td>
                         <td>${post.title}</td>
                         <td>${post.category}</td>
                         <td>
@@ -705,9 +1024,15 @@
         // Show modal
         window.showPostModal = function(postId = null) {
             initQuill();
+            setupDragAndDrop();
             
             const modal = document.getElementById('postModal');
             const modalTitle = document.getElementById('modalTitle');
+            
+            // Reset image states
+            selectedImageFile = null;
+            uploadedImageUrl = null;
+            removeImage();
             
             if (postId) {
                 modalTitle.textContent = 'Edit Post';
@@ -720,8 +1045,15 @@
                     document.getElementById('postExcerpt').value = post.excerpt;
                     document.getElementById('postCategory').value = post.category;
                     document.getElementById('postStatus').value = post.status;
-                    document.getElementById('postImageUrl').value = post.image_url || '';
                     quill.root.innerHTML = post.content;
+                    
+                    // Handle existing image
+                    if (post.image_url) {
+                        document.getElementById('currentImageUrl').value = post.image_url;
+                        document.getElementById('imagePreview').src = post.image_url;
+                        document.getElementById('imagePreviewContainer').classList.add('show');
+                        document.getElementById('imageUploadArea').style.display = 'none';
+                    }
                 }
             } else {
                 modalTitle.textContent = 'New Post';
@@ -737,6 +1069,8 @@
         window.closePostModal = function() {
             document.getElementById('postModal').classList.remove('active');
             editingPostId = null;
+            selectedImageFile = null;
+            uploadedImageUrl = null;
         }
 
         // Auto-generate slug
@@ -752,32 +1086,50 @@
 
         // Save post
         window.savePost = async function() {
-            const title = document.getElementById('postTitle').value;
-            const slug = document.getElementById('postSlug').value;
-            const excerpt = document.getElementById('postExcerpt').value;
-            const category = document.getElementById('postCategory').value;
-            const status = document.getElementById('postStatus').value;
-            const imageUrl = document.getElementById('postImageUrl').value;
-            const content = quill.root.innerHTML;
-            
-            if (!title || !excerpt || !category || !content || !slug) {
-                showToast('Please fill all required fields', 'error');
-                return;
-            }
-            
-            const postData = {
-                title,
-                slug,
-                excerpt,
-                category,
-                status,
-                content,
-                image_url: imageUrl || null,
-                author: 'Azor Cynthia',
-                published_at: status === 'published' ? new Date().toISOString() : null
-            };
-            
+            const saveBtn = document.getElementById('savePostBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
             try {
+                const title = document.getElementById('postTitle').value;
+                const slug = document.getElementById('postSlug').value;
+                const excerpt = document.getElementById('postExcerpt').value;
+                const category = document.getElementById('postCategory').value;
+                const status = document.getElementById('postStatus').value;
+                const content = quill.root.innerHTML;
+                
+                if (!title || !excerpt || !category || !content || !slug) {
+                    showToast('Please fill all required fields', 'error');
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Post';
+                    return;
+                }
+
+                // Handle image upload
+                let imageUrl = document.getElementById('currentImageUrl').value;
+                if (selectedImageFile) {
+                    showToast('Uploading image...', 'success');
+                    imageUrl = await uploadImage();
+                    if (!imageUrl && selectedImageFile) {
+                        showToast('Failed to upload image', 'error');
+                        saveBtn.disabled = false;
+                        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Post';
+                        return;
+                    }
+                }
+                
+                const postData = {
+                    title,
+                    slug,
+                    excerpt,
+                    category,
+                    status,
+                    content,
+                    image_url: imageUrl || null,
+                    author: 'CY Visa Help Team',
+                    published_at: status === 'published' ? new Date().toISOString() : null
+                };
+                
                 if (editingPostId) {
                     // Update post
                     const { error } = await supabase
@@ -802,6 +1154,9 @@
             } catch (error) {
                 console.error('Error saving post:', error);
                 showToast('Error saving post: ' + error.message, 'error');
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<i class="fas fa-save"></i> Save Post';
             }
         }
 
