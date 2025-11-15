@@ -499,6 +499,109 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Blog Section Styles */
+        .blog {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-date {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .blog-card-excerpt {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .blog-card-link {
+            color: var(--accent-color);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .blog-card:hover .blog-card-link {
+            gap: 0.8rem;
+        }
+
+        .blog-cta {
+            text-align: center;
+        }
+
+        .blog-placeholder {
+            background: var(--light-bg);
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .loading-spinner {
+            border: 3px solid var(--light-bg);
+            border-top: 3px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Enhanced Testimonials Section with Slide Effect */
         .testimonials {
             padding: 5rem 2rem;
@@ -643,7 +746,7 @@
         /* FAQ Section */
         .faq {
             padding: 5rem 2rem;
-            background: var(--light-bg);
+            background: var(--white);
         }
 
         .faq-container {
@@ -667,887 +770,4 @@
             align-items: center;
             font-weight: 500;
             color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: var(--light-bg);
-        }
-
-        .faq-question i {
-            transition: transform 0.3s ease;
-            color: var(--accent-color);
-        }
-
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .faq-answer-content {
-            padding: 0 1.5rem 1.5rem 1.5rem;
-            color: var(--text-light);
-            line-height: 1.8;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 3rem 2rem 1rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        .footer-section p,
-        .footer-section ul {
-            color: rgba(255,255,255,0.8);
-            line-height: 1.8;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section ul li a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--accent-color);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Scroll Animations */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Mobile Styles */
-        @media (max-width: 1024px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .testimonial-nav.prev {
-                left: 1rem;
-            }
-            
-            .testimonial-nav.next {
-                right: 1rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: var(--white);
-                padding: 5rem 2rem;
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            }
-
-            nav.active {
-                right: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .slide-content h1 {
-                font-size: 2rem;
-            }
-
-            .slide-content p {
-                font-size: 1rem;
-            }
-
-            .carousel-arrow {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
-
-            .carousel-arrow.left {
-                left: 1rem;
-            }
-
-            .carousel-arrow.right {
-                right: 1rem;
-            }
-
-            .carousel-indicators {
-                bottom: 2rem;
-            }
-
-            .unmute-btn {
-                bottom: 5rem;
-                right: 1rem;
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
-            }
-
-            .thumbnail {
-                width: 60px;
-                height: 60px;
-            }
-
-            .thumbnail i {
-                font-size: 1.5rem;
-            }
-
-            .slide-thumbnails {
-                gap: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .testimonial-text {
-                font-size: 1.1rem;
-            }
-            
-            .testimonial-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-            
-            .testimonial-nav.prev {
-                left: 0.5rem;
-            }
-            
-            .testimonial-nav.next {
-                right: 0.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .slide-content h1 {
-                font-size: 1.5rem;
-            }
-
-            .slide-content p {
-                font-size: 0.9rem;
-            }
-
-            .cta-button {
-                padding: 0.8rem 2rem;
-                font-size: 0.9rem;
-            }
-
-            .thumbnail {
-                width: 50px;
-                height: 50px;
-            }
-
-            .thumbnail i {
-                font-size: 1.2rem;
-            }
-            
-            .testimonial-text {
-                font-size: 1rem;
-            }
-            
-            .testimonial-author {
-                font-size: 1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <a href="index.html" class="logo">CY <span>visa</span> help</a>
-            <nav id="nav">
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="testimonials.html">Testimonials</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Carousel Section -->
-    <section class="hero-carousel">
-        <!-- Continuous Video Background (Behind All Slides) -->
-        <div class="hero-video-background">
-            <video 
-                class="hero-video" 
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                poster="assets/images/video-poster.jpg"
-                id="heroVideo">
-                <source src="assets/videos/hero-video.mp4" type="video/mp4">
-            </video>
-        </div>
-
-        <!-- Fixed Overlay -->
-        <div class="hero-overlay"></div>
-
-        <!-- Unmute Button (Always Visible) -->
-        <button class="unmute-btn" id="unmuteBtn" aria-label="Unmute video">
-            <i class="fas fa-volume-mute" id="volumeIcon"></i>
-        </button>
-
-        <!-- Carousel Content Container -->
-        <div class="carousel-container">
-            <!-- Slide 1: Immigration Services -->
-            <div class="carousel-slide active">
-                <div class="slide-content">
-                    <h1>Your Trusted Partner for U.S. Immigration & Visa Solutions</h1>
-                    <p>Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support to help you achieve your American dream with confidence.</p>
-                    <a href="https://calendly.com/cynobas/document-review-consultation" class="cta-button">Book Now</a>
-                    <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-passport"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-users"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 2: Document Assessment Consultation - UPDATED -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <h1>Document Assessment Consultation</h1>
-                    <p>We help clients who previously filed, received denials, or have new documents they want evaluated. Our focus is to review what was submitted, identify gaps, and guide you toward the right next step with clarity.</p>
-                    <a href="https://calendly.com/cynobas/document-review-consultation" class="cta-button">Book Now</a>
-                    <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-clipboard-check"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Immigration Guides -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <h1>Immigration Guides, Templates & Resources</h1>
-                    <p>Access expert immigration guides, visa application templates, and comprehensive resources. Equip yourself with the knowledge and tools needed for a successful immigration journey.</p>
-                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Book Now</a>
-                    <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4: Weekend Consultation -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <h1>Weekend Visa Consultation Services</h1>
-                    <p>Can't make it during the week? We offer flexible weekend consultation sessions to accommodate your schedule. Get expert visa advice and personalized immigration guidance at a time that works best for you and your family.</p>
-                    <a href="https://calendly.com/cynobas/new-meeting-1" class="cta-button">Book Now</a>
-                    <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Navigation Arrows -->
-        <button class="carousel-arrow left" id="prevBtn">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="carousel-arrow right" id="nextBtn">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-
-        <!-- Slide Indicators -->
-        <div class="carousel-indicators">
-            <span class="indicator-dot active" data-slide="0"></span>
-            <span class="indicator-dot" data-slide="1"></span>
-            <span class="indicator-dot" data-slide="2"></span>
-            <span class="indicator-dot" data-slide="3"></span>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services fade-in-section">
-        <div class="section-container">
-            <h2 class="section-title">Our Visa & Immigration Services</h2>
-            <p class="section-subtitle">Comprehensive immigration solutions for individuals and businesses</p>
-            <div class="services-grid">
-                <!-- Immigration Services -->
-                <a href="services.html#immigration" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-passport"></i>
-                        <h3>Visa Applications</h3>
-                        <p>Expert assistance with all visa types including family, work, student visas, green cards, citizenship, and deportation defense.</p>
-                    </div>
-                </a>
-
-                <!-- Intellectual Property Law -->
-                <a href="services.html#ip" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-lightbulb"></i>
-                        <h3>Business Legal Support</h3>
-                        <p>Trademark registration, copyright protection, patents, and corporate legal services for international businesses.</p>
-                    </div>
-                </a>
-
-                <!-- Business Formation -->
-                <a href="services.html#business" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-building"></i>
-                        <h3>Business Immigration</h3>
-                        <p>Business visas, investor immigration, and company formation support for U.S. and international entrepreneurs.</p>
-                    </div>
-                </a>
-
-                <!-- Contract Drafting -->
-                <a href="services.html#contracts" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-file-signature"></i>
-                        <h3>Document Preparation</h3>
-                        <p>Professional visa application documents, affidavits, employment letters, and immigration form assistance.</p>
-                    </div>
-                </a>
-
-                <!-- Legal Guides & Training -->
-                <a href="services.html#training" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h3>Immigration Guides</h3>
-                        <p>Comprehensive immigration resources, step-by-step guides, webinars, and educational materials for visa applicants.</p>
-                    </div>
-                </a>
-
-                <!-- Legal Consultation -->
-                <a href="services.html#consultation" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-comments"></i>
-                        <h3>Expert Consultation</h3>
-                        <p>One-on-one personalized immigration consultation tailored to your specific visa and citizenship needs.</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about fade-in-section">
-        <div class="section-container">
-            <h2 class="section-title">About CY visa help</h2>
-            <div class="about-content">
-                <p>CY visa help is dedicated to making your U.S. immigration journey smooth, stress-free, and successful. With extensive experience in immigration law, visa processing, and business immigration, we understand the unique challenges faced by individuals and families navigating the complex U.S. immigration system.</p>
-                <p>Our mission is to provide expert guidance, personalized support, and comprehensive solutions for all your immigration needs. Whether you're seeking family reunification, pursuing work opportunities, or building your business in America, we're here to help you every step of the way with professionalism, compassion, and dedication.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Updated Testimonials Section with Slide Effect -->
-    <section class="testimonials fade-in-section">
-        <div class="section-container">
-            <h2 class="section-title" style="color: white;">What Our Clients Say</h2>
-            
-            <div class="testimonials-carousel">
-                <!-- Navigation Arrows -->
-                <button class="testimonial-nav prev" id="testimonialPrev">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="testimonial-nav next" id="testimonialNext">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-
-                <!-- Testimonial Slide 1 -->
-                <div class="testimonial-slide active">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"CY visa help made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
-                        <p class="testimonial-author">- Maria & Carlos Rodriguez</p>
-                    </div>
-                </div>
-
-                <!-- Testimonial Slide 2 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"Working with CY visa help was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
-                        <p class="testimonial-author">- Chinemelum Azike</p>
-                    </div>
-                </div>
-
-                <!-- Testimonial Slide 3 -->
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"The business visa services provided by CY visa help were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
-                        <p class="testimonial-author">- Dr. Adebayo Ogundimu</p>
-                    </div>
-                </div>
-
-                <!-- Testimonial Dots Navigation -->
-                <div class="testimonial-dots">
-                    <span class="testimonial-dot active" data-testimonial="0"></span>
-                    <span class="testimonial-dot" data-testimonial="1"></span>
-                    <span class="testimonial-dot" data-testimonial="2"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq fade-in-section">
-        <div class="section-container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How long does the visa application process take?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            The timeline varies depending on the type of visa or immigration application. Some processes can take a few months, while others may take several years. We'll provide you with a realistic timeline and keep you updated throughout your visa journey.
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you help with business immigration and investor visas?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Yes! We provide comprehensive business immigration services including investor visas (EB-5), E-2 treaty visas, L-1 intracompany transfers, and other work-related visas for entrepreneurs and businesses looking to operate in the United States.
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What's included in an immigration consultation?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            A consultation includes a comprehensive review of your immigration situation, expert advice on visa options, discussion of eligibility requirements, and a clear action plan. You'll receive personalized guidance tailored to your specific immigration goals and circumstances.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
-            </div>
-            <div class="footer-section">
-                <h3>Office Hours</h3>
-                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 2:00 PM</p>
-                <p>Sunday: Closed</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="testimonials.html">Testimonials</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 CY visa help. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- CMS Content Loader -->
-    <script src="/js/cms-loader.js"></script>
-
-    <!-- Page Scripts -->
-    <script>
-        // Hamburger Menu Toggle with Fix
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.getElementById('nav');
-        const navLinks = document.querySelectorAll('nav ul li a');
-
-        // Toggle menu on hamburger click
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            hamburger.classList.toggle('active');
-            nav.classList.toggle('active');
-        });
-
-        // Close menu when clicking on a navigation link
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            }
-        });
-
-        // Video and Unmute Button
-        const unmuteBtn = document.getElementById('unmuteBtn');
-        const heroVideo = document.getElementById('heroVideo');
-        const volumeIcon = document.getElementById('volumeIcon');
-
-        if (unmuteBtn && heroVideo) {
-            unmuteBtn.addEventListener('click', function() {
-                if (heroVideo.muted) {
-                    heroVideo.muted = false;
-                    volumeIcon.classList.remove('fa-volume-mute');
-                    volumeIcon.classList.add('fa-volume-up');
-                    unmuteBtn.setAttribute('aria-label', 'Mute video');
-                } else {
-                    heroVideo.muted = true;
-                    volumeIcon.classList.remove('fa-volume-up');
-                    volumeIcon.classList.add('fa-volume-mute');
-                    unmuteBtn.setAttribute('aria-label', 'Unmute video');
-                }
-            });
-        }
-
-        // Carousel Functionality
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.indicator-dot');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        let currentSlide = 0;
-        let autoPlayInterval;
-        const autoPlayDelay = 6000;
-
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-            
-            currentSlide = index;
-        }
-
-        function nextSlide() {
-            let next = (currentSlide + 1) % slides.length;
-            showSlide(next);
-        }
-
-        function prevSlide() {
-            let prev = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(prev);
-        }
-
-        function startAutoPlay() {
-            autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
-        }
-
-        function stopAutoPlay() {
-            clearInterval(autoPlayInterval);
-        }
-
-        function resetAutoPlay() {
-            stopAutoPlay();
-            startAutoPlay();
-        }
-
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            resetAutoPlay();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            resetAutoPlay();
-        });
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
-                resetAutoPlay();
-            });
-        });
-
-        const carouselContainer = document.querySelector('.hero-carousel');
-        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
-        carouselContainer.addEventListener('mouseleave', startAutoPlay);
-
-        // Testimonials Carousel
-        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-        const testimonialDots = document.querySelectorAll('.testimonial-dot');
-        const testimonialPrev = document.getElementById('testimonialPrev');
-        const testimonialNext = document.getElementById('testimonialNext');
-        
-        let currentTestimonial = 0;
-        let testimonialAutoPlay;
-        const testimonialDelay = 5000;
-
-        function showTestimonial(index) {
-            testimonialSlides.forEach((slide, i) => {
-                slide.classList.remove('active', 'prev');
-                if (i < index) {
-                    slide.classList.add('prev');
-                }
-            });
-            testimonialDots.forEach(dot => dot.classList.remove('active'));
-            
-            testimonialSlides[index].classList.add('active');
-            testimonialDots[index].classList.add('active');
-            
-            // Reset animations for active slide
-            const activeCard = testimonialSlides[index].querySelector('.testimonial-card');
-            const icon = activeCard.querySelector('i');
-            const text = activeCard.querySelector('.testimonial-text');
-            const author = activeCard.querySelector('.testimonial-author');
-            
-            // Force animation restart
-            [icon, text, author].forEach(el => {
-                el.style.animation = 'none';
-                el.offsetHeight; // Trigger reflow
-                el.style.animation = '';
-            });
-            
-            currentTestimonial = index;
-        }
-
-        function nextTestimonial() {
-            let next = (currentTestimonial + 1) % testimonialSlides.length;
-            showTestimonial(next);
-        }
-
-        function prevTestimonial() {
-            let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
-            showTestimonial(prev);
-        }
-
-        function startTestimonialAutoPlay() {
-            testimonialAutoPlay = setInterval(nextTestimonial, testimonialDelay);
-        }
-
-        function stopTestimonialAutoPlay() {
-            clearInterval(testimonialAutoPlay);
-        }
-
-        function resetTestimonialAutoPlay() {
-            stopTestimonialAutoPlay();
-            startTestimonialAutoPlay();
-        }
-
-        testimonialNext.addEventListener('click', () => {
-            nextTestimonial();
-            resetTestimonialAutoPlay();
-        });
-
-        testimonialPrev.addEventListener('click', () => {
-            prevTestimonial();
-            resetTestimonialAutoPlay();
-        });
-
-        testimonialDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showTestimonial(index);
-                resetTestimonialAutoPlay();
-            });
-        });
-
-        // Touch/Swipe support for testimonials
-        let testimonialTouchStart = 0;
-        let testimonialTouchEnd = 0;
-
-        const testimonialsSection = document.querySelector('.testimonials-carousel');
-        
-        testimonialsSection.addEventListener('touchstart', (e) => {
-            testimonialTouchStart = e.changedTouches[0].screenX;
-        });
-
-        testimonialsSection.addEventListener('touchend', (e) => {
-            testimonialTouchEnd = e.changedTouches[0].screenX;
-            handleTestimonialSwipe();
-        });
-
-        function handleTestimonialSwipe() {
-            if (testimonialTouchEnd < testimonialTouchStart - 50) {
-                nextTestimonial();
-                resetTestimonialAutoPlay();
-            }
-            if (testimonialTouchEnd > testimonialTouchStart + 50) {
-                prevTestimonial();
-                resetTestimonialAutoPlay();
-            }
-        }
-
-        // Start testimonial autoplay
-        window.addEventListener('load', function() {
-            if (heroVideo) {
-                heroVideo.play().catch(error => {
-                    console.log('Autoplay prevented:', error);
-                });
-            }
-            startAutoPlay();
-            startTestimonialAutoPlay();
-        });
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                
-                faqItems.forEach(faqItem => {
-                    faqItem.classList.remove('active');
-                    faqItem.querySelector('.faq-answer').style.maxHeight = null;
-                });
-                
-                if (!isActive) {
-                    item.classList.add('active');
-                    const answer = item.querySelector('.faq-answer');
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                }
-            });
-        });
-
-        // Intersection Observer for Scroll Animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        const fadeElements = document.querySelectorAll('.fade-in-section');
-        fadeElements.forEach(element => observer.observe(element));
-
-        // Keyboard Navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                prevSlide();
-                resetAutoPlay();
-            } else if (e.key === 'ArrowRight') {
-                nextSlide();
-                resetAutoPlay();
-            }
-        });
-    </script>
-
-    <!-- Netlify Identity Widget Script -->
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+            transition: all 0.3s 
