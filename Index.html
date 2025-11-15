@@ -511,6 +511,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-bottom: 3rem;
+            min-height: 300px;
         }
 
         .blog-card {
@@ -533,6 +534,7 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
+            background: var(--light-bg);
         }
 
         .blog-card-content {
@@ -578,6 +580,29 @@
 
         .blog-cta {
             text-align: center;
+        }
+
+        .blog-placeholder {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 10px;
+        }
+
+        .loading-spinner {
+            border: 3px solid var(--light-bg);
+            border-top: 3px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Enhanced Testimonials Section with Slide Effect */
@@ -830,17 +855,6 @@
             color: rgba(255,255,255,0.6);
         }
 
-        /* FIXED: Scroll Animations - Removed opacity: 0 */
-        .fade-in-section {
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         /* Mobile Styles */
         @media (max-width: 1024px) {
             .services-grid {
@@ -1010,6 +1024,7 @@
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="testimonials.html">Testimonials</a></li>
                     <li><a href="contact.html">Contact</a></li>
+                    <li><a href="admin.html">Admin</a></li>
                 </ul>
             </nav>
             <div class="hamburger" id="hamburger">
@@ -1144,7 +1159,7 @@
         </div>
     </section>
 
-    <!-- Services Section - REMOVED fade-in-section class -->
+    <!-- Services Section -->
     <section class="services">
         <div class="section-container">
             <h2 class="section-title">Our Visa & Immigration Services</h2>
@@ -1207,7 +1222,7 @@
         </div>
     </section>
 
-    <!-- About Section - REMOVED fade-in-section class -->
+    <!-- About Section -->
     <section class="about">
         <div class="section-container">
             <h2 class="section-title">About CY visa help</h2>
@@ -1218,49 +1233,17 @@
         </div>
     </section>
 
-    <!-- Blog Section - REMOVED fade-in-section class -->
+    <!-- Blog Section -->
     <section class="blog">
         <div class="section-container">
             <h2 class="section-title">Latest Immigration News & Updates</h2>
             <p class="section-subtitle">Stay informed with our expert insights and immigration tips</p>
             
             <div class="blog-grid" id="blogGrid">
-                <!-- Sample blog posts (replace with dynamic content later) -->
-                <a href="blog.html" class="blog-card">
-                    <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Immigration+News" alt="Blog post" class="blog-card-image">
-                    <div class="blog-card-content">
-                        <span class="blog-card-date">January 15, 2025</span>
-                        <h3 class="blog-card-title">New Immigration Policy Changes for 2025</h3>
-                        <p class="blog-card-excerpt">Understanding the latest updates to U.S. immigration policies and how they might affect your visa application process.</p>
-                        <span class="blog-card-link">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </span>
-                    </div>
-                </a>
-
-                <a href="blog.html" class="blog-card">
-                    <img src="https://via.placeholder.com/400x200/d4af37/ffffff?text=Visa+Tips" alt="Blog post" class="blog-card-image">
-                    <div class="blog-card-content">
-                        <span class="blog-card-date">January 10, 2025</span>
-                        <h3 class="blog-card-title">Top 5 Mistakes to Avoid in Your Visa Application</h3>
-                        <p class="blog-card-excerpt">Learn about common errors that can delay or derail your visa application and how to avoid them.</p>
-                        <span class="blog-card-link">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </span>
-                    </div>
-                </a>
-
-                <a href="blog.html" class="blog-card">
-                    <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Success+Story" alt="Blog post" class="blog-card-image">
-                    <div class="blog-card-content">
-                        <span class="blog-card-date">January 5, 2025</span>
-                        <h3 class="blog-card-title">Success Story: From Student Visa to Green Card</h3>
-                        <p class="blog-card-excerpt">Read about Maria's journey from international student to permanent resident with our guidance.</p>
-                        <span class="blog-card-link">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </span>
-                    </div>
-                </a>
+                <div class="blog-placeholder">
+                    <div class="loading-spinner"></div>
+                    <p>Loading blog posts...</p>
+                </div>
             </div>
             
             <div class="blog-cta">
@@ -1269,7 +1252,7 @@
         </div>
     </section>
 
-    <!-- Updated Testimonials Section - REMOVED fade-in-section class -->
+    <!-- Updated Testimonials Section -->
     <section class="testimonials">
         <div class="section-container">
             <h2 class="section-title" style="color: white;">What Our Clients Say</h2>
@@ -1320,7 +1303,7 @@
         </div>
     </section>
 
-    <!-- FAQ Section - REMOVED fade-in-section class -->
+    <!-- FAQ Section -->
     <section class="faq">
         <div class="section-container">
             <h2 class="section-title">Frequently Asked Questions</h2>
@@ -1394,9 +1377,122 @@
         </div>
     </footer>
 
+    <!-- Supabase and Blog Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Load latest blog posts on homepage
+        async function loadLatestBlogPosts() {
+            try {
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('status', 'published')
+                    .order('published_at', { ascending: false })
+                    .limit(3);
+                
+                const blogGrid = document.getElementById('blogGrid');
+                
+                if (error || !data || data.length === 0) {
+                    // Show placeholder content
+                    blogGrid.innerHTML = `
+                        <a href="blog.html" class="blog-card">
+                            <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Immigration+News" alt="Blog post" class="blog-card-image">
+                            <div class="blog-card-content">
+                                <span class="blog-card-date">January 15, 2025</span>
+                                <h3 class="blog-card-title">New Immigration Policy Changes for 2025</h3>
+                                <p class="blog-card-excerpt">Understanding the latest updates to U.S. immigration policies and how they might affect your visa application process.</p>
+                                <span class="blog-card-link">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </a>
+
+                        <a href="blog.html" class="blog-card">
+                            <img src="https://via.placeholder.com/400x200/d4af37/ffffff?text=Visa+Tips" alt="Blog post" class="blog-card-image">
+                            <div class="blog-card-content">
+                                <span class="blog-card-date">January 10, 2025</span>
+                                <h3 class="blog-card-title">Top 5 Mistakes to Avoid in Your Visa Application</h3>
+                                <p class="blog-card-excerpt">Learn about common errors that can delay or derail your visa application and how to avoid them.</p>
+                                <span class="blog-card-link">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </a>
+
+                        <a href="blog.html" class="blog-card">
+                            <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Success+Story" alt="Blog post" class="blog-card-image">
+                            <div class="blog-card-content">
+                                <span class="blog-card-date">January 5, 2025</span>
+                                <h3 class="blog-card-title">Success Story: From Student Visa to Green Card</h3>
+                                <p class="blog-card-excerpt">Read about Maria's journey from international student to permanent resident with our guidance.</p>
+                                <span class="blog-card-link">
+                                    Read More <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </div>
+                        </a>
+                    `;
+                    return;
+                }
+                
+                // Display actual posts from database
+                blogGrid.innerHTML = '';
+                data.forEach(post => {
+                    const postCard = createBlogCard(post);
+                    blogGrid.innerHTML += postCard;
+                });
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                // Show default content on error
+                document.getElementById('blogGrid').innerHTML = `
+                    <div class="blog-placeholder">
+                        <h3>Blog coming soon!</h3>
+                        <p>Check back later for immigration updates and insights.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function createBlogCard(post) {
+            const defaultImage = 'https://via.placeholder.com/400x200/0a2342/ffffff?text=' + encodeURIComponent(post.category || 'Blog Post');
+            const imageUrl = post.image_url || defaultImage;
+            const date = new Date(post.published_at || post.created_at);
+            
+            return `
+                <a href="blog-post.html?slug=${post.slug}" class="blog-card">
+                    <img src="${imageUrl}" 
+                         alt="${post.title}" 
+                         class="blog-card-image"
+                         onerror="this.src='${defaultImage}'">
+                    <div class="blog-card-content">
+                        <span class="blog-card-date">${formatDate(date)}</span>
+                        <h3 class="blog-card-title">${post.title}</h3>
+                        <p class="blog-card-excerpt">${post.excerpt}</p>
+                        <span class="blog-card-link">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+            `;
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+    </script>
+
     <!-- Page Scripts -->
     <script>
-        // Hamburger Menu Toggle with Fix
+        // Hamburger Menu Toggle
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('nav');
         const navLinks = document.querySelectorAll('nav ul li a');
@@ -1613,7 +1709,7 @@
             }
         }
 
-        // Start testimonial autoplay
+        // Start testimonial autoplay and load blog posts
         window.addEventListener('load', function() {
             if (heroVideo) {
                 heroVideo.play().catch(error => {
@@ -1622,6 +1718,9 @@
             }
             startAutoPlay();
             startTestimonialAutoPlay();
+            
+            // Load blog posts from Supabase
+            loadLatestBlogPosts();
         });
 
         // FAQ Accordion
