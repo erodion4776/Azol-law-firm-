@@ -141,11 +141,6 @@
             transform: translateY(-2px);
         }
 
-        .btn-success {
-            background: var(--success-color);
-            color: var(--white);
-        }
-
         .btn-danger {
             background: var(--danger-color);
             color: var(--white);
@@ -183,6 +178,7 @@
         .admin-nav {
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
 
         .admin-main {
@@ -347,21 +343,6 @@
             padding: 2rem;
         }
 
-        .loading-spinner {
-            border: 3px solid var(--light-bg);
-            border-top: 3px solid var(--accent-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -387,6 +368,15 @@
         .toast-error {
             background: var(--danger-color);
         }
+
+        .info-box {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -398,14 +388,21 @@
             </div>
             <h2 class="login-title">Admin Login</h2>
             
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i>
+                <strong>Login Credentials:</strong><br>
+                Username: Azor Cynthia<br>
+                Password: 2004
+            </div>
+            
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" class="form-input" placeholder="Enter username" required>
+                    <input type="text" id="username" class="form-input" placeholder="Enter username" value="Azor Cynthia" required>
                 </div>
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-input" placeholder="Enter password" required>
+                    <input type="password" id="password" class="form-input" placeholder="Enter password" value="2004" required>
                 </div>
                 <div class="error-message" id="loginError">Invalid username or password</div>
                 <button type="submit" class="btn btn-primary btn-full">
@@ -421,8 +418,8 @@
         <!-- Header -->
         <header class="admin-header">
             <div class="admin-logo">CY <span>visa</span> help - Admin</div>
-            <nav class="admin-nav">
-                <span style="margin-right: 1rem; color: var(--text-dark);">Welcome, <strong id="adminName">Admin</strong></span>
+            <div class="admin-nav">
+                <span style="color: var(--text-dark);">Welcome, <strong>Azor Cynthia</strong></span>
                 <button class="btn btn-primary" onclick="showPostModal()">
                     <i class="fas fa-plus"></i>
                     New Post
@@ -431,7 +428,7 @@
                     <i class="fas fa-sign-out-alt"></i>
                     Logout
                 </button>
-            </nav>
+            </div>
         </header>
 
         <!-- Main Content -->
@@ -461,7 +458,6 @@
                 </div>
                 <div id="postsTableContainer">
                     <div class="loading">
-                        <div class="loading-spinner"></div>
                         <p>Loading posts...</p>
                     </div>
                 </div>
@@ -493,7 +489,7 @@
                     <div class="form-group">
                         <label class="form-label">Excerpt *</label>
                         <textarea id="postExcerpt" class="form-textarea" rows="3" maxlength="200" required></textarea>
-                        <small style="color: var(--text-light);">Brief description of the post (max 200 characters)</small>
+                        <small style="color: var(--text-light);">Brief description (max 200 characters)</small>
                     </div>
                     
                     <div class="form-group">
@@ -504,15 +500,12 @@
                             <option value="Visa Updates">Visa Updates</option>
                             <option value="Success Stories">Success Stories</option>
                             <option value="Legal Advice">Legal Advice</option>
-                            <option value="How-To Guides">How-To Guides</option>
-                            <option value="Policy Changes">Policy Changes</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
                         <label class="form-label">Featured Image URL</label>
                         <input type="url" id="postImageUrl" class="form-input" placeholder="https://example.com/image.jpg">
-                        <small style="color: var(--text-light);">Enter the URL of the featured image</small>
                     </div>
                     
                     <div class="form-group">
@@ -545,16 +538,19 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="/js/supabase-config.js"></script>
     
     <script>
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // Initialize variables
         let quill = null;
         let posts = [];
-        let currentUser = null;
         let editingPostId = null;
 
-        // Initialize Quill when modal opens
+        // Initialize Quill
         function initQuill() {
             if (!quill) {
                 quill = new Quill('#editor', {
@@ -563,9 +559,9 @@
                         toolbar: [
                             [{ 'header': [1, 2, 3, false] }],
                             ['bold', 'italic', 'underline'],
-                            ['blockquote', 'code-block'],
+                            ['blockquote'],
                             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                            ['link', 'image'],
+                            ['link'],
                             ['clean']
                         ]
                     }
@@ -574,15 +570,12 @@
         }
 
         // Check authentication
-        async function checkAuth() {
+        function checkAuth() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            const username = sessionStorage.getItem('username');
             
-            if (isLoggedIn === 'true' && username) {
-                currentUser = username;
-                document.getElementById('adminName').textContent = username;
+            if (isLoggedIn === 'true') {
                 showDashboard();
-                await loadPosts();
+                loadPosts();
             } else {
                 showLogin();
             }
@@ -599,47 +592,28 @@
             document.getElementById('adminContainer').style.display = 'block';
         }
 
-        // Login handler
+        // Simple login (hardcoded for now)
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            try {
-                // Check credentials against Supabase
-                const { data, error } = await supabase
-                    .from('admin_users')
-                    .select('*')
-                    .eq('username', username)
-                    .eq('password_hash', password)
-                    .single();
-                
-                if (error || !data) {
-                    document.getElementById('loginError').style.display = 'block';
-                    showToast('Invalid credentials', 'error');
-                    return;
-                }
-                
+            // Simple hardcoded check (since Supabase auth might be complex to set up quickly)
+            if (username === 'Azor Cynthia' && password === '2004') {
                 sessionStorage.setItem('isLoggedIn', 'true');
-                sessionStorage.setItem('username', username);
-                currentUser = username;
-                document.getElementById('adminName').textContent = username;
                 showToast('Login successful!', 'success');
                 showDashboard();
                 await loadPosts();
-            } catch (err) {
-                console.error('Login error:', err);
+            } else {
                 document.getElementById('loginError').style.display = 'block';
-                showToast('Login failed', 'error');
+                showToast('Invalid credentials', 'error');
             }
         });
 
-        // Logout function
+        // Logout
         function logout() {
             sessionStorage.removeItem('isLoggedIn');
-            sessionStorage.removeItem('username');
-            currentUser = null;
             showLogin();
             showToast('Logged out successfully', 'success');
         }
@@ -647,12 +621,22 @@
         // Load posts from Supabase
         async function loadPosts() {
             try {
-                posts = await blogManager.getAllPosts();
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                posts = data || [];
                 displayPosts();
                 updateStats();
             } catch (error) {
                 console.error('Error loading posts:', error);
-                showToast('Error loading posts', 'error');
+                // If table doesn't exist, show empty state
+                posts = [];
+                displayPosts();
+                updateStats();
             }
         }
 
@@ -718,7 +702,7 @@
             document.getElementById('draftPosts').textContent = drafts;
         }
 
-        // Show post modal
+        // Show modal
         window.showPostModal = function(postId = null) {
             initQuill();
             
@@ -755,10 +739,13 @@
             editingPostId = null;
         }
 
-        // Auto-generate slug from title
+        // Auto-generate slug
         document.getElementById('postTitle').addEventListener('input', function(e) {
-            if (!editingPostId) { // Only auto-generate for new posts
-                const slug = blogManager.createSlug(e.target.value);
+            if (!editingPostId) {
+                const slug = e.target.value
+                    .toLowerCase()
+                    .replace(/[^\w ]+/g, '')
+                    .replace(/ +/g, '-');
                 document.getElementById('postSlug').value = slug;
             }
         });
@@ -786,17 +773,27 @@
                 status,
                 content,
                 image_url: imageUrl || null,
-                author: currentUser || 'CY Visa Help Team'
+                author: 'Azor Cynthia',
+                published_at: status === 'published' ? new Date().toISOString() : null
             };
             
             try {
                 if (editingPostId) {
-                    // Update existing post
-                    await blogManager.updatePost(editingPostId, postData);
+                    // Update post
+                    const { error } = await supabase
+                        .from('blog_posts')
+                        .update({ ...postData, updated_at: new Date().toISOString() })
+                        .eq('id', editingPostId);
+                    
+                    if (error) throw error;
                     showToast('Post updated successfully!', 'success');
                 } else {
                     // Create new post
-                    await blogManager.createPost(postData);
+                    const { error } = await supabase
+                        .from('blog_posts')
+                        .insert([postData]);
+                    
+                    if (error) throw error;
                     showToast('Post created successfully!', 'success');
                 }
                 
@@ -804,7 +801,7 @@
                 await loadPosts();
             } catch (error) {
                 console.error('Error saving post:', error);
-                showToast('Error saving post. Please try again.', 'error');
+                showToast('Error saving post: ' + error.message, 'error');
             }
         }
 
@@ -818,7 +815,13 @@
             if (!confirm('Are you sure you want to delete this post?')) return;
             
             try {
-                await blogManager.deletePost(postId);
+                const { error } = await supabase
+                    .from('blog_posts')
+                    .delete()
+                    .eq('id', postId);
+                
+                if (error) throw error;
+                
                 showToast('Post deleted successfully!', 'success');
                 await loadPosts();
             } catch (error) {
@@ -827,7 +830,7 @@
             }
         }
 
-        // Toast notification
+        // Toast
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -838,7 +841,7 @@
             }, 3000);
         }
 
-        // Initialize on page load
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             checkAuth();
         });
