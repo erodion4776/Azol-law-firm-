@@ -132,6 +132,7 @@
             position: relative;
             height: 100vh;
             overflow: hidden;
+            background: var(--primary-color);
         }
 
         /* Video Background - Fixed and Continuous */
@@ -829,9 +830,8 @@
             color: rgba(255,255,255,0.6);
         }
 
-        /* Scroll Animations */
+        /* FIXED: Scroll Animations - Removed opacity: 0 */
         .fade-in-section {
-            opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease, transform 0.6s ease;
         }
@@ -1144,8 +1144,8 @@
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services fade-in-section">
+    <!-- Services Section - REMOVED fade-in-section class -->
+    <section class="services">
         <div class="section-container">
             <h2 class="section-title">Our Visa & Immigration Services</h2>
             <p class="section-subtitle">Comprehensive immigration solutions for individuals and businesses</p>
@@ -1207,8 +1207,8 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about fade-in-section">
+    <!-- About Section - REMOVED fade-in-section class -->
+    <section class="about">
         <div class="section-container">
             <h2 class="section-title">About CY visa help</h2>
             <div class="about-content">
@@ -1218,8 +1218,8 @@
         </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="blog fade-in-section">
+    <!-- Blog Section - REMOVED fade-in-section class -->
+    <section class="blog">
         <div class="section-container">
             <h2 class="section-title">Latest Immigration News & Updates</h2>
             <p class="section-subtitle">Stay informed with our expert insights and immigration tips</p>
@@ -1254,4 +1254,421 @@
                     <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Success+Story" alt="Blog post" class="blog-card-image">
                     <div class="blog-card-content">
                         <span class="blog-card-date">January 5, 2025</span>
-                        
+                        <h3 class="blog-card-title">Success Story: From Student Visa to Green Card</h3>
+                        <p class="blog-card-excerpt">Read about Maria's journey from international student to permanent resident with our guidance.</p>
+                        <span class="blog-card-link">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="blog-cta">
+                <a href="blog.html" class="cta-button">View All Articles</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Updated Testimonials Section - REMOVED fade-in-section class -->
+    <section class="testimonials">
+        <div class="section-container">
+            <h2 class="section-title" style="color: white;">What Our Clients Say</h2>
+            
+            <div class="testimonials-carousel">
+                <!-- Navigation Arrows -->
+                <button class="testimonial-nav prev" id="testimonialPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-nav next" id="testimonialNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Testimonial Slide 1 -->
+                <div class="testimonial-slide active">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p class="testimonial-text">"CY visa help made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
+                        <p class="testimonial-author">- Maria & Carlos Rodriguez</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial Slide 2 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p class="testimonial-text">"Working with CY visa help was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
+                        <p class="testimonial-author">- Chinemelum Azike</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial Slide 3 -->
+                <div class="testimonial-slide">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <p class="testimonial-text">"The business visa services provided by CY visa help were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
+                        <p class="testimonial-author">- Dr. Adebayo Ogundimu</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial Dots Navigation -->
+                <div class="testimonial-dots">
+                    <span class="testimonial-dot active" data-testimonial="0"></span>
+                    <span class="testimonial-dot" data-testimonial="1"></span>
+                    <span class="testimonial-dot" data-testimonial="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section - REMOVED fade-in-section class -->
+    <section class="faq">
+        <div class="section-container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How long does the visa application process take?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            The timeline varies depending on the type of visa or immigration application. Some processes can take a few months, while others may take several years. We'll provide you with a realistic timeline and keep you updated throughout your visa journey.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Do you help with business immigration and investor visas?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes! We provide comprehensive business immigration services including investor visas (EB-5), E-2 treaty visas, L-1 intracompany transfers, and other work-related visas for entrepreneurs and businesses looking to operate in the United States.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What's included in an immigration consultation?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            A consultation includes a comprehensive review of your immigration situation, expert advice on visa options, discussion of eligibility requirements, and a clear action plan. You'll receive personalized guidance tailored to your specific immigration goals and circumstances.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 2:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CY visa help. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Page Scripts -->
+    <script>
+        // Hamburger Menu Toggle with Fix
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        // Toggle menu on hamburger click
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a navigation link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Video and Unmute Button
+        const unmuteBtn = document.getElementById('unmuteBtn');
+        const heroVideo = document.getElementById('heroVideo');
+        const volumeIcon = document.getElementById('volumeIcon');
+
+        if (unmuteBtn && heroVideo) {
+            unmuteBtn.addEventListener('click', function() {
+                if (heroVideo.muted) {
+                    heroVideo.muted = false;
+                    volumeIcon.classList.remove('fa-volume-mute');
+                    volumeIcon.classList.add('fa-volume-up');
+                    unmuteBtn.setAttribute('aria-label', 'Mute video');
+                } else {
+                    heroVideo.muted = true;
+                    volumeIcon.classList.remove('fa-volume-up');
+                    volumeIcon.classList.add('fa-volume-mute');
+                    unmuteBtn.setAttribute('aria-label', 'Unmute video');
+                }
+            });
+        }
+
+        // Carousel Functionality
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.indicator-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        let currentSlide = 0;
+        let autoPlayInterval;
+        const autoPlayDelay = 6000;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            let next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prev);
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        function resetAutoPlay() {
+            stopAutoPlay();
+            startAutoPlay();
+        }
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetAutoPlay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetAutoPlay();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+                resetAutoPlay();
+            });
+        });
+
+        const carouselContainer = document.querySelector('.hero-carousel');
+        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+
+        // Testimonials Carousel
+        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+        const testimonialDots = document.querySelectorAll('.testimonial-dot');
+        const testimonialPrev = document.getElementById('testimonialPrev');
+        const testimonialNext = document.getElementById('testimonialNext');
+        
+        let currentTestimonial = 0;
+        let testimonialAutoPlay;
+        const testimonialDelay = 5000;
+
+        function showTestimonial(index) {
+            testimonialSlides.forEach((slide, i) => {
+                slide.classList.remove('active', 'prev');
+                if (i < index) {
+                    slide.classList.add('prev');
+                }
+            });
+            testimonialDots.forEach(dot => dot.classList.remove('active'));
+            
+            testimonialSlides[index].classList.add('active');
+            testimonialDots[index].classList.add('active');
+            
+            // Reset animations for active slide
+            const activeCard = testimonialSlides[index].querySelector('.testimonial-card');
+            const icon = activeCard.querySelector('i');
+            const text = activeCard.querySelector('.testimonial-text');
+            const author = activeCard.querySelector('.testimonial-author');
+            
+            // Force animation restart
+            [icon, text, author].forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // Trigger reflow
+                el.style.animation = '';
+            });
+            
+            currentTestimonial = index;
+        }
+
+        function nextTestimonial() {
+            let next = (currentTestimonial + 1) % testimonialSlides.length;
+            showTestimonial(next);
+        }
+
+        function prevTestimonial() {
+            let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
+            showTestimonial(prev);
+        }
+
+        function startTestimonialAutoPlay() {
+            testimonialAutoPlay = setInterval(nextTestimonial, testimonialDelay);
+        }
+
+        function stopTestimonialAutoPlay() {
+            clearInterval(testimonialAutoPlay);
+        }
+
+        function resetTestimonialAutoPlay() {
+            stopTestimonialAutoPlay();
+            startTestimonialAutoPlay();
+        }
+
+        testimonialNext.addEventListener('click', () => {
+            nextTestimonial();
+            resetTestimonialAutoPlay();
+        });
+
+        testimonialPrev.addEventListener('click', () => {
+            prevTestimonial();
+            resetTestimonialAutoPlay();
+        });
+
+        testimonialDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showTestimonial(index);
+                resetTestimonialAutoPlay();
+            });
+        });
+
+        // Touch/Swipe support for testimonials
+        let testimonialTouchStart = 0;
+        let testimonialTouchEnd = 0;
+
+        const testimonialsSection = document.querySelector('.testimonials-carousel');
+        
+        testimonialsSection.addEventListener('touchstart', (e) => {
+            testimonialTouchStart = e.changedTouches[0].screenX;
+        });
+
+        testimonialsSection.addEventListener('touchend', (e) => {
+            testimonialTouchEnd = e.changedTouches[0].screenX;
+            handleTestimonialSwipe();
+        });
+
+        function handleTestimonialSwipe() {
+            if (testimonialTouchEnd < testimonialTouchStart - 50) {
+                nextTestimonial();
+                resetTestimonialAutoPlay();
+            }
+            if (testimonialTouchEnd > testimonialTouchStart + 50) {
+                prevTestimonial();
+                resetTestimonialAutoPlay();
+            }
+        }
+
+        // Start testimonial autoplay
+        window.addEventListener('load', function() {
+            if (heroVideo) {
+                heroVideo.play().catch(error => {
+                    console.log('Autoplay prevented:', error);
+                });
+            }
+            startAutoPlay();
+            startTestimonialAutoPlay();
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                faqItems.forEach(faqItem => {
+                    faqItem.classList.remove('active');
+                    faqItem.querySelector('.faq-answer').style.maxHeight = null;
+                });
+                
+                if (!isActive) {
+                    item.classList.add('active');
+                    const answer = item.querySelector('.faq-answer');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+                resetAutoPlay();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+                resetAutoPlay();
+            }
+        });
+    </script>
+
+    <!-- Netlify Identity Widget Script -->
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
