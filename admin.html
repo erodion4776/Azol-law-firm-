@@ -174,14 +174,6 @@
             color: var(--accent-color);
         }
 
-        .admin-user {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
         .admin-nav {
             display: flex;
             gap: 1rem;
@@ -238,13 +230,6 @@
             background: var(--light-bg);
         }
 
-        .post-thumbnail {
-            width: 60px;
-            height: 40px;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
         .status-badge {
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
@@ -272,7 +257,7 @@
             font-size: 0.875rem;
         }
 
-        /* Post Editor Modal */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -322,9 +307,6 @@
             font-size: 1.5rem;
             color: var(--text-light);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             border-radius: 6px;
             transition: all 0.3s ease;
         }
@@ -346,21 +328,410 @@
             gap: 1rem;
         }
 
-        /* Quill Editor */
         #editor {
             min-height: 300px;
             margin-bottom: 1rem;
         }
 
-        .ql-toolbar {
-            border-radius: 6px 6px 0 0;
+        .security-warning {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .ql-container {
-            border-radius: 0 0 6px 6px;
-            font-size: 1rem;
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            color: var(--white);
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 2000;
         }
 
-        /* Image Upload */
-        .image-upload {
-            border: 2px 
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-success {
+            background: var(--success-color);
+        }
+
+        .toast-error {
+            background: var(--danger-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">
+                <h1>CY <span>visa</span> help</h1>
+            </div>
+            <h2 class="login-title">Admin Login</h2>
+            
+            <div class="security-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <small>Demo Mode: Use username "Azor Cynthia" and password "2004"</small>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter password" required>
+                </div>
+                <div class="error-message" id="loginError">Invalid username or password</div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-container" id="adminContainer">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-logo">CY <span>visa</span> help - Admin</div>
+            <nav class="admin-nav">
+                <button class="btn btn-primary" onclick="showPostModal()">
+                    <i class="fas fa-plus"></i>
+                    New Post
+                </button>
+                <button class="btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Stats Section -->
+            <div class="admin-section">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color);" id="totalPosts">0</div>
+                        <div style="color: var(--text-light);">Total Posts</div>
+                    </div>
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--success-color);" id="publishedPosts">0</div>
+                        <div style="color: var(--text-light);">Published</div>
+                    </div>
+                    <div style="padding: 1.5rem; background: var(--light-bg); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--accent-color);" id="draftPosts">0</div>
+                        <div style="color: var(--text-light);">Drafts</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts Table -->
+            <div class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">Blog Posts</h2>
+                </div>
+                <div id="postsTableContainer">
+                    <p style="text-align: center; color: var(--text-light);">No posts yet. Create your first post!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Post Editor Modal -->
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">New Post</h2>
+                <button class="modal-close" onclick="closePostModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="postForm">
+                    <input type="hidden" id="postId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Title</label>
+                        <input type="text" id="postTitle" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Excerpt</label>
+                        <textarea id="postExcerpt" class="form-input" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select id="postCategory" class="form-input" required>
+                            <option value="">Select Category</option>
+                            <option value="Immigration News">Immigration News</option>
+                            <option value="Visa Updates">Visa Updates</option>
+                            <option value="Success Stories">Success Stories</option>
+                            <option value="Legal Advice">Legal Advice</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Content</label>
+                        <div id="editor"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="postStatus" class="form-input">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="closePostModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="savePost()">
+                    <i class="fas fa-save"></i>
+                    Save Post
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Admin panel loaded');
+            
+            // Initialize variables
+            let quill = null;
+            let posts = [];
+            
+            // Credentials
+            const ADMIN_USERNAME = "Azor Cynthia";
+            const ADMIN_PASSWORD = "2004";
+
+            // Check if user is logged in
+            function checkAuth() {
+                const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+                if (isLoggedIn === 'true') {
+                    showDashboard();
+                    loadPosts();
+                } else {
+                    showLogin();
+                }
+            }
+
+            // Show/Hide UI
+            function showLogin() {
+                document.getElementById('loginContainer').style.display = 'flex';
+                document.getElementById('adminContainer').style.display = 'none';
+            }
+
+            function showDashboard() {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('adminContainer').style.display = 'block';
+            }
+
+            // Login handler
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    showToast('Login successful!', 'success');
+                    showDashboard();
+                    loadPosts();
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                    showToast('Invalid credentials', 'error');
+                }
+            });
+
+            // Logout function
+            window.logout = function() {
+                sessionStorage.removeItem('isLoggedIn');
+                showLogin();
+                showToast('Logged out successfully', 'success');
+            }
+
+            // Load posts
+            function loadPosts() {
+                posts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+                displayPosts();
+                updateStats();
+            }
+
+            // Display posts
+            function displayPosts() {
+                const container = document.getElementById('postsTableContainer');
+                
+                if (posts.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: var(--text-light);">No posts yet. Create your first post!</p>';
+                    return;
+                }
+
+                let tableHTML = `
+                    <table class="posts-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+                posts.forEach(post => {
+                    tableHTML += `
+                        <tr>
+                            <td>${post.title}</td>
+                            <td>${post.category}</td>
+                            <td>
+                                <span class="status-badge status-${post.status}">
+                                    ${post.status}
+                                </span>
+                            </td>
+                            <td>${new Date(post.date).toLocaleDateString()}</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-small" onclick="editPost('${post.id}')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-small btn-danger" onclick="deletePost('${post.id}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>`;
+                });
+
+                tableHTML += '</tbody></table>';
+                container.innerHTML = tableHTML;
+            }
+
+            // Update stats
+            function updateStats() {
+                document.getElementById('totalPosts').textContent = posts.length;
+                document.getElementById('publishedPosts').textContent = posts.filter(p => p.status === 'published').length;
+                document.getElementById('draftPosts').textContent = posts.filter(p => p.status === 'draft').length;
+            }
+
+            // Show post modal
+            window.showPostModal = function(postId = null) {
+                // Initialize Quill only when modal opens
+                if (!quill) {
+                    quill = new Quill('#editor', {
+                        theme: 'snow',
+                        modules: {
+                            toolbar: [
+                                ['bold', 'italic', 'underline'],
+                                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                ['link'],
+                                ['clean']
+                            ]
+                        }
+                    });
+                }
+
+                const modal = document.getElementById('postModal');
+                
+                // Reset form
+                document.getElementById('postForm').reset();
+                document.getElementById('postId').value = '';
+                quill.setText('');
+                
+                modal.classList.add('active');
+            }
+
+            // Close modal
+            window.closePostModal = function() {
+                document.getElementById('postModal').classList.remove('active');
+            }
+
+            // Save post
+            window.savePost = function() {
+                const title = document.getElementById('postTitle').value;
+                const excerpt = document.getElementById('postExcerpt').value;
+                const category = document.getElementById('postCategory').value;
+                const status = document.getElementById('postStatus').value;
+                const content = quill.root.innerHTML;
+                
+                if (!title || !excerpt || !category) {
+                    showToast('Please fill all fields', 'error');
+                    return;
+                }
+                
+                const post = {
+                    id: Date.now().toString(),
+                    title,
+                    excerpt,
+                    category,
+                    status,
+                    content,
+                    date: new Date().toISOString(),
+                    slug: title.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
+                };
+                
+                posts.push(post);
+                localStorage.setItem('blogPosts', JSON.stringify(posts));
+                
+                showToast('Post saved successfully!', 'success');
+                closePostModal();
+                loadPosts();
+            }
+
+            // Delete post
+            window.deletePost = function(postId) {
+                if (confirm('Are you sure you want to delete this post?')) {
+                    posts = posts.filter(p => p.id !== postId);
+                    localStorage.setItem('blogPosts', JSON.stringify(posts));
+                    showToast('Post deleted', 'success');
+                    loadPosts();
+                }
+            }
+
+            // Edit post (simplified for now)
+            window.editPost = function(postId) {
+                alert('Edit functionality will be added soon!');
+            }
+
+            // Toast notification
+            function showToast(message, type = 'success') {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.className = `toast toast-${type} show`;
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // Initialize
+            checkAuth();
+        });
+    </script>
+</body>
+</html>
