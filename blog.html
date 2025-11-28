@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - CY Visa Help</title>
+    <title>Shop - CYAzor Law Firm | Immigration eBooks & Resources</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -21,16 +21,19 @@
             --white: #ffffff;
             --text-dark: #333333;
             --text-light: #666666;
-            --border-color: #e5e7eb;
+            --success-color: #28a745;
+            --error-color: #dc3545;
         }
 
         body {
             font-family: 'Roboto', sans-serif;
             color: var(--text-dark);
             line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--light-bg);
         }
 
-        /* Header styles */
+        /* Header Styles */
         header {
             position: fixed;
             top: 0;
@@ -39,6 +42,7 @@
             background: var(--white);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         .header-container {
@@ -56,6 +60,7 @@
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
+            letter-spacing: 1px;
         }
 
         .logo span {
@@ -100,7 +105,6 @@
             flex-direction: column;
             cursor: pointer;
             gap: 4px;
-            z-index: 1001;
         }
 
         .hamburger span {
@@ -122,267 +126,284 @@
             transform: rotate(-45deg) translate(7px, -6px);
         }
 
-        /* Blog Hero */
-        .blog-hero {
-            background: linear-gradient(135deg, var(--primary-color) 0%, rgba(10, 35, 66, 0.8) 100%);
-            padding: 8rem 2rem 4rem;
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0d3a66 100%);
             color: var(--white);
+            padding: 8rem 2rem 4rem;
             text-align: center;
-            margin-top: 60px;
+            margin-top: 70px;
         }
 
-        .blog-hero h1 {
+        .page-header h1 {
             font-family: 'Playfair Display', serif;
             font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        .blog-hero p {
+        .page-header p {
             font-size: 1.2rem;
             opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Blog Content */
-        .blog-container {
+        /* Shop Section */
+        .shop-section {
+            padding: 4rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 4rem 2rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
         }
 
-        .blog-main {
+        .shop-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .shop-intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .shop-intro p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Products Grid */
+        .products-grid {
             display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
         }
 
-        .blog-post-card {
+        /* Product Card */
+        .product-card {
             background: var(--white);
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: grid;
-            grid-template-columns: 300px 1fr;
+            display: flex;
+            flex-direction: column;
         }
 
-        .blog-post-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
 
-        .blog-post-image {
+        .product-image {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+        }
+
+        .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            background: var(--light-bg);
+            transition: transform 0.5s ease;
         }
 
-        .blog-post-content {
-            padding: 2rem;
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
         }
 
-        .blog-post-meta {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .blog-post-category {
-            color: var(--accent-color);
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
             font-weight: 500;
         }
 
-        .blog-post-title {
+        .product-badge.new {
+            background: var(--success-color);
+        }
+
+        .product-badge.sale {
+            background: var(--error-color);
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-category {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             line-height: 1.3;
         }
 
-        .blog-post-excerpt {
+        .product-description {
             color: var(--text-light);
+            font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 1rem;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .read-more {
-            color: var(--accent-color);
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-bg);
+            margin-top: auto;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .product-price .original-price {
+            font-size: 1rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+            font-weight: 400;
+        }
+
+        .product-price .sale-price {
+            color: var(--error-color);
+        }
+
+        .buy-btn {
+            padding: 0.8rem 1.5rem;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
             font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        /* Sidebar */
-        .blog-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .sidebar-widget {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        .sidebar-widget h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .category-list {
-            list-style: none;
-        }
-
-        .category-list li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .category-list a {
-            color: var(--text-dark);
-            text-decoration: none;
-            display: flex;
-            justify-content: space-between;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .category-list a:hover {
-            color: var(--accent-color);
-        }
-
-        .category-count {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        /* Search Box */
-        .search-box {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .search-button {
-            padding: 0.8rem 1.5rem;
-            background: var(--accent-color);
-            color: var(--white);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .search-button:hover {
+        .buy-btn:hover {
             background: #c4a137;
+            transform: translateY(-2px);
         }
 
-        /* Newsletter */
-        .newsletter-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .newsletter-input {
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .newsletter-button {
-            padding: 0.8rem;
-            background: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .newsletter-button:hover {
-            background: #0c2d52;
-        }
-
-        /* Loading and Empty States */
-        .loading {
+        /* Loading State */
+        .loading-container {
+            grid-column: 1 / -1;
             text-align: center;
-            padding: 3rem;
-            color: var(--text-light);
+            padding: 4rem 2rem;
         }
 
         .loading-spinner {
-            border: 3px solid var(--light-bg);
-            border-top: 3px solid var(--accent-color);
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--light-bg);
+            border-top-color: var(--accent-color);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
+        /* Empty State */
         .empty-state {
+            grid-column: 1 / -1;
             text-align: center;
-            padding: 3rem;
+            padding: 4rem 2rem;
             background: var(--white);
-            border-radius: 10px;
-            color: var(--text-light);
+            border-radius: 15px;
         }
 
         .empty-state i {
-            font-size: 3rem;
+            font-size: 4rem;
             color: var(--accent-color);
             margin-bottom: 1rem;
         }
 
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: var(--text-light);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--white);
             margin-top: 3rem;
+            border-radius: 15px;
         }
 
-        .pagination a,
-        .pagination span {
-            padding: 0.5rem 1rem;
-            background: var(--white);
-            color: var(--text-dark);
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border-color);
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .pagination a:hover,
-        .pagination .active {
+        .cta-section p {
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
             background: var(--accent-color);
             color: var(--white);
-            border-color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #c4a137;
+            transform: translateY(-3px);
         }
 
         /* Footer */
@@ -390,6 +411,7 @@
             background: var(--primary-color);
             color: var(--white);
             padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
         }
 
         .footer-container {
@@ -439,20 +461,153 @@
             color: rgba(255,255,255,0.6);
         }
 
-        @media (max-width: 968px) {
-            .blog-container {
-                grid-template-columns: 1fr;
-            }
-
-            .blog-post-card {
-                grid-template-columns: 1fr;
-            }
-
-            .blog-post-image {
-                height: 200px;
-            }
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
 
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 15px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--light-bg);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .modal-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .modal-image {
+            height: 100%;
+            min-height: 400px;
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-details {
+            padding: 2rem;
+        }
+
+        .modal-category {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .modal-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-description {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .modal-features {
+            margin-bottom: 2rem;
+        }
+
+        .modal-features h4 {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-features ul {
+            list-style: none;
+        }
+
+        .modal-features ul li {
+            padding: 0.4rem 0;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-features ul li i {
+            color: var(--accent-color);
+        }
+
+        .modal-buy-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .modal-buy-btn:hover {
+            background: #c4a137;
+        }
+
+        /* Mobile Styles */
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -479,8 +634,30 @@
                 gap: 1.5rem;
             }
 
-            .blog-hero h1 {
+            .page-header h1 {
                 font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-image {
+                min-height: 250px;
+            }
+
+            .product-footer {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .buy-btn {
+                justify-content: center;
             }
         }
     </style>
@@ -489,10 +666,9 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>visa</span> help</a>
+            <a href="index.html" class="logo">CYAzor <span>Law</span> Firm</a>
             <nav id="nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="shop.html">Shop</a></li>
@@ -509,82 +685,70 @@
         </div>
     </header>
 
-    <!-- Blog Hero -->
-    <section class="blog-hero">
-        <h1>Immigration News & Insights</h1>
-        <p>Expert guidance and latest updates on U.S. immigration</p>
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Immigration Resources Shop</h1>
+        <p>Expert guides, templates, and eBooks to help you navigate your U.S. immigration journey with confidence.</p>
     </section>
 
-    <!-- Blog Content -->
-    <div class="blog-container">
-        <!-- Main Blog Posts -->
-        <main class="blog-main" id="blogMain">
-            <div class="loading">
-                <div class="loading-spinner"></div>
-                <p>Loading blog posts...</p>
-            </div>
-        </main>
+    <!-- Shop Section -->
+    <section class="shop-section">
+        <div class="shop-intro">
+            <h2>Our Immigration eBooks & Guides</h2>
+            <p>Download comprehensive resources created by Attorney Cynthia Azor to help you understand and prepare for your immigration journey.</p>
+        </div>
 
-        <!-- Sidebar -->
-        <aside class="blog-sidebar">
-            <!-- Search Widget -->
-            <div class="sidebar-widget">
-                <h3>Search</h3>
-                <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Search articles..." id="searchInput">
-                    <button class="search-button" onclick="searchPosts()">
-                        <i class="fas fa-search"></i>
-                    </button>
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Loading State -->
+            <div class="loading-container" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>Loading products...</p>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Need Personalized Guidance?</h2>
+            <p>Our eBooks provide great foundational knowledge, but every immigration case is unique. Schedule a consultation with Attorney Cynthia Azor for personalized advice.</p>
+            <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">
+                <i class="fas fa-calendar-check"></i> Book a Consultation
+            </a>
+        </div>
+    </section>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content">
+                <div class="modal-image">
+                    <img src="" alt="" id="modalImage">
+                </div>
+                <div class="modal-details">
+                    <p class="modal-category" id="modalCategory"></p>
+                    <h2 class="modal-title" id="modalTitle"></h2>
+                    <p class="modal-price" id="modalPrice"></p>
+                    <p class="modal-description" id="modalDescription"></p>
+                    
+                    <div class="modal-features">
+                        <h4>What's Included:</h4>
+                        <ul id="modalFeatures">
+                            <li><i class="fas fa-check"></i> Instant PDF Download</li>
+                            <li><i class="fas fa-check"></i> Step-by-Step Instructions</li>
+                            <li><i class="fas fa-check"></i> Lifetime Access</li>
+                            <li><i class="fas fa-check"></i> Free Updates</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="#" class="modal-buy-btn" id="modalBuyBtn">
+                        <i class="fas fa-shopping-cart"></i> Purchase Now
+                    </a>
                 </div>
             </div>
-
-            <!-- Categories Widget -->
-            <div class="sidebar-widget">
-                <h3>Categories</h3>
-                <ul class="category-list" id="categoryList">
-                    <li>
-                        <a onclick="filterByCategory('all')">
-                            <span>All Posts</span>
-                            <span class="category-count" id="allCount">0</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a onclick="filterByCategory('Immigration News')">
-                            <span>Immigration News</span>
-                            <span class="category-count" id="immigrationCount">0</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a onclick="filterByCategory('Visa Updates')">
-                            <span>Visa Updates</span>
-                            <span class="category-count" id="visaCount">0</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a onclick="filterByCategory('Success Stories')">
-                            <span>Success Stories</span>
-                            <span class="category-count" id="successCount">0</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a onclick="filterByCategory('Legal Advice')">
-                            <span>Legal Advice</span>
-                            <span class="category-count" id="legalCount">0</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Newsletter Widget -->
-            <div class="sidebar-widget">
-                <h3>Newsletter</h3>
-                <p style="margin-bottom: 1rem; color: var(--text-light);">Subscribe to get the latest immigration updates</p>
-                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" class="newsletter-input" placeholder="Your email address" required>
-                    <button type="submit" class="newsletter-button">Subscribe</button>
-                </form>
-            </div>
-        </aside>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -593,8 +757,8 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> 153 Dreville Dr<br>LA Vergne, Tennessee 37086</p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>La Vergne, Tennessee 37086</a></p>
             </div>
             <div class="footer-section">
                 <h3>Office Hours</h3>
@@ -605,20 +769,21 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
                     <li><a href="blog.html">Blog</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 CY visa help. All rights reserved.</p>
+            <p>&copy; 2025 CYAzor Law Firm. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Supabase -->
+    <!-- Supabase SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
@@ -627,172 +792,136 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let allPosts = [];
-        let currentFilter = 'all';
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const loadingState = document.getElementById('loadingState');
+        const productModal = document.getElementById('productModal');
+        const modalClose = document.getElementById('modalClose');
 
-        // Load blog posts from Supabase
-        async function loadBlogPosts() {
-            const blogMain = document.getElementById('blogMain');
-            blogMain.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Loading blog posts...</p></div>';
-
+        // Load Products
+        async function loadProducts() {
             try {
                 const { data, error } = await supabase
-                    .from('blog_posts')
+                    .from('products')
                     .select('*')
-                    .eq('status', 'published')
-                    .order('published_at', { ascending: false });
+                    .eq('status', 'active')
+                    .order('created_at', { ascending: false });
 
                 if (error) throw error;
 
-                allPosts = data || [];
-                
-                if (allPosts.length === 0) {
-                    blogMain.innerHTML = `
+                loadingState.style.display = 'none';
+
+                if (!data || data.length === 0) {
+                    productsGrid.innerHTML = `
                         <div class="empty-state">
-                            <i class="fas fa-newspaper"></i>
-                            <h2>No Blog Posts Yet</h2>
-                            <p>Check back soon for immigration updates and insights!</p>
+                            <i class="fas fa-book-open"></i>
+                            <h3>Coming Soon!</h3>
+                            <p>Our immigration eBooks and guides are being prepared. Check back soon!</p>
                         </div>
                     `;
-                } else {
-                    displayPosts(allPosts);
+                    return;
                 }
-                
-                updateCategoryCounts();
+
+                productsGrid.innerHTML = data.map(product => createProductCard(product)).join('');
+
+                // Add click handlers to cards
+                document.querySelectorAll('.product-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (!e.target.closest('.buy-btn')) {
+                            const productId = card.dataset.productId;
+                            const product = data.find(p => p.id == productId);
+                            openProductModal(product);
+                        }
+                    });
+                });
+
             } catch (error) {
-                console.error('Error loading posts:', error);
-                blogMain.innerHTML = `
+                console.error('Error loading products:', error);
+                loadingState.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-exclamation-circle"></i>
-                        <h2>Error Loading Posts</h2>
-                        <p>Please try again later.</p>
+                        <h3>Unable to Load Products</h3>
+                        <p>Please refresh the page or try again later.</p>
                     </div>
                 `;
             }
         }
 
-        // Display posts
-        function displayPosts(posts) {
-            const blogMain = document.getElementById('blogMain');
+        // Create Product Card HTML
+        function createProductCard(product) {
+            const defaultImage = 'https://via.placeholder.com/400x500/0a2342/d4af37?text=' + encodeURIComponent(product.title || 'eBook');
+            const imageUrl = product.cover_image || defaultImage;
+            const hasDiscount = product.original_price && product.original_price > product.price;
             
-            if (posts.length === 0) {
-                blogMain.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-search"></i>
-                        <h2>No Posts Found</h2>
-                        <p>Try a different search term or category.</p>
-                    </div>
-                `;
-                return;
+            let badgeHtml = '';
+            if (product.badge) {
+                const badgeClass = product.badge.toLowerCase() === 'new' ? 'new' : 
+                                   product.badge.toLowerCase() === 'sale' ? 'sale' : '';
+                badgeHtml = `<span class="product-badge ${badgeClass}">${product.badge}</span>`;
             }
 
-            blogMain.innerHTML = '';
-            posts.forEach(post => {
-                const postCard = createBlogPostCard(post);
-                blogMain.innerHTML += postCard;
-            });
-        }
-
-        // Create blog post card
-        function createBlogPostCard(post) {
-            const defaultImage = 'https://via.placeholder.com/300x200/0a2342/ffffff?text=' + encodeURIComponent(post.category || 'Blog');
-            const imageUrl = post.image_url || defaultImage;
-            const date = new Date(post.published_at || post.created_at);
+            let priceHtml = '';
+            if (hasDiscount) {
+                priceHtml = `
+                    <span class="original-price">$${product.original_price.toFixed(2)}</span>
+                    <span class="sale-price">$${product.price.toFixed(2)}</span>
+                `;
+            } else {
+                priceHtml = `$${product.price.toFixed(2)}`;
+            }
 
             return `
-                <a href="blog-post.html?slug=${post.slug}" class="blog-post-card">
-                    <img src="${imageUrl}" 
-                         alt="${post.title}" 
-                         class="blog-post-image"
-                         onerror="this.src='${defaultImage}'">
-                    <div class="blog-post-content">
-                        <div class="blog-post-meta">
-                            <span class="blog-post-category">${post.category}</span>
-                            <span>•</span>
-                            <span>${formatDate(date)}</span>
-                            <span>•</span>
-                            <span>${post.author || 'CY Visa Help Team'}</span>
-                        </div>
-                        <h2 class="blog-post-title">${post.title}</h2>
-                        <p class="blog-post-excerpt">${post.excerpt}</p>
-                        <span class="read-more">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </span>
+                <div class="product-card" data-product-id="${product.id}">
+                    <div class="product-image">
+                        <img src="${imageUrl}" alt="${product.title}" onerror="this.src='${defaultImage}'">
+                        ${badgeHtml}
                     </div>
-                </a>
+                    <div class="product-content">
+                        <p class="product-category">${product.category || 'Immigration Guide'}</p>
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-description">${product.description || ''}</p>
+                        <div class="product-footer">
+                            <span class="product-price">${priceHtml}</span>
+                            <a href="${product.purchase_link || '#'}" class="buy-btn" target="_blank">
+                                <i class="fas fa-shopping-cart"></i> Buy Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
             `;
         }
 
-        // Format date
-        function formatDate(date) {
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
+        // Open Product Modal
+        function openProductModal(product) {
+            const defaultImage = 'https://via.placeholder.com/400x500/0a2342/d4af37?text=' + encodeURIComponent(product.title || 'eBook');
+            
+            document.getElementById('modalImage').src = product.cover_image || defaultImage;
+            document.getElementById('modalImage').alt = product.title;
+            document.getElementById('modalCategory').textContent = product.category || 'Immigration Guide';
+            document.getElementById('modalTitle').textContent = product.title;
+            document.getElementById('modalPrice').textContent = `$${product.price.toFixed(2)}`;
+            document.getElementById('modalDescription').textContent = product.full_description || product.description || '';
+            document.getElementById('modalBuyBtn').href = product.purchase_link || '#';
+
+            productModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        // Search functionality
-        async function searchPosts() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
-            
-            if (!searchTerm) {
-                displayPosts(allPosts);
-                return;
-            }
-
-            const filteredPosts = allPosts.filter(post => 
-                post.title.toLowerCase().includes(searchTerm) || 
-                post.excerpt.toLowerCase().includes(searchTerm) ||
-                (post.content && post.content.toLowerCase().includes(searchTerm))
-            );
-            
-            displayPosts(filteredPosts);
+        // Close Modal
+        function closeModal() {
+            productModal.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        // Filter by category
-        function filterByCategory(category) {
-            currentFilter = category;
-            
-            if (category === 'all') {
-                displayPosts(allPosts);
-            } else {
-                const filteredPosts = allPosts.filter(post => post.category === category);
-                displayPosts(filteredPosts);
-            }
-        }
+        modalClose.addEventListener('click', closeModal);
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
-        // Update category counts
-        function updateCategoryCounts() {
-            document.getElementById('allCount').textContent = allPosts.length;
-            
-            const categories = {
-                'Immigration News': 0,
-                'Visa Updates': 0,
-                'Success Stories': 0,
-                'Legal Advice': 0
-            };
-            
-            allPosts.forEach(post => {
-                if (categories.hasOwnProperty(post.category)) {
-                    categories[post.category]++;
-                }
-            });
-            
-            document.getElementById('immigrationCount').textContent = categories['Immigration News'];
-            document.getElementById('visaCount').textContent = categories['Visa Updates'];
-            document.getElementById('successCount').textContent = categories['Success Stories'];
-            document.getElementById('legalCount').textContent = categories['Legal Advice'];
-        }
-
-        // Newsletter subscription
-        function subscribeNewsletter(event) {
-            event.preventDefault();
-            alert('Thank you for subscribing! You will receive our latest updates.');
-            event.target.reset();
-        }
-
-        // Hamburger menu
+        // Hamburger Menu
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('nav');
 
@@ -801,15 +930,15 @@
             nav.classList.toggle('active');
         });
 
-        // Load posts on page load
-        document.addEventListener('DOMContentLoaded', loadBlogPosts);
-        
-        // Allow search on Enter key
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                searchPosts();
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
             }
         });
+
+        // Load products on page load
+        document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
-                  </html>
+</html>
