@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - CYAzor Law Firm | Immigration eBooks & Resources</title>
+    <meta name="description" content="Download expert immigration guides, eBooks, and templates created by Attorney Cynthia Azor to help you navigate your U.S. immigration journey.">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -81,7 +82,8 @@
             position: relative;
         }
 
-        nav ul li a:hover {
+        nav ul li a:hover,
+        nav ul li a.active {
             color: var(--accent-color);
         }
 
@@ -96,7 +98,8 @@
             transition: width 0.3s ease;
         }
 
-        nav ul li a:hover::after {
+        nav ul li a:hover::after,
+        nav ul li a.active::after {
             width: 100%;
         }
 
@@ -105,6 +108,7 @@
             flex-direction: column;
             cursor: pointer;
             gap: 4px;
+            z-index: 1001;
         }
 
         .hamburger span {
@@ -173,11 +177,39 @@
             margin: 0 auto;
         }
 
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 0.8rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--light-bg);
+            border-radius: 50px;
+            color: var(--text-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--white);
+        }
+
         /* Products Grid */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
+            min-height: 400px;
         }
 
         /* Product Card */
@@ -189,6 +221,7 @@
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -199,9 +232,12 @@
         .product-image {
             position: relative;
             width: 100%;
-            height: 300px;
+            height: 280px;
             overflow: hidden;
             background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .product-image img {
@@ -215,6 +251,12 @@
             transform: scale(1.05);
         }
 
+        .product-image-placeholder {
+            color: var(--accent-color);
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+
         .product-badge {
             position: absolute;
             top: 1rem;
@@ -225,6 +267,7 @@
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 500;
+            text-transform: uppercase;
         }
 
         .product-badge.new {
@@ -233,6 +276,10 @@
 
         .product-badge.sale {
             background: var(--error-color);
+        }
+
+        .product-badge.bestseller {
+            background: var(--accent-color);
         }
 
         .product-content {
@@ -281,20 +328,23 @@
         }
 
         .product-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-price .current-price {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-color);
         }
 
         .product-price .original-price {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-light);
             text-decoration: line-through;
-            margin-right: 0.5rem;
-            font-weight: 400;
         }
 
-        .product-price .sale-price {
+        .product-price.on-sale .current-price {
             color: var(--error-color);
         }
 
@@ -340,6 +390,10 @@
             to { transform: rotate(360deg); }
         }
 
+        .loading-container p {
+            color: var(--text-light);
+        }
+
         /* Empty State */
         .empty-state {
             grid-column: 1 / -1;
@@ -347,23 +401,60 @@
             padding: 4rem 2rem;
             background: var(--white);
             border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
 
         .empty-state i {
             font-size: 4rem;
             color: var(--accent-color);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .empty-state h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
 
         .empty-state p {
             color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
         }
 
         /* CTA Section */
@@ -391,7 +482,9 @@
         }
 
         .cta-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             padding: 1rem 2.5rem;
             background: var(--accent-color);
             color: var(--white);
@@ -399,11 +492,220 @@
             font-weight: 500;
             border-radius: 50px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
         }
 
         .cta-button:hover {
             background: #c4a137;
             transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Product Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--white);
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--light-bg);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .modal-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .modal-image {
+            height: 100%;
+            min-height: 450px;
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-image-placeholder {
+            color: var(--accent-color);
+            font-size: 6rem;
+            opacity: 0.5;
+        }
+
+        .modal-details {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-category {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .modal-price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-price .current-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .modal-price .original-price {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+        }
+
+        .modal-price.on-sale .current-price {
+            color: var(--error-color);
+        }
+
+        .modal-description {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .modal-features {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--light-bg);
+            border-radius: 10px;
+        }
+
+        .modal-features h4 {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-features h4 i {
+            color: var(--accent-color);
+        }
+
+        .modal-features ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+
+        .modal-features ul li {
+            padding: 0.4rem 0;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .modal-features ul li i {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        .modal-buy-btn {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .modal-buy-btn:hover {
+            background: #c4a137;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
         /* Footer */
@@ -461,150 +763,16 @@
             color: rgba(255,255,255,0.6);
         }
 
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
+        /* Scroll Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--white);
-            border-radius: 15px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--light-bg);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: var(--primary-color);
-            color: var(--white);
-        }
-
-        .modal-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .modal-image {
-            height: 100%;
-            min-height: 400px;
-            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
-        }
-
-        .modal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-details {
-            padding: 2rem;
-        }
-
-        .modal-category {
-            color: var(--accent-color);
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .modal-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-description {
-            color: var(--text-light);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .modal-features {
-            margin-bottom: 2rem;
-        }
-
-        .modal-features h4 {
-            font-size: 1rem;
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-        }
-
-        .modal-features ul {
-            list-style: none;
-        }
-
-        .modal-features ul li {
-            padding: 0.4rem 0;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .modal-features ul li i {
-            color: var(--accent-color);
-        }
-
-        .modal-buy-btn {
-            width: 100%;
-            padding: 1rem 2rem;
-            background: var(--accent-color);
-            color: var(--white);
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .modal-buy-btn:hover {
-            background: #c4a137;
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Mobile Styles */
@@ -623,6 +791,7 @@
                 padding: 5rem 2rem;
                 transition: right 0.3s ease;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                z-index: 1000;
             }
 
             nav.active {
@@ -638,8 +807,25 @@
                 font-size: 2rem;
             }
 
+            .page-header p {
+                font-size: 1rem;
+            }
+
+            .shop-intro h2 {
+                font-size: 1.6rem;
+            }
+
             .products-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .filter-tabs {
+                gap: 0.5rem;
+            }
+
+            .filter-tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
             }
 
             .modal-content {
@@ -650,14 +836,57 @@
                 min-height: 250px;
             }
 
+            .modal-details {
+                padding: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .modal-features ul {
+                grid-template-columns: 1fr;
+            }
+
             .product-footer {
                 flex-direction: column;
                 gap: 1rem;
                 align-items: stretch;
             }
 
+            .product-price {
+                text-align: center;
+            }
+
             .buy-btn {
                 justify-content: center;
+                width: 100%;
+            }
+
+            .features-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .cta-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .cta-section h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .shop-section {
+                padding: 2rem 1rem;
+            }
+
+            .product-image {
+                height: 220px;
             }
         }
     </style>
@@ -671,7 +900,7 @@
                 <ul>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
-                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="shop.html" class="active">Shop</a></li>
                     <li><a href="blog.html">Blog</a></li>
                     <li><a href="testimonials.html">Testimonials</a></li>
                     <li><a href="contact.html">Contact</a></li>
@@ -693,9 +922,18 @@
 
     <!-- Shop Section -->
     <section class="shop-section">
-        <div class="shop-intro">
+        <div class="shop-intro fade-in-section">
             <h2>Our Immigration eBooks & Guides</h2>
-            <p>Download comprehensive resources created by Attorney Cynthia Azor to help you understand and prepare for your immigration journey.</p>
+            <p>Download comprehensive resources created by Attorney Cynthia Azor to help you understand and prepare for your immigration journey. Each guide provides step-by-step instructions and expert insights.</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs fade-in-section">
+            <button class="filter-tab active" data-category="all">All Resources</button>
+            <button class="filter-tab" data-category="visa-guide">Visa Guides</button>
+            <button class="filter-tab" data-category="citizenship">Citizenship</button>
+            <button class="filter-tab" data-category="business">Business</button>
+            <button class="filter-tab" data-category="template">Templates</button>
         </div>
 
         <!-- Products Grid -->
@@ -707,10 +945,34 @@
             </div>
         </div>
 
+        <!-- Features Section -->
+        <div class="features-section fade-in-section">
+            <div class="feature-item">
+                <i class="fas fa-download"></i>
+                <h3>Instant Download</h3>
+                <p>Get immediate access to your purchased resources in PDF format.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-infinity"></i>
+                <h3>Lifetime Access</h3>
+                <p>Access your purchased guides anytime, anywhere, forever.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-sync-alt"></i>
+                <h3>Free Updates</h3>
+                <p>Receive free updates when immigration laws change.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-user-shield"></i>
+                <h3>Expert Content</h3>
+                <p>Written by Attorney Cynthia Azor with 5+ years experience.</p>
+            </div>
+        </div>
+
         <!-- CTA Section -->
-        <div class="cta-section">
+        <div class="cta-section fade-in-section">
             <h2>Need Personalized Guidance?</h2>
-            <p>Our eBooks provide great foundational knowledge, but every immigration case is unique. Schedule a consultation with Attorney Cynthia Azor for personalized advice.</p>
+            <p>Our eBooks provide great foundational knowledge, but every immigration case is unique. Schedule a consultation with Attorney Cynthia Azor for personalized advice tailored to your specific situation.</p>
             <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">
                 <i class="fas fa-calendar-check"></i> Book a Consultation
             </a>
@@ -724,26 +986,31 @@
                 <i class="fas fa-times"></i>
             </button>
             <div class="modal-content">
-                <div class="modal-image">
+                <div class="modal-image" id="modalImageContainer">
                     <img src="" alt="" id="modalImage">
                 </div>
                 <div class="modal-details">
                     <p class="modal-category" id="modalCategory"></p>
                     <h2 class="modal-title" id="modalTitle"></h2>
-                    <p class="modal-price" id="modalPrice"></p>
+                    <div class="modal-price" id="modalPriceContainer">
+                        <span class="current-price" id="modalPrice"></span>
+                        <span class="original-price" id="modalOriginalPrice"></span>
+                    </div>
                     <p class="modal-description" id="modalDescription"></p>
                     
                     <div class="modal-features">
-                        <h4>What's Included:</h4>
-                        <ul id="modalFeatures">
+                        <h4><i class="fas fa-check-circle"></i> What's Included:</h4>
+                        <ul>
                             <li><i class="fas fa-check"></i> Instant PDF Download</li>
                             <li><i class="fas fa-check"></i> Step-by-Step Instructions</li>
                             <li><i class="fas fa-check"></i> Lifetime Access</li>
                             <li><i class="fas fa-check"></i> Free Updates</li>
+                            <li><i class="fas fa-check"></i> Expert Insights</li>
+                            <li><i class="fas fa-check"></i> Practical Examples</li>
                         </ul>
                     </div>
                     
-                    <a href="#" class="modal-buy-btn" id="modalBuyBtn">
+                    <a href="#" class="modal-buy-btn" id="modalBuyBtn" target="_blank">
                         <i class="fas fa-shopping-cart"></i> Purchase Now
                     </a>
                 </div>
@@ -758,4 +1025,289 @@
                 <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
                 <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> <a 
+                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>La Vergne, Tennessee 37086</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <p>Saturday: 10:00 AM - 2:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CYAzor Law Firm. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Store all products for filtering
+        let allProducts = [];
+
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const loadingState = document.getElementById('loadingState');
+        const productModal = document.getElementById('productModal');
+        const modalClose = document.getElementById('modalClose');
+        const filterTabs = document.querySelectorAll('.filter-tab');
+
+        // Load Products from Supabase
+        async function loadProducts() {
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .eq('status', 'active')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                allProducts = data || [];
+                displayProducts(allProducts);
+
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showEmptyState('Unable to load products. Please refresh the page or try again later.');
+            }
+        }
+
+        // Display Products
+        function displayProducts(products) {
+            loadingState.style.display = 'none';
+
+            if (!products || products.length === 0) {
+                showEmptyState('Our immigration eBooks and guides are being prepared. Check back soon!');
+                return;
+            }
+
+            productsGrid.innerHTML = products.map(product => createProductCard(product)).join('');
+
+            // Add click handlers to product cards
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.buy-btn')) {
+                        const productId = card.dataset.productId;
+                        const product = allProducts.find(p => p.id == productId);
+                        if (product) openProductModal(product);
+                    }
+                });
+            });
+        }
+
+        // Show Empty State
+        function showEmptyState(message) {
+            loadingState.style.display = 'none';
+            productsGrid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Coming Soon!</h3>
+                    <p>${message}</p>
+                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button" style="margin-top: 1rem;">
+                        <i class="fas fa-calendar-check"></i> Book a Consultation Instead
+                    </a>
+                </div>
+            `;
+        }
+
+        // Create Product Card HTML
+        function createProductCard(product) {
+            const hasImage = product.cover_image && product.cover_image.trim() !== '';
+            const hasDiscount = product.original_price && parseFloat(product.original_price) > parseFloat(product.price);
+            
+            // Badge HTML
+            let badgeHtml = '';
+            if (product.badge) {
+                const badgeClass = product.badge.toLowerCase().replace(' ', '');
+                badgeHtml = `<span class="product-badge ${badgeClass}">${product.badge}</span>`;
+            }
+
+            // Image HTML
+            let imageHtml = '';
+            if (hasImage) {
+                imageHtml = `<img src="${product.cover_image}" alt="${product.title}" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-book product-image-placeholder\\'></i>'">`;
+            } else {
+                imageHtml = `<i class="fas fa-book product-image-placeholder"></i>`;
+            }
+
+            // Price HTML
+            let priceHtml = '';
+            if (hasDiscount) {
+                priceHtml = `
+                    <div class="product-price on-sale">
+                        <span class="original-price">$${parseFloat(product.original_price).toFixed(2)}</span>
+                        <span class="current-price">$${parseFloat(product.price).toFixed(2)}</span>
+                    </div>
+                `;
+            } else {
+                priceHtml = `
+                    <div class="product-price">
+                        <span class="current-price">$${parseFloat(product.price).toFixed(2)}</span>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="product-card fade-in-section visible" data-product-id="${product.id}" data-category="${product.category || 'general'}">
+                    <div class="product-image">
+                        ${imageHtml}
+                        ${badgeHtml}
+                    </div>
+                    <div class="product-content">
+                        <p class="product-category">${product.category || 'Immigration Guide'}</p>
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-description">${product.description || ''}</p>
+                        <div class="product-footer">
+                            ${priceHtml}
+                            <a href="${product.purchase_link || '#'}" class="buy-btn" target="_blank" onclick="event.stopPropagation();">
+                                <i class="fas fa-shopping-cart"></i> Buy Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Open Product Modal
+        function openProductModal(product) {
+            const hasImage = product.cover_image && product.cover_image.trim() !== '';
+            const hasDiscount = product.original_price && parseFloat(product.original_price) > parseFloat(product.price);
+            
+            // Set image
+            const modalImageContainer = document.getElementById('modalImageContainer');
+            if (hasImage) {
+                modalImageContainer.innerHTML = `<img src="${product.cover_image}" alt="${product.title}" id="modalImage">`;
+            } else {
+                modalImageContainer.innerHTML = `<i class="fas fa-book modal-image-placeholder"></i>`;
+            }
+
+            // Set text content
+            document.getElementById('modalCategory').textContent = product.category || 'Immigration Guide';
+            document.getElementById('modalTitle').textContent = product.title;
+            document.getElementById('modalDescription').textContent = product.full_description || product.description || 'Comprehensive guide to help you navigate the U.S. immigration process.';
+            
+            // Set price
+            const priceContainer = document.getElementById('modalPriceContainer');
+            if (hasDiscount) {
+                priceContainer.className = 'modal-price on-sale';
+                document.getElementById('modalPrice').textContent = `$${parseFloat(product.price).toFixed(2)}`;
+                document.getElementById('modalOriginalPrice').textContent = `$${parseFloat(product.original_price).toFixed(2)}`;
+                document.getElementById('modalOriginalPrice').style.display = 'inline';
+            } else {
+                priceContainer.className = 'modal-price';
+                document.getElementById('modalPrice').textContent = `$${parseFloat(product.price).toFixed(2)}`;
+                document.getElementById('modalOriginalPrice').style.display = 'none';
+            }
+
+            // Set purchase link
+            document.getElementById('modalBuyBtn').href = product.purchase_link || '#';
+
+            // Show modal
+            productModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Modal
+        function closeModal() {
+            productModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Modal Event Listeners
+        modalClose.addEventListener('click', closeModal);
+        productModal.addEventListener('click', (e) => {
+            if (e.target === productModal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Filter Functionality
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active state
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const category = tab.dataset.category;
+                
+                if (category === 'all') {
+                    displayProducts(allProducts);
+                } else {
+                    const filtered = allProducts.filter(product => {
+                        const productCategory = (product.category || '').toLowerCase().replace(/\s+/g, '-');
+                        return productCategory.includes(category) || category.includes(productCategory);
+                    });
+                    
+                    if (filtered.length === 0) {
+                        showEmptyState(`No products found in this category. Check back soon!`);
+                    } else {
+                        displayProducts(filtered);
+                    }
+                }
+            });
+        });
+
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            });
+        });
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+
+        // Load products on page load
+        document.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+</html>
