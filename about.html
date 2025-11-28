@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - CY visa help</title>
+    <title>About Us - CYAzor Law Firm | Immigration Attorney</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -249,18 +249,37 @@
 
         .team-member {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 400px 1fr;
             gap: 3rem;
-            align-items: center;
+            align-items: start;
             margin-bottom: 3rem;
+        }
+
+        .team-photo-wrapper {
+            position: relative;
         }
 
         .team-photo {
             width: 100%;
-            height: 400px;
+            height: 500px;
             object-fit: cover;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .team-badge {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            white-space: nowrap;
         }
 
         .team-info h3 {
@@ -273,14 +292,125 @@
         .team-info .title {
             color: var(--accent-color);
             font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-info .subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
             margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-bg);
         }
 
         .team-info p {
             color: var(--text-light);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             margin-bottom: 1rem;
+        }
+
+        /* Credentials Section */
+        .credentials {
+            margin-top: 2rem;
+        }
+
+        .credentials h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .credentials h4 i {
+            color: var(--accent-color);
+        }
+
+        .credentials-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .credential-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 0.8rem;
+            background: var(--light-bg);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .credential-item:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .credential-item i {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+        }
+
+        /* Memberships */
+        .memberships {
+            background: var(--light-bg);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            margin-top: 1.5rem;
+        }
+
+        .memberships h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .memberships ul {
+            list-style: none;
+        }
+
+        .memberships ul li {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .memberships ul li i {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent-color);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            margin-top: 1.5rem;
+        }
+
+        .cta-button:hover {
+            background: #c4a137;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
 
         /* Footer */
@@ -350,6 +480,22 @@
         }
 
         /* Mobile Styles */
+        @media (max-width: 1024px) {
+            .team-member {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .team-photo-wrapper {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .credentials-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -380,19 +526,36 @@
                 font-size: 2rem;
             }
 
-            .about-grid,
-            .team-member {
+            .about-grid {
                 grid-template-columns: 1fr;
             }
 
-            .about-image,
-            .team-photo {
+            .about-image {
                 height: 300px;
+            }
+
+            .team-photo {
+                height: 400px;
             }
 
             .about-text h2,
             .section-title {
                 font-size: 2rem;
+            }
+
+            .team-info h3 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .team-photo {
+                height: 350px;
+            }
+
+            .team-badge {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
             }
         }
     </style>
@@ -401,12 +564,13 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>visa</span> help</a>
+            <a href="index.html" class="logo">CYAzor <span>Law</span> Firm</a>
             <nav id="nav">
                 <ul>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="testimonials.html">Testimonials</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -421,19 +585,19 @@
 
     <!-- Page Header -->
     <section class="page-header">
-        <h1>About CY visa help</h1>
+        <h1>About CYAzor Law Firm</h1>
         <p>Your Trusted Partner in U.S. Immigration & Visa Services</p>
     </section>
 
     <!-- About Content -->
     <section class="about-content fade-in-section">
         <div class="about-grid">
-            <img src="assets/images/cynthia-azor.jpg" alt="Cynthia Azor" class="about-image">
+            <img src="assets/images/attorney-cynthia-azor.png" alt="Attorney Cynthia Azor, Esq." class="about-image">
             <div class="about-text">
                 <h2>Our Story</h2>
-                <p>Founded with a passion for helping individuals and families achieve their American dreams, CY visa help has been serving the community with dedication and expertise, making the complex U.S. immigration process simple and accessible.</p>
+                <p>Founded with a passion for helping individuals and families achieve their American dreams, CYAzor Law Firm has been serving the community with dedication and expertise, making the complex U.S. immigration process simple and accessible.</p>
                 <p>We understand that navigating visa applications and immigration procedures can be overwhelming and stressful. That's why we're committed to providing personalized, compassionate support that puts your needs first and guides you through every step of your journey.</p>
-                <p>Our service combines deep immigration knowledge with genuine care for our clients, ensuring that every case receives the attention, expertise, and personalized guidance it deserves.</p>
+                <p>Our service combines deep immigration knowledge with genuine care for our clients, ensuring that every case receives the attention, expertise, and personalized guidance it deserves. As U.S. immigration law is federal, we proudly represent clients in all 50 states from our Tennessee office.</p>
             </div>
         </div>
     </section>
@@ -470,15 +634,65 @@
     <!-- Team Section -->
     <section class="team fade-in-section">
         <div class="team-container">
-            <h2 class="section-title">Meet Our Founder</h2>
+            <h2 class="section-title">Meet the Attorney</h2>
             <div class="team-member">
-                <img src="assets/images/cynthia-azor.jpg" alt="Cynthia Azor" class="team-photo">
+                <div class="team-photo-wrapper">
+                    <img src="assets/images/attorney-cynthia-azor.png" alt="Attorney Cynthia Azor, Esq." class="team-photo">
+                    <div class="team-badge">
+                        <i class="fas fa-balance-scale"></i> Licensed Alabama Attorney
+                    </div>
+                </div>
                 <div class="team-info">
-                    <h3>Cynthia Azor, Esq.</h3>
-                    <p class="title">Founder & Lead Immigration Specialist</p>
-                    <p>Cynthia Azor is a dedicated immigration professional with over 15 years of experience helping clients navigate the complexities of U.S. immigration and visa processes. She graduated from Columbia Law School and has since devoted her career to assisting individuals, families, and businesses with their immigration needs.</p>
-                    <p>Fluent in English, Spanish, and French, Cynthia has successfully guided clients from around the world through visa applications ranging from family-based petitions to complex business immigration cases. Her commitment to client success and wellbeing has earned her recognition as a leading advocate in the immigration services community.</p>
-                    <p>When she's not helping clients achieve their American dreams, Cynthia volunteers with local immigrant advocacy organizations and mentors aspiring professionals in the immigration field.</p>
+                    <h3>Attorney Cynthia Azor, Esq.</h3>
+                    <p class="title">Immigration Attorney</p>
+                    <p class="subtitle">Licensed Alabama Attorney | Nationwide Immigration Representation</p>
+                    
+                    <p>Attorney Cynthia Azor, Esq. is licensed to practice law in Alabama and represents immigration clients in all 50 states, as U.S. immigration law is federal and not restricted by state boundaries.</p>
+                    
+                    <p>She earned her LL.B from the University of Benin, completed her B.L at the Nigerian Law School, and obtained her LL.M in American & Transnational Law from the University of Dayton School of Law, along with a Certificate in the American Legal System.</p>
+                    
+                    <p>With over five years of immigration experience, she has successfully assisted clients with naturalization, green cards, family-based petitions, adjustment of status, VAWA cases, waivers, work authorization, and other immigration benefits.</p>
+
+                    <div class="credentials">
+                        <h4><i class="fas fa-certificate"></i> Professional Certifications & Training</h4>
+                        <div class="credentials-list">
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Certificate in Immigration & Nationality Law</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>CIPP/US (Privacy Certification)</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>HIPAA Compliance Certification</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>AWS Cloud Training</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Notary Public & Loan Signing Agent</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>ADR / Mediation Training</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="memberships">
+                        <h4><i class="fas fa-users"></i> Professional Memberships & Advocacy</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Immigrant & Refugee Rights Coalition of Tennessee</li>
+                            <li><i class="fas fa-check"></i> Institute for Wellbeing in Law</li>
+                            <li><i class="fas fa-check"></i> Stand Up Nashville</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Schedule a Consultation</a>
                 </div>
             </div>
         </div>
@@ -490,7 +704,7 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
                 <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
             </div>
             <div class="footer-section">
@@ -505,13 +719,14 @@
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="testimonials.html">Testimonials</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 CY visa help. All rights reserved.</p>
+            <p>&copy; 2025 CYAzor Law Firm. All rights reserved.</p>
         </div>
     </footer>
 
@@ -523,6 +738,23 @@
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             nav.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            });
         });
 
         // Intersection Observer for Scroll Animations
