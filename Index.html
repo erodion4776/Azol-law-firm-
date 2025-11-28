@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CY visa help - Expert Immigration & Visa Services</title>
+    <title>CY Law Firm - Expert Immigration & Visa Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -391,6 +391,177 @@
 
         .indicator-dot:hover {
             background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Meet the Attorney Section */
+        .attorney {
+            padding: 5rem 2rem;
+            background: var(--white);
+        }
+
+        .attorney-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .attorney-image-wrapper {
+            position: relative;
+        }
+
+        .attorney-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .attorney-image-placeholder {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a5c 100%);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .attorney-image-placeholder i {
+            font-size: 8rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .attorney-image-placeholder span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+        }
+
+        .attorney-badge {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            white-space: nowrap;
+        }
+
+        .attorney-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .attorney-title {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .attorney-subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .attorney-bio {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .attorney-bio p {
+            margin-bottom: 1rem;
+        }
+
+        .attorney-credentials h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .attorney-credentials h3 i {
+            color: var(--accent-color);
+        }
+
+        .credentials-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .credential-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .credential-item:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .credential-item i {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .credential-item:hover i {
+            color: var(--accent-color);
+        }
+
+        .attorney-memberships {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .attorney-memberships h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .attorney-memberships p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .attorney-cta {
+            margin-top: 2rem;
+        }
+
+        .attorney-cta .cta-button {
+            opacity: 1;
+            transform: none;
         }
 
         /* Services Section */
@@ -872,6 +1043,20 @@
             .testimonial-nav.next {
                 right: 1rem;
             }
+
+            .attorney-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .attorney-image-wrapper {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .credentials-list {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -976,6 +1161,15 @@
             .testimonial-nav.next {
                 right: 0.5rem;
             }
+
+            .attorney-content h2 {
+                font-size: 2rem;
+            }
+
+            .attorney-image,
+            .attorney-image-placeholder {
+                height: 400px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1008,6 +1202,11 @@
             .testimonial-author {
                 font-size: 1rem;
             }
+
+            .attorney-badge {
+                font-size: 0.85rem;
+                padding: 0.6rem 1.5rem;
+            }
         }
     </style>
 </head>
@@ -1015,7 +1214,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>visa</span> help</a>
+            <a href="index.html" class="logo">CY <span>Law</span> Firm</a>
             <nav id="nav">
                 <ul>
                     <li><a href="about.html">About</a></li>
@@ -1060,7 +1259,7 @@
 
         <!-- Carousel Content Container -->
         <div class="carousel-container">
-            <!-- Slide 1: Immigration Services - UPDATED LINK -->
+            <!-- Slide 1: Immigration Services -->
             <div class="carousel-slide active">
                 <div class="slide-content">
                     <h1>Your Trusted Partner for U.S. Immigration & Visa Solutions</h1>
@@ -1158,6 +1357,82 @@
         </div>
     </section>
 
+    <!-- Meet the Attorney Section -->
+    <section class="attorney">
+        <div class="section-container">
+            <h2 class="section-title">Meet the Attorney</h2>
+            <p class="section-subtitle">Dedicated legal expertise for your immigration journey</p>
+            
+            <div class="attorney-container">
+                <div class="attorney-image-wrapper">
+                    <!-- Replace with actual attorney photo -->
+                    <div class="attorney-image-placeholder">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Attorney Photo</span>
+                    </div>
+                    <!-- Uncomment and use this when you have the actual image -->
+                    <!-- <img src="assets/images/attorney-cynthia-azor.jpg" alt="Attorney Cynthia Azor, Esq." class="attorney-image"> -->
+                    <div class="attorney-badge">
+                        <i class="fas fa-balance-scale"></i> Licensed Alabama Attorney
+                    </div>
+                </div>
+                
+                <div class="attorney-content">
+                    <h2>Attorney Cynthia Azor, Esq.</h2>
+                    <p class="attorney-title">Immigration Attorney</p>
+                    <p class="attorney-subtitle">Licensed Alabama Attorney | Nationwide Immigration Representation</p>
+                    
+                    <div class="attorney-bio">
+                        <p>Attorney Cynthia Azor, Esq. is licensed to practice law in Alabama and represents immigration clients in all 50 states, as U.S. immigration law is federal and not restricted by state boundaries.</p>
+                        
+                        <p>She earned her LL.B from the University of Benin, completed her B.L at the Nigerian Law School, and obtained her LL.M in American & Transnational Law from the University of Dayton School of Law, along with a Certificate in the American Legal System.</p>
+                        
+                        <p>With over five years of immigration experience, she has successfully assisted clients with naturalization, green cards, family-based petitions, adjustment of status, VAWA cases, waivers, work authorization, and other immigration benefits.</p>
+                    </div>
+                    
+                    <div class="attorney-credentials">
+                        <h3><i class="fas fa-certificate"></i> Professional Certifications & Training</h3>
+                        <div class="credentials-list">
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Certificate in Immigration & Nationality Law</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>CIPP/US (Privacy Certification)</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>HIPAA Compliance Certification</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>AWS Cloud Training</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Notary Public & Loan Signing Agent</span>
+                            </div>
+                            <div class="credential-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>ADR / Mediation Training</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="attorney-memberships">
+                        <h4><i class="fas fa-users"></i> Professional Memberships</h4>
+                        <p>She is a member of the <strong>Immigrant & Refugee Rights Coalition of Tennessee</strong> and the <strong>Institute for Wellbeing in Law</strong>, where she advocates for immigrant rights and legal wellness.</p>
+                    </div>
+                    
+                    <div class="attorney-cta">
+                        <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Schedule a Consultation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Services Section -->
     <section class="services">
         <div class="section-container">
@@ -1224,9 +1499,9 @@
     <!-- About Section -->
     <section class="about">
         <div class="section-container">
-            <h2 class="section-title">About CY visa help</h2>
+            <h2 class="section-title">About CY Law Firm</h2>
             <div class="about-content">
-                <p>CY visa help is dedicated to making your U.S. immigration journey smooth, stress-free, and successful. With extensive experience in immigration law, visa processing, and business immigration, we understand the unique challenges faced by individuals and families navigating the complex U.S. immigration system.</p>
+                <p>CY Law Firm is dedicated to making your U.S. immigration journey smooth, stress-free, and successful. With extensive experience in immigration law, visa processing, and business immigration, we understand the unique challenges faced by individuals and families navigating the complex U.S. immigration system.</p>
                 <p>Our mission is to provide expert guidance, personalized support, and comprehensive solutions for all your immigration needs. Whether you're seeking family reunification, pursuing work opportunities, or building your business in America, we're here to help you every step of the way with professionalism, compassion, and dedication.</p>
             </div>
         </div>
@@ -1269,7 +1544,7 @@
                 <div class="testimonial-slide active">
                     <div class="testimonial-card">
                         <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"CY visa help made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
+                        <p class="testimonial-text">"CY Law Firm made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
                         <p class="testimonial-author">- Maria & Carlos Rodriguez</p>
                     </div>
                 </div>
@@ -1278,7 +1553,7 @@
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
                         <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"Working with CY visa help was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
+                        <p class="testimonial-text">"Working with CY Law Firm was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
                         <p class="testimonial-author">- Chinemelum Azike</p>
                     </div>
                 </div>
@@ -1287,7 +1562,7 @@
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
                         <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"The business visa services provided by CY visa help were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
+                        <p class="testimonial-text">"The business visa services provided by CY Law Firm were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
                         <p class="testimonial-author">- Dr. Adebayo Ogundimu</p>
                     </div>
                 </div>
@@ -1350,7 +1625,7 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cylawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cylawfirm.com</a></p>
                 <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
             </div>
             <div class="footer-section">
@@ -1372,7 +1647,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 CY visa help. All rights reserved.</p>
+            <p>&copy; 2025 CY Law Firm. All rights reserved.</p>
         </div>
     </footer>
 
