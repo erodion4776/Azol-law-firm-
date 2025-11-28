@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - CYAzor Law Firm | Immigration Attorney</title>
+    <title>Contact Us - CYAzor Law Firm | Immigration Attorney</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -21,6 +21,8 @@
             --white: #ffffff;
             --text-dark: #333333;
             --text-light: #666666;
+            --success-color: #28a745;
+            --error-color: #dc3545;
         }
 
         body {
@@ -141,260 +143,429 @@
         .page-header p {
             font-size: 1.2rem;
             opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* About Content */
-        .about-content {
+        /* Contact Section */
+        .contact-section {
             padding: 5rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .about-grid {
+        .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1.5fr;
             gap: 4rem;
-            align-items: center;
-            margin-bottom: 5rem;
+            align-items: start;
         }
 
-        .about-image {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-
-        .about-text h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .about-text p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Values Section */
-        .values {
-            background: var(--light-bg);
-            padding: 5rem 2rem;
-        }
-
-        .values-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 3rem;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .value-card {
+        /* Contact Info */
+        .contact-info {
             background: var(--white);
             padding: 2.5rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
         }
 
-        .value-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .value-card i {
-            font-size: 3rem;
-            color: var(--accent-color);
+        .contact-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
             margin-bottom: 1.5rem;
         }
 
-        .value-card h3 {
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .contact-item:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-icon i {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+        }
+
+        .contact-details h3 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-details p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .contact-details a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Office Hours */
+        .office-hours {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .office-hours h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .office-hours h3 i {
+            color: var(--accent-color);
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+            color: var(--text-light);
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        .hours-list li span:first-child {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Social Links */
+        .social-links {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--light-bg);
+        }
+
+        .social-links h3 {
+            font-family: 'Playfair Display', serif;
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
 
-        .value-card p {
-            color: var(--text-light);
-            line-height: 1.8;
+        .social-icons {
+            display: flex;
+            gap: 1rem;
         }
 
-        /* Team Section */
-        .team {
-            padding: 5rem 2rem;
-        }
-
-        .team-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .team-member {
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 3rem;
-            align-items: start;
-            margin-bottom: 3rem;
-        }
-
-        .team-photo-wrapper {
-            position: relative;
-        }
-
-        .team-photo {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-
-        .team-badge {
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent-color);
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--white);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            white-space: nowrap;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .team-info h3 {
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* Contact Form */
+        .contact-form-container {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+        }
+
+        .contact-form-container h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
 
-        .team-info .title {
-            color: var(--accent-color);
-            font-size: 1.2rem;
+        .contact-form-container .subtitle {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
             font-weight: 500;
+            color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
 
-        .team-info .subtitle {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid var(--light-bg);
+        .form-group label .required {
+            color: var(--error-color);
         }
 
-        .team-info p {
-            color: var(--text-light);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        /* Credentials Section */
-        .credentials {
-            margin-top: 2rem;
-        }
-
-        .credentials h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .credentials h4 i {
-            color: var(--accent-color);
-        }
-
-        .credentials-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .credential-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.6rem 0.8rem;
-            background: var(--light-bg);
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .credential-item:hover {
-            background: var(--primary-color);
-            color: var(--white);
-            transform: translateX(5px);
-        }
-
-        .credential-item i {
-            color: var(--accent-color);
-            font-size: 0.9rem;
-        }
-
-        /* Memberships */
-        .memberships {
-            background: var(--light-bg);
-            padding: 1.2rem;
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
             border-radius: 8px;
-            border-left: 4px solid var(--accent-color);
-            margin-top: 1.5rem;
+            font-size: 1rem;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--white);
         }
 
-        .memberships h4 {
-            font-family: 'Playfair Display', serif;
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #aaa;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .checkbox-group label {
+            display: block;
+            font-weight: 500;
             color: var(--primary-color);
             margin-bottom: 0.8rem;
-            font-size: 1.1rem;
         }
 
-        .memberships ul {
-            list-style: none;
+        .checkbox-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
         }
 
-        .memberships ul li {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            padding: 0.3rem 0;
+        .checkbox-item {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
         }
 
-        .memberships ul li i {
-            color: var(--accent-color);
-            font-size: 0.85rem;
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
         }
 
-        /* CTA Button */
-        .cta-button {
+        .checkbox-item span {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Newsletter Opt-in */
+        .newsletter-optin {
+            background: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .newsletter-optin label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .newsletter-optin input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .newsletter-optin .optin-text {
+            color: var(--text-dark);
+        }
+
+        .newsletter-optin .optin-text strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .newsletter-optin .optin-text span {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            background: var(--accent-color);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: #c4a137;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .submit-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .submit-btn.loading .spinner {
+            display: block;
+        }
+
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Form Messages */
+        .form-message {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .form-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .form-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .form-message i {
+            margin-right: 0.5rem;
+        }
+
+        /* Quick Book Section */
+        .quick-book {
+            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--white);
+            margin-top: 2rem;
+            border-radius: 15px;
+        }
+
+        .quick-book h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-book p {
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .quick-book .cta-button {
             display: inline-block;
             padding: 1rem 2.5rem;
             background: var(--accent-color);
@@ -404,13 +575,31 @@
             border-radius: 50px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            margin-top: 1.5rem;
         }
 
-        .cta-button:hover {
+        .quick-book .cta-button:hover {
             background: #c4a137;
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 0 2rem 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            height: 400px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         /* Footer */
@@ -481,18 +670,9 @@
 
         /* Mobile Styles */
         @media (max-width: 1024px) {
-            .team-member {
+            .contact-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
-            }
-
-            .team-photo-wrapper {
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .credentials-list {
-                grid-template-columns: 1fr;
             }
         }
 
@@ -526,36 +706,21 @@
                 font-size: 2rem;
             }
 
-            .about-grid {
+            .form-row {
                 grid-template-columns: 1fr;
             }
 
-            .about-image {
+            .checkbox-options {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info,
+            .contact-form-container {
+                padding: 1.5rem;
+            }
+
+            .map-container {
                 height: 300px;
-            }
-
-            .team-photo {
-                height: 400px;
-            }
-
-            .about-text h2,
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .team-info h3 {
-                font-size: 1.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .team-photo {
-                height: 350px;
-            }
-
-            .team-badge {
-                font-size: 0.8rem;
-                padding: 0.5rem 1rem;
             }
         }
     </style>
@@ -585,116 +750,212 @@
 
     <!-- Page Header -->
     <section class="page-header">
-        <h1>About CYAzor Law Firm</h1>
-        <p>Your Trusted Partner in U.S. Immigration & Visa Services</p>
+        <h1>Contact Us</h1>
+        <p>Ready to start your immigration journey? Get in touch with Attorney Cynthia Azor for expert legal guidance.</p>
     </section>
 
-    <!-- About Content -->
-    <section class="about-content fade-in-section">
-        <div class="about-grid">
-            <img src="assets/images/attorney-cynthia-azor.png" alt="Attorney Cynthia Azor, Esq." class="about-image">
-            <div class="about-text">
-                <h2>Our Story</h2>
-                <p>Founded with a passion for helping individuals and families achieve their American dreams, CYAzor Law Firm has been serving the community with dedication and expertise, making the complex U.S. immigration process simple and accessible.</p>
-                <p>We understand that navigating visa applications and immigration procedures can be overwhelming and stressful. That's why we're committed to providing personalized, compassionate support that puts your needs first and guides you through every step of your journey.</p>
-                <p>Our service combines deep immigration knowledge with genuine care for our clients, ensuring that every case receives the attention, expertise, and personalized guidance it deserves. As U.S. immigration law is federal, we proudly represent clients in all 50 states from our Tennessee office.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Values Section -->
-    <section class="values fade-in-section">
-        <div class="values-container">
-            <h2 class="section-title">Our Core Values</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <i class="fas fa-heart"></i>
-                    <h3>Compassion</h3>
-                    <p>We treat every client with empathy and understanding, recognizing the personal nature of your immigration journey and visa needs.</p>
-                </div>
-                <div class="value-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Integrity</h3>
-                    <p>Honesty and transparency guide everything we do. You can trust us to provide straightforward advice and ethical immigration assistance.</p>
-                </div>
-                <div class="value-card">
-                    <i class="fas fa-star"></i>
-                    <h3>Excellence</h3>
-                    <p>We strive for the highest standards in visa services, staying current with immigration law changes and best practices to serve you better.</p>
-                </div>
-                <div class="value-card">
-                    <i class="fas fa-users"></i>
-                    <h3>Client-Focused</h3>
-                    <p>Your goals are our goals. We provide personalized immigration strategies tailored to your unique situation and visa requirements.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section class="team fade-in-section">
-        <div class="team-container">
-            <h2 class="section-title">Meet the Attorney</h2>
-            <div class="team-member">
-                <div class="team-photo-wrapper">
-                    <img src="assets/images/attorney-cynthia-azor.png" alt="Attorney Cynthia Azor, Esq." class="team-photo">
-                    <div class="team-badge">
-                        <i class="fas fa-balance-scale"></i> Licensed Alabama Attorney
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-grid">
+            <!-- Contact Info -->
+            <div class="contact-info fade-in-section">
+                <h2>Get In Touch</h2>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Phone</h3>
+                        <p><a href="tel:+16292022006">+1 (629) 202-2006</a></p>
                     </div>
                 </div>
-                <div class="team-info">
-                    <h3>Attorney Cynthia Azor, Esq.</h3>
-                    <p class="title">Immigration Attorney</p>
-                    <p class="subtitle">Licensed Alabama Attorney | Nationwide Immigration Representation</p>
-                    
-                    <p>Attorney Cynthia Azor, Esq. is licensed to practice law in Alabama and represents immigration clients in all 50 states, as U.S. immigration law is federal and not restricted by state boundaries.</p>
-                    
-                    <p>She earned her LL.B from the University of Benin, completed her B.L at the Nigerian Law School, and obtained her LL.M in American & Transnational Law from the University of Dayton School of Law, along with a Certificate in the American Legal System.</p>
-                    
-                    <p>With over five years of immigration experience, she has successfully assisted clients with naturalization, green cards, family-based petitions, adjustment of status, VAWA cases, waivers, work authorization, and other immigration benefits.</p>
 
-                    <div class="credentials">
-                        <h4><i class="fas fa-certificate"></i> Professional Certifications & Training</h4>
-                        <div class="credentials-list">
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Certificate in Immigration & Nationality Law</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>CIPP/US (Privacy Certification)</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>HIPAA Compliance Certification</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>AWS Cloud Training</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Notary Public & Loan Signing Agent</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>ADR / Mediation Training</span>
-                            </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@cyazorlawfirm.com">info@cyazorlawfirm.com</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Office Address</h3>
+                        <p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank">
+                                153 Dreville Dr<br>
+                                La Vergne, Tennessee 37086
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Service Area</h3>
+                        <p>Nationwide - All 50 States<br><small>(U.S. Immigration Law is Federal)</small></p>
+                    </div>
+                </div>
+
+                <!-- Office Hours -->
+                <div class="office-hours">
+                    <h3><i class="fas fa-clock"></i> Office Hours</h3>
+                    <ul class="hours-list">
+                        <li><span>Monday - Friday</span><span>9:00 AM - 6:00 PM</span></li>
+                        <li><span>Saturday</span><span>10:00 AM - 2:00 PM</span></li>
+                        <li><span>Sunday</span><span>Closed</span></li>
+                    </ul>
+                </div>
+
+                <!-- Social Links -->
+                <div class="social-links">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Book -->
+                <div class="quick-book">
+                    <h3>Prefer to Book Directly?</h3>
+                    <p>Schedule your consultation online</p>
+                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">
+                        <i class="fas fa-calendar-check"></i> Book Now
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-container fade-in-section">
+                <h2>Send Us a Message</h2>
+                <p class="subtitle">Fill out the form below and we'll get back to you within 24-48 hours.</p>
+
+                <!-- Form Messages -->
+                <div class="form-message" id="formMessage"></div>
+
+                <!-- IMPORTANT: Replace YOUR_MAILCHIMP_FORM_ACTION with your actual Mailchimp form action URL -->
+                <form id="contactForm" action="YOUR_MAILCHIMP_FORM_ACTION" method="POST" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstName" name="FNAME" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastName" name="LNAME" placeholder="Enter your last name" required>
                         </div>
                     </div>
 
-                    <div class="memberships">
-                        <h4><i class="fas fa-users"></i> Professional Memberships & Advocacy</h4>
-                        <ul>
-                            <li><i class="fas fa-check"></i> Immigrant & Refugee Rights Coalition of Tennessee</li>
-                            <li><i class="fas fa-check"></i> Institute for Wellbeing in Law</li>
-                            <li><i class="fas fa-check"></i> Stand Up Nashville</li>
-                        </ul>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="EMAIL" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="PHONE" placeholder="Enter your phone number">
+                        </div>
                     </div>
 
-                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Schedule a Consultation</a>
-                </div>
+                    <div class="form-group">
+                        <label for="service">Service Interested In <span class="required">*</span></label>
+                        <select id="service" name="SERVICE" required>
+                            <option value="">Select a service...</option>
+                            <option value="Family Visa">Family-Based Visa</option>
+                            <option value="Work Visa">Work / Employment Visa</option>
+                            <option value="Green Card">Green Card Application</option>
+                            <option value="Citizenship">U.S. Citizenship / Naturalization</option>
+                            <option value="Business Immigration">Business Immigration</option>
+                            <option value="VAWA">VAWA Case</option>
+                            <option value="Waiver">Waiver Application</option>
+                            <option value="Document Review">Document Review / Assessment</option>
+                            <option value="Consultation">General Consultation</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Country of Origin</label>
+                        <input type="text" id="country" name="COUNTRY" placeholder="Enter your country of origin">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label>How did you hear about us?</label>
+                        <div class="checkbox-options">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="SOURCE" value="Google">
+                                <span>Google Search</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="SOURCE" value="Social Media">
+                                <span>Social Media</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="SOURCE" value="Referral">
+                                <span>Friend / Referral</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="SOURCE" value="Other">
+                                <span>Other</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message <span class="required">*</span></label>
+                        <textarea id="message" name="MESSAGE" placeholder="Please describe your immigration situation and how we can help you..." required></textarea>
+                    </div>
+
+                    <!-- Newsletter Opt-in -->
+                    <div class="newsletter-optin">
+                        <label>
+                            <input type="checkbox" name="NEWSLETTER" value="Yes" checked>
+                            <div class="optin-text">
+                                <strong><i class="fas fa-envelope-open-text"></i> Subscribe to Our Newsletter</strong>
+                                <span>Receive immigration updates, tips, and exclusive resources. You can unsubscribe anytime.</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
+                        <span class="spinner"></span>
+                    </button>
+                </form>
             </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section fade-in-section">
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3227.8!2d-86.5819!3d35.9901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDU5JzI0LjQiTiA4NsKwMzQnNTQuOCJX!5e0!3m2!1sen!2sus!4v1234567890"
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="CYAzor Law Firm Location">
+            </iframe>
         </div>
     </section>
 
@@ -705,7 +966,7 @@
                 <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
                 <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>La Vergne, Tennessee 37086</a></p>
             </div>
             <div class="footer-section">
                 <h3>Office Hours</h3>
@@ -773,6 +1034,65 @@
 
         const fadeElements = document.querySelectorAll('.fade-in-section');
         fadeElements.forEach(element => observer.observe(element));
+
+        // Form Submission Handler
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Basic validation
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value.trim();
+
+            if (!firstName || !lastName || !email || !service || !message) {
+                showMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showMessage('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+
+            try {
+                // For Mailchimp integration, you'll need to use their API
+                // This is a placeholder for the actual submission
+                
+                // Simulate form submission (remove this in production)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Show success message
+                showMessage('Thank you for your message! We\'ll get back to you within 24-48 hours.', 'success');
+                contactForm.reset();
+
+            } catch (error) {
+                showMessage('Something went wrong. Please try again or contact us directly.', 'error');
+            } finally {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showMessage(text, type) {
+            formMessage.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${text}`;
+            formMessage.className = `form-message ${type}`;
+            formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
     </script>
 </body>
 </html>
