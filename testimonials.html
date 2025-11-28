@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testimonials - CY visa help</title>
+    <title>Testimonials - CYAzor Law Firm | Client Success Stories</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -227,6 +227,53 @@
             margin-bottom: 1rem;
         }
 
+        /* Featured Testimonial */
+        .featured-testimonial {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0d3a66 100%);
+            color: var(--white);
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            border-radius: 15px;
+        }
+
+        .featured-testimonial .testimonial-card {
+            background: rgba(255,255,255,0.1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .featured-testimonial .testimonial-card::before {
+            color: var(--accent-color);
+            opacity: 0.4;
+        }
+
+        .featured-testimonial .testimonial-text {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.3rem;
+        }
+
+        .featured-testimonial .author-info h4 {
+            color: var(--accent-color);
+        }
+
+        .featured-testimonial .author-info p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .featured-label {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .featured-label span {
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         /* Stats Section */
         .stats {
             background: var(--primary-color);
@@ -397,6 +444,14 @@
             .stat-item h3 {
                 font-size: 2.5rem;
             }
+
+            .featured-testimonial .testimonial-text {
+                font-size: 1.1rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -404,12 +459,13 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>visa</span> help</a>
+            <a href="index.html" class="logo">CYAzor <span>Law</span> Firm</a>
             <nav id="nav">
                 <ul>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="testimonials.html">Testimonials</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -425,7 +481,31 @@
     <!-- Page Header -->
     <section class="page-header">
         <h1>Immigration Success Stories</h1>
-        <p>See how we've helped families achieve their American dream</p>
+        <p>See how Attorney Cynthia Azor has helped families achieve their American dream</p>
+    </section>
+
+    <!-- Featured Testimonial -->
+    <section class="featured-testimonial fade-in-section">
+        <div class="featured-label">
+            <span><i class="fas fa-star"></i> Featured Testimonial</span>
+        </div>
+        <div class="testimonial-card">
+            <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-text">"Working with CYAzor Law Firm was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
+            <div class="testimonial-author">
+                <div class="author-avatar">CA</div>
+                <div class="author-info">
+                    <h4>Chinemelum Azike</h4>
+                    <p>U.S. Citizen - Naturalization Success</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Testimonials Section -->
@@ -439,7 +519,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text">"CY visa help made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
+                <p class="testimonial-text">"CYAzor Law Firm made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">MR</div>
                     <div class="author-info">
@@ -457,7 +537,25 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text">"I was facing deportation and felt hopeless. CY visa help fought tirelessly for my case with compassion and expertise. They kept my family together and gave us a future in America. Forever grateful!"</p>
+                <p class="testimonial-text">"The business visa services provided by CYAzor Law Firm were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AO</div>
+                    <div class="author-info">
+                        <h4>Dr. Adebayo Ogundimu</h4>
+                        <p>E-2 Investor Visa Holder</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card fade-in-section">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"I was facing deportation and felt hopeless. CYAzor Law Firm fought tirelessly for my case with compassion and expertise. They kept my family together and gave us a future in America. Forever grateful!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">JM</div>
                     <div class="author-info">
@@ -493,7 +591,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text">"Professional, knowledgeable, and genuinely caring. CY visa help helped me navigate the complex H-1B process with clarity and confidence. I received my visa approval without any issues. Highly recommended!"</p>
+                <p class="testimonial-text">"Professional, knowledgeable, and genuinely caring. Attorney Azor helped me navigate the complex H-1B process with clarity and confidence. I received my visa approval without any issues. Highly recommended!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">RP</div>
                     <div class="author-info">
@@ -511,7 +609,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text">"After being denied twice, I almost gave up on my citizenship dream. CY visa help reviewed my case, identified the issues, and expertly guided me through the process. I'm now a proud U.S. citizen!"</p>
+                <p class="testimonial-text">"After being denied twice, I almost gave up on my citizenship dream. CYAzor Law Firm reviewed my case, identified the issues, and expertly guided me through the process. I'm now a proud U.S. citizen!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">LC</div>
                     <div class="author-info">
@@ -529,12 +627,30 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="testimonial-text">"As an entrepreneur seeking an E-2 visa, I needed expert guidance. CY visa help provided comprehensive support for both my business setup and visa application. My American business dream is now a reality!"</p>
+                <p class="testimonial-text">"As an entrepreneur seeking an E-2 visa, I needed expert guidance. CYAzor Law Firm provided comprehensive support for both my business setup and visa application. My American business dream is now a reality!"</p>
                 <div class="testimonial-author">
                     <div class="author-avatar">AD</div>
                     <div class="author-info">
                         <h4>Aisha Davis</h4>
                         <p>E-2 Investor Visa Holder</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card fade-in-section">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Attorney Azor's expertise in VAWA cases gave me hope when I had none. She handled my case with sensitivity and professionalism, and I now have the protection I needed. Thank you for giving me my life back."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">AN</div>
+                    <div class="author-info">
+                        <h4>Anonymous</h4>
+                        <p>VAWA Case Success</p>
                     </div>
                 </div>
             </div>
@@ -545,11 +661,11 @@
     <section class="stats fade-in-section">
         <div class="stats-container">
             <div class="stat-item">
-                <h3>500+</h3>
+                <h3>200+</h3>
                 <p>Successful Visa Applications</p>
             </div>
             <div class="stat-item">
-                <h3>15+</h3>
+                <h3>5+</h3>
                 <p>Years of Immigration Experience</p>
             </div>
             <div class="stat-item">
@@ -557,8 +673,8 @@
                 <p>Client Satisfaction Rate</p>
             </div>
             <div class="stat-item">
-                <h3>50+</h3>
-                <p>Countries Represented</p>
+                <h3>50</h3>
+                <p>States Represented</p>
             </div>
         </div>
     </section>
@@ -566,8 +682,8 @@
     <!-- CTA Section -->
     <section class="cta-section fade-in-section">
         <h2>Ready to Start Your Immigration Journey?</h2>
-        <p>Join hundreds of satisfied clients who achieved their American dream with our expert visa assistance</p>
-        <a href="contact.html" class="cta-button">Schedule Your Consultation</a>
+        <p>Join hundreds of satisfied clients who achieved their American dream with Attorney Cynthia Azor's expert guidance</p>
+        <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Schedule Your Consultation</a>
     </section>
 
     <!-- Footer -->
@@ -576,7 +692,7 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyvisahelp.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyvisahelp.com</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
                 <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
             </div>
             <div class="footer-section">
@@ -591,13 +707,14 @@
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="shop.html">Shop</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="testimonials.html">Testimonials</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 CY visa help. All rights reserved.</p>
+            <p>&copy; 2025 CYAzor Law Firm. All rights reserved.</p>
         </div>
     </footer>
 
@@ -609,6 +726,23 @@
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             nav.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+
+        // Close menu when clicking a link
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            });
         });
 
         // Intersection Observer for Scroll Animations
