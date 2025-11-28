@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CY Law Firm - Expert Immigration & Visa Services</title>
+    <title>CYAzor Law Firm - Expert Immigration & Visa Services</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -420,30 +420,6 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
 
-        .attorney-image-placeholder {
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #1a3a5c 100%);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-
-        .attorney-image-placeholder i {
-            font-size: 8rem;
-            margin-bottom: 1rem;
-            color: var(--accent-color);
-        }
-
-        .attorney-image-placeholder span {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-        }
-
         .attorney-badge {
             position: absolute;
             bottom: -20px;
@@ -553,6 +529,25 @@
             color: var(--text-light);
             font-size: 0.95rem;
             line-height: 1.7;
+        }
+
+        .attorney-memberships ul {
+            list-style: none;
+            margin-top: 0.8rem;
+        }
+
+        .attorney-memberships ul li {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .attorney-memberships ul li i {
+            color: var(--accent-color);
+            font-size: 0.9rem;
         }
 
         .attorney-cta {
@@ -1166,8 +1161,7 @@
                 font-size: 2rem;
             }
 
-            .attorney-image,
-            .attorney-image-placeholder {
+            .attorney-image {
                 height: 400px;
             }
         }
@@ -1214,7 +1208,7 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">CY <span>Law</span> Firm</a>
+            <a href="index.html" class="logo">CYAzor <span>Law</span> Firm</a>
             <nav id="nav">
                 <ul>
                     <li><a href="about.html">About</a></li>
@@ -1365,13 +1359,7 @@
             
             <div class="attorney-container">
                 <div class="attorney-image-wrapper">
-                    <!-- Replace with actual attorney photo -->
-                    <div class="attorney-image-placeholder">
-                        <i class="fas fa-user-tie"></i>
-                        <span>Attorney Photo</span>
-                    </div>
-                    <!-- Uncomment and use this when you have the actual image -->
-                    <!-- <img src="assets/images/attorney-cynthia-azor.jpg" alt="Attorney Cynthia Azor, Esq." class="attorney-image"> -->
+                    <img src="assets/images/attorney-cynthia-azor.png" alt="Attorney Cynthia Azor, Esq. - Licensed Alabama Immigration Attorney" class="attorney-image">
                     <div class="attorney-badge">
                         <i class="fas fa-balance-scale"></i> Licensed Alabama Attorney
                     </div>
@@ -1421,8 +1409,13 @@
                     </div>
                     
                     <div class="attorney-memberships">
-                        <h4><i class="fas fa-users"></i> Professional Memberships</h4>
-                        <p>She is a member of the <strong>Immigrant & Refugee Rights Coalition of Tennessee</strong> and the <strong>Institute for Wellbeing in Law</strong>, where she advocates for immigrant rights and legal wellness.</p>
+                        <h4><i class="fas fa-users"></i> Professional Memberships & Advocacy</h4>
+                        <p>Attorney Azor is actively involved in organizations that advocate for immigrant rights and legal wellness:</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Immigrant & Refugee Rights Coalition of Tennessee</li>
+                            <li><i class="fas fa-check"></i> Institute for Wellbeing in Law</li>
+                            <li><i class="fas fa-check"></i> Stand Up Nashville</li>
+                        </ul>
                     </div>
                     
                     <div class="attorney-cta">
@@ -1499,9 +1492,9 @@
     <!-- About Section -->
     <section class="about">
         <div class="section-container">
-            <h2 class="section-title">About CY Law Firm</h2>
+            <h2 class="section-title">About CYAzor Law Firm</h2>
             <div class="about-content">
-                <p>CY Law Firm is dedicated to making your U.S. immigration journey smooth, stress-free, and successful. With extensive experience in immigration law, visa processing, and business immigration, we understand the unique challenges faced by individuals and families navigating the complex U.S. immigration system.</p>
+                <p>CYAzor Law Firm is dedicated to making your U.S. immigration journey smooth, stress-free, and successful. With extensive experience in immigration law, visa processing, and business immigration, we understand the unique challenges faced by individuals and families navigating the complex U.S. immigration system.</p>
                 <p>Our mission is to provide expert guidance, personalized support, and comprehensive solutions for all your immigration needs. Whether you're seeking family reunification, pursuing work opportunities, or building your business in America, we're here to help you every step of the way with professionalism, compassion, and dedication.</p>
             </div>
         </div>
@@ -1510,8 +1503,8 @@
     <!-- Blog Section -->
     <section class="blog">
         <div class="section-container">
-            <h2 class="section-title">Latest Immigration News & Updates</h2>
-            <p class="section-subtitle">Stay informed with our expert insights and immigration tips</p>
+            <h2 class="section-title">Immigration Insights & Legal Updates</h2>
+            <p class="section-subtitle">Expert guidance, visa tips, and the latest immigration news to help you navigate your journey</p>
             
             <div class="blog-grid" id="blogGrid">
                 <div class="blog-placeholder">
@@ -1521,7 +1514,7 @@
             </div>
             
             <div class="blog-cta">
-                <a href="blog.html" class="cta-button">View All Articles</a>
+                <a href="blog.html" class="cta-button">Explore All Articles</a>
             </div>
         </div>
     </section>
@@ -1544,7 +1537,7 @@
                 <div class="testimonial-slide active">
                     <div class="testimonial-card">
                         <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"CY Law Firm made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
+                        <p class="testimonial-text">"CYAzor Law Firm made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
                         <p class="testimonial-author">- Maria & Carlos Rodriguez</p>
                     </div>
                 </div>
@@ -1553,7 +1546,7 @@
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
                         <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"Working with CY Law Firm was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
+                        <p class="testimonial-text">"Working with CYAzor Law Firm was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
                         <p class="testimonial-author">- Chinemelum Azike</p>
                     </div>
                 </div>
@@ -1562,7 +1555,7 @@
                 <div class="testimonial-slide">
                     <div class="testimonial-card">
                         <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"The business visa services provided by CY Law Firm were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
+                        <p class="testimonial-text">"The business visa services provided by CYAzor Law Firm were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
                         <p class="testimonial-author">- Dr. Adebayo Ogundimu</p>
                     </div>
                 </div>
@@ -1625,7 +1618,7 @@
             <div class="footer-section">
                 <h3>Contact Us</h3>
                 <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cylawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cylawfirm.com</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
                 <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
             </div>
             <div class="footer-section">
@@ -1647,7 +1640,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 CY Law Firm. All rights reserved.</p>
+            <p>&copy; 2025 CYAzor Law Firm. All rights reserved.</p>
         </div>
     </footer>
 
