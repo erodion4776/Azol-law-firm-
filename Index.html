@@ -7,1171 +7,147 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Netlify Identity Widget -->
+    <!-- Netlify Identity (Optional, can be removed if using Supabase Admin) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #0a2342;
-            --accent-color: #d4af37;
-            --light-bg: #f9f9f9;
-            --white: #ffffff;
-            --text-dark: #333333;
-            --text-light: #666666;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Header Styles */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--accent-color);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent-color);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
-        /* Hero Carousel Section */
-        .hero-carousel {
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-            background: var(--primary-color);
-        }
-
-        .hero-video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 35, 66, 0.75);
-            z-index: 1;
-        }
-
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .slide-content {
-            position: relative;
-            text-align: center;
-            color: var(--white);
-            max-width: 900px;
-            padding: 2rem;
-        }
-
-        .slide-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
-        }
-
-        .carousel-slide.active .slide-content h1 {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .slide-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
-            font-weight: 300;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
-        }
-
-        .carousel-slide.active .slide-content p {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--accent-color);
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .carousel-slide.active .cta-button {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s, background 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background: #c4a137;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        .slide-thumbnails {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .carousel-slide.active .slide-thumbnails {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
-        }
-
-        .thumbnail {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-
-        .thumbnail:hover {
-            transform: scale(1.1);
-        }
-
-        .thumbnail i {
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
-
-        .thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .unmute-btn {
-            position: absolute;
-            bottom: 6rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: rgba(212, 175, 55, 0.9);
-            border: 2px solid white;
-            border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .unmute-btn:hover {
-            background: rgba(212, 175, 55, 1);
-            transform: scale(1.1);
-        }
-
-        .unmute-btn:focus {
-            outline: 2px solid white;
-            outline-offset: 3px;
-        }
-
-        .carousel-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(212, 175, 55, 0.9);
-            color: var(--white);
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .carousel-arrow:hover {
-            background: rgba(212, 175, 55, 1);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-arrow.left {
-            left: 2rem;
-        }
-
-        .carousel-arrow.right {
-            right: 2rem;
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 1rem;
-            z-index: 10;
-        }
-
-        .indicator-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            border: 2px solid var(--white);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .indicator-dot.active {
-            background: var(--accent-color);
-            transform: scale(1.2);
-        }
-
-        .indicator-dot:hover {
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        /* Meet the Attorney Section */
-        .attorney {
-            padding: 5rem 2rem;
-            background: var(--white);
-        }
-
-        .attorney-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .attorney-image-wrapper {
-            position: relative;
-        }
-
-        .attorney-image {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-
-        .attorney-badge {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent-color);
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
-            white-space: nowrap;
-        }
-
-        .attorney-content h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .attorney-title {
-            font-size: 1.2rem;
-            color: var(--accent-color);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
-
-        .attorney-subtitle {
-            font-size: 1rem;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid var(--light-bg);
-        }
-
-        .attorney-bio {
-            color: var(--text-light);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .attorney-bio p {
-            margin-bottom: 1rem;
-        }
-
-        .attorney-credentials h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .attorney-credentials h3 i {
-            color: var(--accent-color);
-        }
-
-        .credentials-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-        }
-
-        .credential-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 0.8rem 1rem;
-            background: var(--light-bg);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .credential-item:hover {
-            background: var(--primary-color);
-            color: var(--white);
-            transform: translateX(5px);
-        }
-
-        .credential-item i {
-            color: var(--accent-color);
-            font-size: 1.1rem;
-        }
-
-        .credential-item:hover i {
-            color: var(--accent-color);
-        }
-
-        .attorney-memberships {
-            background: var(--light-bg);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .attorney-memberships h4 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-        }
-
-        .attorney-memberships p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        .attorney-memberships ul {
-            list-style: none;
-            margin-top: 0.8rem;
-        }
-
-        .attorney-memberships ul li {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            padding: 0.4rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .attorney-memberships ul li i {
-            color: var(--accent-color);
-            font-size: 0.9rem;
-        }
-
-        .attorney-cta {
-            margin-top: 2rem;
-        }
-
-        .attorney-cta .cta-button {
-            opacity: 1;
-            transform: none;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 5rem 2rem;
-            background: var(--light-bg);
-        }
-
-        .section-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .service-card-link {
-            text-decoration: none;
-            display: block;
-        }
-
-        .service-card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            height: 100%;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .service-card i {
-            font-size: 3rem;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover i {
-            transform: scale(1.1);
-            color: #c4a137;
-        }
-
-        .service-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            transition: color 0.3s ease;
-        }
-
-        .service-card:hover h3 {
-            color: var(--accent-color);
-        }
-
-        .service-card p {
-            color: var(--text-light);
-            line-height: 1.8;
-            font-size: 0.95rem;
-        }
-
-        /* Blog Section Styles */
-        .blog {
-            padding: 5rem 2rem;
-            background: var(--white);
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
-            min-height: 300px;
-        }
-
-        .blog-card {
-            background: var(--light-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .blog-card-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: var(--light-bg);
-        }
-
-        .blog-card-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blog-card-date {
-            color: var(--accent-color);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .blog-card-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-
-        .blog-card-excerpt {
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-        }
-
-        .blog-card-link {
-            color: var(--accent-color);
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: gap 0.3s ease;
-        }
-
-        .blog-card:hover .blog-card-link {
-            gap: 0.8rem;
-        }
-
-        .blog-cta {
-            text-align: center;
-        }
-
-        .blog-placeholder {
-            grid-column: 1/-1;
-            text-align: center;
-            padding: 3rem;
-            background: var(--light-bg);
-            border-radius: 10px;
-        }
-
-        .loading-spinner {
-            border: 3px solid var(--light-bg);
-            border-top: 3px solid var(--accent-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 5rem 2rem;
-            background: var(--primary-color);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .testimonials-carousel {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .testimonial-slide {
-            position: absolute;
-            width: 100%;
-            opacity: 0;
-            transform: translateX(100px);
-            transition: all 0.8s ease;
-            pointer-events: none;
-        }
-
-        .testimonial-slide.active {
-            position: relative;
-            opacity: 1;
-            transform: translateX(0);
-            pointer-events: auto;
-        }
-
-        .testimonial-slide.prev {
-            transform: translateX(-100px);
-        }
-
-        .testimonial-card {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .testimonial-card i {
-            font-size: 3rem;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
-            animation-delay: 0.2s;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .testimonial-text {
-            font-size: 1.3rem;
-            font-style: italic;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
-            animation-delay: 0.4s;
-        }
-
-        .testimonial-author {
-            font-weight: 500;
-            color: var(--accent-color);
-            font-size: 1.1rem;
-            opacity: 0;
-            animation: fadeInUp 0.6s ease forwards;
-            animation-delay: 0.6s;
-        }
-
-        .testimonial-dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            margin-top: 2rem;
-        }
-
-        .testimonial-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-dot.active {
-            background: var(--accent-color);
-            border-color: var(--accent-color);
-            transform: scale(1.2);
-        }
-
-        .testimonial-dot:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .testimonial-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(212, 175, 55, 0.2);
-            color: var(--white);
-            border: 2px solid rgba(212, 175, 55, 0.5);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-        }
-
-        .testimonial-nav:hover {
-            background: rgba(212, 175, 55, 0.4);
-            border-color: var(--accent-color);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .testimonial-nav.prev {
-            left: 2rem;
-        }
-
-        .testimonial-nav.next {
-            right: 2rem;
-        }
-
-        /* FAQ Section */
-        .faq {
-            padding: 5rem 2rem;
-            background: var(--light-bg);
-        }
-
-        .faq-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            background: var(--white);
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: var(--light-bg);
-        }
-
-        .faq-question i {
-            transition: transform 0.3s ease;
-            color: var(--accent-color);
-        }
-
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .faq-answer-content {
-            padding: 0 1.5rem 1.5rem 1.5rem;
-            color: var(--text-light);
-            line-height: 1.8;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 3rem 2rem 1rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        .footer-section p,
-        .footer-section ul {
-            color: rgba(255,255,255,0.8);
-            line-height: 1.8;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section ul li a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--accent-color);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Mobile Styles */
+        /* [KEEPING YOUR ORIGINAL CSS STYLES UNTOUCHED] */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary-color: #0a2342; --accent-color: #d4af37; --light-bg: #f9f9f9; --white: #ffffff; --text-dark: #333333; --text-light: #666666; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
+        header { position: fixed; top: 0; left: 0; width: 100%; background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; transition: all 0.3s ease; }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-decoration: none; letter-spacing: 1px; }
+        .logo span { color: var(--accent-color); }
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav ul li a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: all 0.3s ease; position: relative; }
+        nav ul li a:hover { color: var(--accent-color); }
+        nav ul li a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--accent-color); transition: width 0.3s ease; }
+        nav ul li a:hover::after { width: 100%; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 4px; z-index: 1001; }
+        .hamburger span { width: 25px; height: 3px; background: var(--primary-color); transition: all 0.3s ease; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+        .hero-carousel { position: relative; height: 100vh; overflow: hidden; background: var(--primary-color); }
+        .hero-video-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 35, 66, 0.75); z-index: 1; }
+        .carousel-container { position: relative; width: 100%; height: 100%; z-index: 2; }
+        .carousel-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .carousel-slide.active { opacity: 1; pointer-events: auto; }
+        .slide-content { position: relative; text-align: center; color: var(--white); max-width: 900px; padding: 2rem; }
+        .slide-content h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 1.5rem; line-height: 1.2; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s; }
+        .carousel-slide.active .slide-content h1 { opacity: 1; transform: translateY(0); }
+        .slide-content p { font-size: 1.2rem; margin-bottom: 2.5rem; line-height: 1.8; font-weight: 300; opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s; }
+        .carousel-slide.active .slide-content p { opacity: 1; transform: translateY(0); }
+        .cta-button { display: inline-block; padding: 1rem 2.5rem; background: var(--accent-color); color: var(--white); text-decoration: none; font-weight: 500; border-radius: 50px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); opacity: 0; transform: translateY(30px); }
+        .carousel-slide.active .cta-button { opacity: 1; transform: translateY(0); transition: opacity 0.8s ease 0.7s, transform 0.8s ease 0.7s, background 0.3s ease, box-shadow 0.3s ease; }
+        .cta-button:hover { background: #c4a137; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4); }
+        .slide-thumbnails { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.5rem; opacity: 0; transform: translateY(30px); }
+        .carousel-slide.active .slide-thumbnails { opacity: 1; transform: translateY(0); transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s; }
+        .thumbnail { width: 80px; height: 80px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease; overflow: hidden; }
+        .thumbnail:hover { transform: scale(1.1); }
+        .thumbnail i { font-size: 2rem; color: var(--primary-color); }
+        .unmute-btn { position: absolute; bottom: 6rem; right: 2rem; width: 50px; height: 50px; background: rgba(212, 175, 55, 0.9); border: 2px solid white; border-radius: 50%; color: white; font-size: 1.2rem; cursor: pointer; z-index: 10; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .unmute-btn:hover { background: rgba(212, 175, 55, 1); transform: scale(1.1); }
+        .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(212, 175, 55, 0.9); color: var(--white); border: none; width: 60px; height: 60px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; z-index: 10; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .carousel-arrow:hover { background: rgba(212, 175, 55, 1); transform: translateY(-50%) scale(1.1); }
+        .carousel-arrow.left { left: 2rem; }
+        .carousel-arrow.right { right: 2rem; }
+        .carousel-indicators { position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); display: flex; gap: 1rem; z-index: 10; }
+        .indicator-dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: 2px solid var(--white); cursor: pointer; transition: all 0.3s ease; }
+        .indicator-dot.active { background: var(--accent-color); transform: scale(1.2); }
+        .attorney { padding: 5rem 2rem; background: var(--white); }
+        .attorney-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 400px 1fr; gap: 4rem; align-items: start; }
+        .attorney-image-wrapper { position: relative; }
+        .attorney-image { width: 100%; height: 500px; object-fit: cover; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .attorney-badge { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); background: var(--accent-color); color: var(--white); padding: 0.8rem 2rem; border-radius: 50px; font-weight: 500; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4); white-space: nowrap; }
+        .attorney-content h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+        .attorney-title { font-size: 1.2rem; color: var(--accent-color); font-weight: 500; margin-bottom: 0.5rem; }
+        .attorney-subtitle { font-size: 1rem; color: var(--text-light); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--light-bg); }
+        .attorney-bio { color: var(--text-light); line-height: 1.8; margin-bottom: 2rem; }
+        .attorney-bio p { margin-bottom: 1rem; }
+        .attorney-credentials h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .attorney-credentials h3 i { color: var(--accent-color); }
+        .credentials-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; margin-bottom: 2rem; }
+        .credential-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 1rem; background: var(--light-bg); border-radius: 8px; transition: all 0.3s ease; }
+        .credential-item:hover { background: var(--primary-color); color: var(--white); transform: translateX(5px); }
+        .credential-item i { color: var(--accent-color); font-size: 1.1rem; }
+        .attorney-memberships { background: var(--light-bg); padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--accent-color); }
+        .attorney-memberships h4 { font-family: 'Playfair Display', serif; color: var(--primary-color); margin-bottom: 0.8rem; }
+        .attorney-memberships ul { list-style: none; margin-top: 0.8rem; }
+        .attorney-memberships ul li { color: var(--text-light); font-size: 0.95rem; padding: 0.4rem 0; display: flex; align-items: center; gap: 0.5rem; }
+        .attorney-memberships ul li i { color: var(--accent-color); font-size: 0.9rem; }
+        .services { padding: 5rem 2rem; background: var(--light-bg); }
+        .section-container { max-width: 1200px; margin: 0 auto; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; color: var(--primary-color); margin-bottom: 1rem; }
+        .section-subtitle { text-align: center; color: var(--text-light); margin-bottom: 3rem; font-size: 1.1rem; }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+        .service-card-link { text-decoration: none; display: block; }
+        .service-card { background: var(--white); padding: 2.5rem; border-radius: 10px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; height: 100%; min-height: 280px; display: flex; flex-direction: column; justify-content: center; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .service-card i { font-size: 3rem; color: var(--accent-color); margin-bottom: 1.5rem; transition: all 0.3s ease; }
+        .service-card:hover i { transform: scale(1.1); color: #c4a137; }
+        .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary-color); margin-bottom: 1rem; transition: color 0.3s ease; }
+        .service-card:hover h3 { color: var(--accent-color); }
+        .service-card p { color: var(--text-light); line-height: 1.8; font-size: 0.95rem; }
+        .blog { padding: 5rem 2rem; background: var(--white); }
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; min-height: 300px; }
+        .blog-card { background: var(--light-bg); border-radius: 10px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; text-decoration: none; display: flex; flex-direction: column; }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .blog-card-image { width: 100%; height: 200px; object-fit: cover; background: var(--light-bg); }
+        .blog-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .blog-card-date { color: var(--accent-color); font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .blog-card-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--primary-color); margin-bottom: 1rem; line-height: 1.3; }
+        .blog-card-excerpt { color: var(--text-light); line-height: 1.6; margin-bottom: 1rem; flex-grow: 1; }
+        .blog-card-link { color: var(--accent-color); font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease; }
+        .blog-card:hover .blog-card-link { gap: 0.8rem; }
+        .blog-cta { text-align: center; }
+        .testimonials { padding: 5rem 2rem; background: var(--primary-color); color: var(--white); position: relative; overflow: hidden; }
+        .testimonials-carousel { position: relative; max-width: 900px; margin: 0 auto; }
+        .testimonial-slide { position: absolute; width: 100%; opacity: 0; transform: translateX(100px); transition: all 0.8s ease; pointer-events: none; }
+        .testimonial-slide.active { position: relative; opacity: 1; transform: translateX(0); pointer-events: auto; }
+        .testimonial-slide.prev { transform: translateX(-100px); }
+        .testimonial-card { text-align: center; padding: 2rem; }
+        .testimonial-text { font-size: 1.3rem; font-style: italic; line-height: 1.8; margin-bottom: 1.5rem; }
+        .testimonial-author { font-weight: 500; color: var(--accent-color); font-size: 1.1rem; }
+        .testimonial-dots { display: flex; justify-content: center; gap: 0.8rem; margin-top: 2rem; }
+        .testimonial-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); border: 2px solid rgba(255, 255, 255, 0.5); cursor: pointer; transition: all 0.3s ease; }
+        .testimonial-dot.active { background: var(--accent-color); border-color: var(--accent-color); transform: scale(1.2); }
+        .faq { padding: 5rem 2rem; background: var(--light-bg); }
+        .faq-container { max-width: 900px; margin: 0 auto; }
+        .faq-item { background: var(--white); margin-bottom: 1rem; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .faq-question { padding: 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 500; color: var(--primary-color); transition: all 0.3s ease; }
+        .faq-question:hover { background: var(--light-bg); }
+        .faq-question i { transition: transform 0.3s ease; color: var(--accent-color); }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-answer-content { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--text-light); line-height: 1.8; }
+        footer { background: var(--primary-color); color: var(--white); padding: 3rem 2rem 1rem; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .footer-section h3 { font-family: 'Playfair Display', serif; color: var(--accent-color); margin-bottom: 1rem; }
+        .footer-section p, .footer-section ul { color: rgba(255,255,255,0.8); line-height: 1.8; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li a { color: rgba(255,255,255,0.8); text-decoration: none; transition: all 0.3s ease; }
+        .footer-section ul li a:hover { color: var(--accent-color); padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+
+        /* Media Queries */
         @media (max-width: 1024px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .blog-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .testimonial-nav.prev {
-                left: 1rem;
-            }
-            
-            .testimonial-nav.next {
-                right: 1rem;
-            }
-
-            .attorney-container {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .attorney-image-wrapper {
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .credentials-list {
-                grid-template-columns: 1fr;
-            }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .attorney-container { grid-template-columns: 1fr; gap: 3rem; }
+            .attorney-image-wrapper { max-width: 400px; margin: 0 auto; }
         }
-
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: var(--white);
-                padding: 5rem 2rem;
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            }
-
-            nav.active {
-                right: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .slide-content h1 {
-                font-size: 2rem;
-            }
-
-            .slide-content p {
-                font-size: 1rem;
-            }
-
-            .carousel-arrow {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
-
-            .carousel-arrow.left {
-                left: 1rem;
-            }
-
-            .carousel-arrow.right {
-                right: 1rem;
-            }
-
-            .carousel-indicators {
-                bottom: 2rem;
-            }
-
-            .unmute-btn {
-                bottom: 5rem;
-                right: 1rem;
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
-            }
-
-            .thumbnail {
-                width: 60px;
-                height: 60px;
-            }
-
-            .thumbnail i {
-                font-size: 1.5rem;
-            }
-
-            .slide-thumbnails {
-                gap: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .testimonial-text {
-                font-size: 1.1rem;
-            }
-            
-            .testimonial-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-            }
-            
-            .testimonial-nav.prev {
-                left: 0.5rem;
-            }
-            
-            .testimonial-nav.next {
-                right: 0.5rem;
-            }
-
-            .attorney-content h2 {
-                font-size: 2rem;
-            }
-
-            .attorney-image {
-                height: 400px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .slide-content h1 {
-                font-size: 1.5rem;
-            }
-
-            .slide-content p {
-                font-size: 0.9rem;
-            }
-
-            .cta-button {
-                padding: 0.8rem 2rem;
-                font-size: 0.9rem;
-            }
-
-            .thumbnail {
-                width: 50px;
-                height: 50px;
-            }
-
-            .thumbnail i {
-                font-size: 1.2rem;
-            }
-            
-            .testimonial-text {
-                font-size: 1rem;
-            }
-            
-            .testimonial-author {
-                font-size: 1rem;
-            }
-
-            .attorney-badge {
-                font-size: 0.85rem;
-                padding: 0.6rem 1.5rem;
-            }
+            .hamburger { display: flex; }
+            nav { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--white); padding: 5rem 2rem; transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
+            nav.active { right: 0; }
+            nav ul { flex-direction: column; gap: 1.5rem; }
+            .slide-content h1 { font-size: 2rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .blog-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1191,9 +167,7 @@
                 </ul>
             </nav>
             <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </header>
@@ -1201,190 +175,95 @@
     <!-- Hero Carousel Section -->
     <section class="hero-carousel">
         <div class="hero-video-background">
-            <video 
-                class="hero-video" 
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                poster="assets/images/video-poster.jpg"
-                id="heroVideo">
+            <video class="hero-video" autoplay muted loop playsinline poster="assets/images/video-poster.jpg" id="heroVideo">
                 <source src="assets/videos/hero-video.mp4" type="video/mp4">
             </video>
         </div>
-
         <div class="hero-overlay"></div>
-
-        <button class="unmute-btn" id="unmuteBtn" aria-label="Unmute video">
-            <i class="fas fa-volume-mute" id="volumeIcon"></i>
-        </button>
+        <button class="unmute-btn" id="unmuteBtn"><i class="fas fa-volume-mute" id="volumeIcon"></i></button>
 
         <div class="carousel-container">
-            <!-- Slide 1: Immigration Services -->
+            <!-- Slide 1 -->
             <div class="carousel-slide active">
                 <div class="slide-content">
-                    <h1>Your Trusted Partner for U.S. Immigration & Visa Solutions</h1>
-                    <p>Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support to help you achieve your American dream with confidence.</p>
-                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Book Now</a>
+                    <!-- CMS Tags Added Here -->
+                    <h1 data-cms="hero_slide1_title">Your Trusted Partner for U.S. Immigration & Visa Solutions</h1>
+                    <p data-cms="hero_slide1_text">Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support to help you achieve your American dream with confidence.</p>
+                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button" data-cms="hero_slide1_btn">Book Now</a>
                     <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-passport"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-users"></i>
-                        </div>
+                        <div class="thumbnail"><i class="fas fa-passport"></i></div>
+                        <div class="thumbnail"><i class="fas fa-globe-americas"></i></div>
+                        <div class="thumbnail"><i class="fas fa-users"></i></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Slide 2: Document Assessment Consultation -->
+            <!-- Slide 2 -->
             <div class="carousel-slide">
                 <div class="slide-content">
-                    <h1>Document Assessment Consultation</h1>
-                    <p>We help clients who previously filed, received denials, or have new documents they want evaluated. Our focus is to review what was submitted, identify gaps, and guide you toward the right next step with clarity.</p>
-                    <a href="https://calendly.com/cynobas/document-review-consultation" class="cta-button">Book Now</a>
+                    <h1 data-cms="hero_slide2_title">Document Assessment Consultation</h1>
+                    <p data-cms="hero_slide2_text">We help clients who previously filed, received denials, or have new documents they want evaluated.</p>
+                    <a href="https://calendly.com/cynobas/document-review-consultation" class="cta-button" data-cms="hero_slide2_btn">Book Now</a>
                     <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-clipboard-check"></i>
-                        </div>
+                        <div class="thumbnail"><i class="fas fa-file-alt"></i></div>
+                        <div class="thumbnail"><i class="fas fa-search"></i></div>
+                        <div class="thumbnail"><i class="fas fa-clipboard-check"></i></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Slide 3: Immigration Guides -->
+            <!-- Slide 3 -->
             <div class="carousel-slide">
                 <div class="slide-content">
-                    <h1>Immigration Guides, Templates & Resources</h1>
-                    <p>Access expert immigration guides, visa application templates, and comprehensive resources. Equip yourself with the knowledge and tools needed for a successful immigration journey.</p>
-                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Book Now</a>
+                    <h1 data-cms="hero_slide3_title">Immigration Guides, Templates & Resources</h1>
+                    <p data-cms="hero_slide3_text">Access expert immigration guides, visa application templates, and comprehensive resources.</p>
+                    <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button" data-cms="hero_slide3_btn">Book Now</a>
                     <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-file-contract"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4: Weekend Consultation -->
-            <div class="carousel-slide">
-                <div class="slide-content">
-                    <h1>Weekend Visa Consultation Services</h1>
-                    <p>Can't make it during the week? We offer flexible weekend consultation sessions to accommodate your schedule. Get expert visa advice and personalized immigration guidance at a time that works best for you and your family.</p>
-                    <a href="https://calendly.com/cynobas/new-meeting-1" class="cta-button">Book Now</a>
-                    <div class="slide-thumbnails">
-                        <div class="thumbnail">
-                            <i class="fas fa-calendar-check"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="thumbnail">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
+                        <div class="thumbnail"><i class="fas fa-file-contract"></i></div>
+                        <div class="thumbnail"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="thumbnail"><i class="fas fa-book-open"></i></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <button class="carousel-arrow left" id="prevBtn">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="carousel-arrow right" id="nextBtn">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-
+        <button class="carousel-arrow left" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-arrow right" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
         <div class="carousel-indicators">
             <span class="indicator-dot active" data-slide="0"></span>
             <span class="indicator-dot" data-slide="1"></span>
             <span class="indicator-dot" data-slide="2"></span>
-            <span class="indicator-dot" data-slide="3"></span>
         </div>
     </section>
 
     <!-- Meet the Attorney Section -->
     <section class="attorney">
         <div class="section-container">
-            <h2 class="section-title">Meet the Attorney</h2>
-            <p class="section-subtitle">Dedicated legal expertise for your immigration journey</p>
+            <h2 class="section-title" data-cms="attorney_section_title">Meet the Attorney</h2>
+            <p class="section-subtitle" data-cms="attorney_section_subtitle">Dedicated legal expertise for your immigration journey</p>
             
             <div class="attorney-container">
                 <div class="attorney-image-wrapper">
-                    <img src="assets/images/attorney-cynthia-azor.png" alt="Attorney Cynthia Azor, Esq. - Licensed Alabama Immigration Attorney" class="attorney-image">
+                    <!-- CMS Image Tag -->
+                    <img src="assets/images/attorney-cynthia-azor.png" class="attorney-image" data-cms="attorney_photo">
                     <div class="attorney-badge">
                         <i class="fas fa-balance-scale"></i> Licensed Alabama Attorney
                     </div>
                 </div>
                 
                 <div class="attorney-content">
-                    <h2>Attorney Cynthia Azor.</h2>
-                    <p class="attorney-title">Immigration Attorney</p>
-                    <p class="attorney-subtitle">Licensed Alabama Attorney | Nationwide Immigration Representation</p>
+                    <h2 data-cms="attorney_name">Attorney Cynthia Azor.</h2>
+                    <p class="attorney-title" data-cms="attorney_title">Immigration Attorney</p>
+                    <p class="attorney-subtitle" data-cms="attorney_license">Licensed Alabama Attorney | Nationwide Immigration Representation</p>
                     
                     <div class="attorney-bio">
-                        <p>Attorney Cynthia Azor. is licensed to practice law in Alabama and represents immigration clients in all 50 states, as U.S. immigration law is federal and not restricted by state boundaries.</p>
-                        
-                        <p>She earned her LL.B from the University of Benin, completed her B.L at the Nigerian Law School, and obtained her LL.M in American & Transnational Law from the University of Dayton School of Law, along with a Certificate in the American Legal System.</p>
-                        
-                        <p>With over five years of immigration experience, she has successfully assisted clients with naturalization, green cards, family-based petitions, adjustment of status, VAWA cases, waivers, work authorization, and other immigration benefits.</p>
-                    </div>
-                    
-                    <div class="attorney-credentials">
-                        <h3><i class="fas fa-certificate"></i> Professional Certifications & Training</h3>
-                        <div class="credentials-list">
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Certificate in Immigration & Nationality Law</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>CIPP/US (Privacy Certification)</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>HIPAA Compliance Certification</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>AWS Cloud Training</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>Notary Public & Loan Signing Agent</span>
-                            </div>
-                            <div class="credential-item">
-                                <i class="fas fa-check-circle"></i>
-                                <span>ADR / Mediation Training</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="attorney-memberships">
-                        <h4><i class="fas fa-users"></i> Professional Memberships & Advocacy</h4>
-                        <p>Attorney Azor is actively involved in organizations that advocate for immigrant rights and legal wellness:</p>
-                        <ul>
-                            <li><i class="fas fa-check"></i> Immigrant & Refugee Rights Coalition of Tennessee</li>
-                            <li><i class="fas fa-check"></i> Institute for Wellbeing in Law</li>
-                            <li><i class="fas fa-check"></i> Stand Up Nashville</li>
-                        </ul>
+                        <p data-cms="attorney_bio_1">Attorney Cynthia Azor. is licensed to practice law in Alabama and represents immigration clients in all 50 states.</p>
+                        <p data-cms="attorney_bio_2">She earned her LL.B from the University of Benin, completed her B.L at the Nigerian Law School, and obtained her LL.M in American & Transnational Law.</p>
+                        <p data-cms="attorney_bio_3">With over five years of immigration experience, she has successfully assisted clients with naturalization, green cards, family-based petitions, and more.</p>
                     </div>
                     
                     <div class="attorney-cta">
-                        <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">Schedule a Consultation</a>
+                        <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button" data-cms="attorney_cta_btn">Schedule a Consultation</a>
                     </div>
                 </div>
             </div>
@@ -1394,580 +273,5 @@
     <!-- Services Section -->
     <section class="services">
         <div class="section-container">
-            <h2 class="section-title">Our Visa & Immigration Services</h2>
-            <p class="section-subtitle">Comprehensive immigration solutions for individuals and businesses</p>
-            <div class="services-grid">
-                <a href="services.html#immigration" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-passport"></i>
-                        <h3>Visa Applications</h3>
-                        <p>Expert assistance with all visa types including family, work, student visas, green cards, citizenship, and deportation defense.</p>
-                    </div>
-                </a>
-
-                <a href="services.html#ip" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-lightbulb"></i>
-                        <h3>Business Legal Support</h3>
-                        <p>Trademark registration, copyright protection, patents, and corporate legal services for international businesses.</p>
-                    </div>
-                </a>
-
-                <a href="services.html#business" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-building"></i>
-                        <h3>Business Immigration</h3>
-                        <p>Business visas, investor immigration, and company formation support for U.S. and international entrepreneurs.</p>
-                    </div>
-                </a>
-
-                <a href="services.html#contracts" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-file-signature"></i>
-                        <h3>Document Preparation</h3>
-                        <p>Professional visa application documents, affidavits, employment letters, and immigration form assistance.</p>
-                    </div>
-                </a>
-
-                <a href="services.html#training" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h3>Immigration Guides</h3>
-                        <p>Comprehensive immigration resources, step-by-step guides, webinars, and educational materials for visa applicants.</p>
-                    </div>
-                </a>
-
-                <a href="services.html#consultation" class="service-card-link">
-                    <div class="service-card">
-                        <i class="fas fa-comments"></i>
-                        <h3>Expert Consultation</h3>
-                        <p>One-on-one personalized immigration consultation tailored to your specific visa and citizenship needs.</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Section -->
-    <section class="blog">
-        <div class="section-container">
-            <h2 class="section-title">Immigration Insights & Legal Updates</h2>
-            <p class="section-subtitle">Expert guidance, visa tips, and the latest immigration news to help you navigate your journey</p>
-            
-            <div class="blog-grid" id="blogGrid">
-                <div class="blog-placeholder">
-                    <div class="loading-spinner"></div>
-                    <p>Loading blog posts...</p>
-                </div>
-            </div>
-            
-            <div class="blog-cta">
-                <a href="blog.html" class="cta-button">Explore Our Immigration Blog</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="section-container">
-            <h2 class="section-title" style="color: white;">What Our Clients Say</h2>
-            
-            <div class="testimonials-carousel">
-                <button class="testimonial-nav prev" id="testimonialPrev">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="testimonial-nav next" id="testimonialNext">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-
-                <div class="testimonial-slide active">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"CYAzor Law Firm made our family immigration process incredibly smooth. Their expertise and compassion gave us confidence every step of the way. We're now proud permanent residents thanks to their guidance!"</p>
-                        <p class="testimonial-author">- Maria & Carlos Rodriguez</p>
-                    </div>
-                </div>
-
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"Working with CYAzor Law Firm was a blessing. Their faith-based approach, professionalism, and guidance made my U.S. naturalization process smooth and stress-free. They not only handled my case with excellence but also gave me peace of mind through prayer and encouragement. I'm forever grateful."</p>
-                        <p class="testimonial-author">- Chinemelum Azike</p>
-                    </div>
-                </div>
-
-                <div class="testimonial-slide">
-                    <div class="testimonial-card">
-                        <i class="fas fa-quote-left"></i>
-                        <p class="testimonial-text">"The business visa services provided by CYAzor Law Firm were exceptional. They helped me obtain my investor visa and guided me through all the immigration requirements. Their expertise in both U.S. immigration and business law is outstanding."</p>
-                        <p class="testimonial-author">- Dr. Adebayo Ogundimu</p>
-                    </div>
-                </div>
-
-                <div class="testimonial-dots">
-                    <span class="testimonial-dot active" data-testimonial="0"></span>
-                    <span class="testimonial-dot" data-testimonial="1"></span>
-                    <span class="testimonial-dot" data-testimonial="2"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq">
-        <div class="section-container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>How long does the visa application process take?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            The timeline varies depending on the type of visa or immigration application. Some processes can take a few months, while others may take several years. We'll provide you with a realistic timeline and keep you updated throughout your visa journey.
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you help with business immigration and investor visas?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Yes! We provide comprehensive business immigration services including investor visas (EB-5), E-2 treaty visas, L-1 intracompany transfers, and other work-related visas for entrepreneurs and businesses looking to operate in the United States.
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What's included in an immigration consultation?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            A consultation includes a comprehensive review of your immigration situation, expert advice on visa options, discussion of eligibility requirements, and a clear action plan. You'll receive personalized guidance tailored to your specific immigration goals and circumstances.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>LA Vergne, Tennessee 37086</a></p>
-            </div>
-            <div class="footer-section">
-                <h3>Office Hours</h3>
-                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 2:00 PM</p>
-                <p>Sunday: Closed</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="testimonials.html">Testimonials</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 CYAzor Law Firm. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Supabase and Blog Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <script>
-        // Initialize Supabase
-        const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // Load latest blog posts on homepage
-        async function loadLatestBlogPosts() {
-            try {
-                const { data, error } = await supabase
-                    .from('blog_posts')
-                    .select('*')
-                    .eq('status', 'published')
-                    .order('published_at', { ascending: false })
-                    .limit(3);
-                
-                const blogGrid = document.getElementById('blogGrid');
-                
-                if (error || !data || data.length === 0) {
-                    blogGrid.innerHTML = `
-                        <a href="blog.html" class="blog-card">
-                            <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Immigration+News" alt="Blog post" class="blog-card-image">
-                            <div class="blog-card-content">
-                                <span class="blog-card-date">January 15, 2025</span>
-                                <h3 class="blog-card-title">New Immigration Policy Changes for 2025</h3>
-                                <p class="blog-card-excerpt">Understanding the latest updates to U.S. immigration policies and how they might affect your visa application process.</p>
-                                <span class="blog-card-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </span>
-                            </div>
-                        </a>
-
-                        <a href="blog.html" class="blog-card">
-                            <img src="https://via.placeholder.com/400x200/d4af37/ffffff?text=Visa+Tips" alt="Blog post" class="blog-card-image">
-                            <div class="blog-card-content">
-                                <span class="blog-card-date">January 10, 2025</span>
-                                <h3 class="blog-card-title">Top 5 Mistakes to Avoid in Your Visa Application</h3>
-                                <p class="blog-card-excerpt">Learn about common errors that can delay or derail your visa application and how to avoid them.</p>
-                                <span class="blog-card-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </span>
-                            </div>
-                        </a>
-
-                        <a href="blog.html" class="blog-card">
-                            <img src="https://via.placeholder.com/400x200/0a2342/ffffff?text=Success+Story" alt="Blog post" class="blog-card-image">
-                            <div class="blog-card-content">
-                                <span class="blog-card-date">January 5, 2025</span>
-                                <h3 class="blog-card-title">Success Story: From Student Visa to Green Card</h3>
-                                <p class="blog-card-excerpt">Read about Maria's journey from international student to permanent resident with our guidance.</p>
-                                <span class="blog-card-link">
-                                    Read More <i class="fas fa-arrow-right"></i>
-                                </span>
-                            </div>
-                        </a>
-                    `;
-                    return;
-                }
-                
-                blogGrid.innerHTML = '';
-                data.forEach(post => {
-                    const postCard = createBlogCard(post);
-                    blogGrid.innerHTML += postCard;
-                });
-            } catch (error) {
-                console.error('Error loading blog posts:', error);
-                document.getElementById('blogGrid').innerHTML = `
-                    <div class="blog-placeholder">
-                        <h3>Blog coming soon!</h3>
-                        <p>Check back later for immigration updates and insights.</p>
-                    </div>
-                `;
-            }
-        }
-
-        function createBlogCard(post) {
-            const defaultImage = 'https://via.placeholder.com/400x200/0a2342/ffffff?text=' + encodeURIComponent(post.category || 'Blog Post');
-            const imageUrl = post.image_url || defaultImage;
-            const date = new Date(post.published_at || post.created_at);
-            
-            return `
-                <a href="blog-post.html?slug=${post.slug}" class="blog-card">
-                    <img src="${imageUrl}" 
-                         alt="${post.title}" 
-                         class="blog-card-image"
-                         onerror="this.src='${defaultImage}'">
-                    <div class="blog-card-content">
-                        <span class="blog-card-date">${formatDate(date)}</span>
-                        <h3 class="blog-card-title">${post.title}</h3>
-                        <p class="blog-card-excerpt">${post.excerpt}</p>
-                        <span class="blog-card-link">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </span>
-                    </div>
-                </a>
-            `;
-        }
-
-        function formatDate(date) {
-            return date.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-        }
-    </script>
-
-    <!-- Page Scripts -->
-    <script>
-        // Hamburger Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.getElementById('nav');
-        const navLinks = document.querySelectorAll('nav ul li a');
-
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            hamburger.classList.toggle('active');
-            nav.classList.toggle('active');
-        });
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            }
-        });
-
-        // Video and Unmute Button
-        const unmuteBtn = document.getElementById('unmuteBtn');
-        const heroVideo = document.getElementById('heroVideo');
-        const volumeIcon = document.getElementById('volumeIcon');
-
-        if (unmuteBtn && heroVideo) {
-            unmuteBtn.addEventListener('click', function() {
-                if (heroVideo.muted) {
-                    heroVideo.muted = false;
-                    volumeIcon.classList.remove('fa-volume-mute');
-                    volumeIcon.classList.add('fa-volume-up');
-                    unmuteBtn.setAttribute('aria-label', 'Mute video');
-                } else {
-                    heroVideo.muted = true;
-                    volumeIcon.classList.remove('fa-volume-up');
-                    volumeIcon.classList.add('fa-volume-mute');
-                    unmuteBtn.setAttribute('aria-label', 'Unmute video');
-                }
-            });
-        }
-
-        // Carousel Functionality
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.indicator-dot');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        let currentSlide = 0;
-        let autoPlayInterval;
-        const autoPlayDelay = 6000;
-
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-            
-            currentSlide = index;
-        }
-
-        function nextSlide() {
-            let next = (currentSlide + 1) % slides.length;
-            showSlide(next);
-        }
-
-        function prevSlide() {
-            let prev = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(prev);
-        }
-
-        function startAutoPlay() {
-            autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
-        }
-
-        function stopAutoPlay() {
-            clearInterval(autoPlayInterval);
-        }
-
-        function resetAutoPlay() {
-            stopAutoPlay();
-            startAutoPlay();
-        }
-
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            resetAutoPlay();
-        });
-
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            resetAutoPlay();
-        });
-
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showSlide(index);
-                resetAutoPlay();
-            });
-        });
-
-        const carouselContainer = document.querySelector('.hero-carousel');
-        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
-        carouselContainer.addEventListener('mouseleave', startAutoPlay);
-
-        // Testimonials Carousel
-        const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-        const testimonialDots = document.querySelectorAll('.testimonial-dot');
-        const testimonialPrev = document.getElementById('testimonialPrev');
-        const testimonialNext = document.getElementById('testimonialNext');
-        
-        let currentTestimonial = 0;
-        let testimonialAutoPlay;
-        const testimonialDelay = 5000;
-
-        function showTestimonial(index) {
-            testimonialSlides.forEach((slide, i) => {
-                slide.classList.remove('active', 'prev');
-                if (i < index) {
-                    slide.classList.add('prev');
-                }
-            });
-            testimonialDots.forEach(dot => dot.classList.remove('active'));
-            
-            testimonialSlides[index].classList.add('active');
-            testimonialDots[index].classList.add('active');
-            
-            const activeCard = testimonialSlides[index].querySelector('.testimonial-card');
-            const icon = activeCard.querySelector('i');
-            const text = activeCard.querySelector('.testimonial-text');
-            const author = activeCard.querySelector('.testimonial-author');
-            
-            [icon, text, author].forEach(el => {
-                el.style.animation = 'none';
-                el.offsetHeight;
-                el.style.animation = '';
-            });
-            
-            currentTestimonial = index;
-        }
-
-        function nextTestimonial() {
-            let next = (currentTestimonial + 1) % testimonialSlides.length;
-            showTestimonial(next);
-        }
-
-        function prevTestimonial() {
-            let prev = (currentTestimonial - 1 + testimonialSlides.length) % testimonialSlides.length;
-            showTestimonial(prev);
-        }
-
-        function startTestimonialAutoPlay() {
-            testimonialAutoPlay = setInterval(nextTestimonial, testimonialDelay);
-        }
-
-        function stopTestimonialAutoPlay() {
-            clearInterval(testimonialAutoPlay);
-        }
-
-        function resetTestimonialAutoPlay() {
-            stopTestimonialAutoPlay();
-            startTestimonialAutoPlay();
-        }
-
-        testimonialNext.addEventListener('click', () => {
-            nextTestimonial();
-            resetTestimonialAutoPlay();
-        });
-
-        testimonialPrev.addEventListener('click', () => {
-            prevTestimonial();
-            resetTestimonialAutoPlay();
-        });
-
-        testimonialDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showTestimonial(index);
-                resetTestimonialAutoPlay();
-            });
-        });
-
-        // Touch/Swipe support for testimonials
-        let testimonialTouchStart = 0;
-        let testimonialTouchEnd = 0;
-
-        const testimonialsSection = document.querySelector('.testimonials-carousel');
-        
-        testimonialsSection.addEventListener('touchstart', (e) => {
-            testimonialTouchStart = e.changedTouches[0].screenX;
-        });
-
-        testimonialsSection.addEventListener('touchend', (e) => {
-            testimonialTouchEnd = e.changedTouches[0].screenX;
-            handleTestimonialSwipe();
-        });
-
-        function handleTestimonialSwipe() {
-            if (testimonialTouchEnd < testimonialTouchStart - 50) {
-                nextTestimonial();
-                resetTestimonialAutoPlay();
-            }
-            if (testimonialTouchEnd > testimonialTouchStart + 50) {
-                prevTestimonial();
-                resetTestimonialAutoPlay();
-            }
-        }
-
-        // Start autoplay and load blog posts
-        window.addEventListener('load', function() {
-            if (heroVideo) {
-                heroVideo.play().catch(error => {
-                    console.log('Autoplay prevented:', error);
-                });
-            }
-            startAutoPlay();
-            startTestimonialAutoPlay();
-            loadLatestBlogPosts();
-        });
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                
-                faqItems.forEach(faqItem => {
-                    faqItem.classList.remove('active');
-                    faqItem.querySelector('.faq-answer').style.maxHeight = null;
-                });
-                
-                if (!isActive) {
-                    item.classList.add('active');
-                    const answer = item.querySelector('.faq-answer');
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                }
-            });
-        });
-
-        // Keyboard Navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                prevSlide();
-                resetAutoPlay();
-            } else if (e.key === 'ArrowRight') {
-                nextSlide();
-                resetAutoPlay();
-            }
-        });
-    </script>
-
-    <!-- Netlify Identity Widget Script -->
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+            <h2 class="section-title" data-cms="services_title">Our Visa & Immigration Services</h2>
+            <p class="section-subtitle" data-cms="services_subtitle">Comprehensive
