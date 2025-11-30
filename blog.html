@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - CYAzor Law Firm | Immigration eBooks & Resources</title>
+    <title>Blog - CYAzor Law Firm</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- COPYING YOUR EXISTING STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-color: #0a2342;
             --accent-color: #d4af37;
@@ -21,924 +17,203 @@
             --white: #ffffff;
             --text-dark: #333333;
             --text-light: #666666;
-            --success-color: #28a745;
-            --error-color: #dc3545;
         }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-dark); line-height: 1.6; background: var(--light-bg); }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            color: var(--text-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background: var(--light-bg);
-        }
+        /* Header */
+        header { position: fixed; top: 0; left: 0; width: 100%; background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; }
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-decoration: none; }
+        .logo span { color: var(--accent-color); }
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav ul li a { text-decoration: none; color: var(--text-dark); font-weight: 500; transition: 0.3s; }
+        nav ul li a:hover { color: var(--accent-color); }
 
-        /* Header Styles */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        .logo span {
-            color: var(--accent-color);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent-color);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
-            width: 100%;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
+        /* Mobile Menu */
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 4px; }
+        .hamburger span { width: 25px; height: 3px; background: var(--primary-color); }
+        
         /* Page Header */
         .page-header {
             background: linear-gradient(135deg, var(--primary-color) 0%, #0d3a66 100%);
-            color: var(--white);
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-            margin-top: 70px;
+            color: var(--white); padding: 8rem 2rem 4rem; text-align: center; margin-top: 60px;
         }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
-        .page-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .page-header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Shop Section */
-        .shop-section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .shop-intro {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .shop-intro h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .shop-intro p {
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Products Grid */
-        .products-grid {
+        /* Blog Grid Section */
+        .blog-section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+        
+        .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
 
-        /* Product Card */
-        .product-card {
-            background: var(--white);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-
-        .product-image {
-            position: relative;
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
-        }
-
-        .product-image img {
-            width: 100%;
+        /* Blog Card */
+        .blog-card {
+            background: var(--white); border-radius: 10px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+            text-decoration: none; color: inherit; display: flex; flex-direction: column;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
         }
-
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        .blog-img { width: 100%; height: 220px; object-fit: cover; background: #eee; }
+        
+        .blog-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .blog-date { color: var(--accent-color); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 500; }
+        
+        .blog-title {
+            font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--primary-color);
+            margin-bottom: 1rem; line-height: 1.3;
         }
-
-        .product-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: var(--accent-color);
-            color: var(--white);
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .product-badge.new {
-            background: var(--success-color);
-        }
-
-        .product-badge.sale {
-            background: var(--error-color);
-        }
-
-        .product-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-category {
-            color: var(--accent-color);
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-            line-height: 1.3;
-        }
-
-        .product-description {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid var(--light-bg);
+        
+        .blog-excerpt { color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+        
+        .read-more {
+            color: var(--accent-color); font-weight: 500; display: flex; align-items: center; gap: 0.5rem;
             margin-top: auto;
         }
+        .read-more i { transition: transform 0.3s; }
+        .blog-card:hover .read-more i { transform: translateX(5px); }
 
-        .product-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .product-price .original-price {
-            font-size: 1rem;
-            color: var(--text-light);
-            text-decoration: line-through;
-            margin-right: 0.5rem;
-            font-weight: 400;
-        }
-
-        .product-price .sale-price {
-            color: var(--error-color);
-        }
-
-        .buy-btn {
-            padding: 0.8rem 1.5rem;
-            background: var(--accent-color);
-            color: var(--white);
-            border: none;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .buy-btn:hover {
-            background: #c4a137;
-            transform: translateY(-2px);
-        }
-
-        /* Loading State */
-        .loading-container {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--light-bg);
-            border-top-color: var(--accent-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        /* Loading & Empty States */
+        .loading { text-align: center; padding: 4rem; grid-column: 1 / -1; }
+        .spinner {
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--accent-color);
+            border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Empty State */
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 4rem 2rem;
-            background: var(--white);
-            border-radius: 15px;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            color: var(--text-light);
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
-            padding: 4rem 2rem;
-            text-align: center;
-            color: var(--white);
-            margin-top: 3rem;
-            border-radius: 15px;
-        }
-
-        .cta-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            opacity: 0.9;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--accent-color);
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            background: #c4a137;
-            transform: translateY(-3px);
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Footer */
-        footer {
-            background: var(--primary-color);
-            color: var(--white);
-            padding: 3rem 2rem 1rem;
-            margin-top: 4rem;
-        }
+        footer { background: var(--primary-color); color: var(--white); padding: 3rem 2rem 1rem; margin-top: auto; }
+        .footer-bottom { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; margin-top: 2rem; color: rgba(255,255,255,0.6); }
 
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-        }
-
-        .footer-section p,
-        .footer-section ul {
-            color: rgba(255,255,255,0.8);
-            line-height: 1.8;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section ul li a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-section ul li a:hover {
-            color: var(--accent-color);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal {
-            background: var(--white);
-            border-radius: 15px;
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--light-bg);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .modal-close:hover {
-            background: var(--primary-color);
-            color: var(--white);
-        }
-
-        .modal-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .modal-image {
-            height: 100%;
-            min-height: 400px;
-            background: linear-gradient(135deg, var(--primary-color), #0d3a66);
-        }
-
-        .modal-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-details {
-            padding: 2rem;
-        }
-
-        .modal-category {
-            color: var(--accent-color);
-            font-size: 0.85rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .modal-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .modal-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-description {
-            color: var(--text-light);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .modal-features {
-            margin-bottom: 2rem;
-        }
-
-        .modal-features h4 {
-            font-size: 1rem;
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-        }
-
-        .modal-features ul {
-            list-style: none;
-        }
-
-        .modal-features ul li {
-            padding: 0.4rem 0;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .modal-features ul li i {
-            color: var(--accent-color);
-        }
-
-        .modal-buy-btn {
-            width: 100%;
-            padding: 1rem 2rem;
-            background: var(--accent-color);
-            color: var(--white);
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .modal-buy-btn:hover {
-            background: #c4a137;
-        }
-
-        /* Mobile Styles */
+        /* Mobile */
         @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: var(--white);
-                padding: 5rem 2rem;
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-            }
-
-            nav.active {
-                right: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-content {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-image {
-                min-height: 250px;
-            }
-
-            .product-footer {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: stretch;
-            }
-
-            .buy-btn {
-                justify-content: center;
-            }
+            .hamburger { display: flex; }
+            nav { position: fixed; top: 0; right: -100%; width: 80%; height: 100vh; background: var(--white); transition: 0.3s; padding: 5rem 2rem; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
+            nav.active { right: 0; }
+            nav ul { flex-direction: column; }
+            .blog-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+
     <!-- Header -->
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">CYAzor <span>Law</span> Firm</a>
             <nav id="nav">
                 <ul>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="services.html">Services</a></li>
                     <li><a href="shop.html">Shop</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="testimonials.html">Testimonials</a></li>
+                    <li><a href="blog.html" style="color: var(--accent-color);">Blog</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
             <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </header>
 
     <!-- Page Header -->
     <section class="page-header">
-        <h1>Immigration Resources Shop</h1>
-        <p>Expert guides, templates, and eBooks to help you navigate your U.S. immigration journey with confidence.</p>
+        <h1>Immigration News & Insights</h1>
+        <p>Stay updated with the latest visa policies, legal tips, and success stories from CYAzor Law Firm.</p>
     </section>
 
-    <!-- Shop Section -->
-    <section class="shop-section">
-        <div class="shop-intro">
-            <h2>Our Immigration eBooks & Guides</h2>
-            <p>Download comprehensive resources created by Attorney Cynthia Azor to help you understand and prepare for your immigration journey.</p>
-        </div>
-
-        <!-- Products Grid -->
-        <div class="products-grid" id="productsGrid">
-            <!-- Loading State -->
-            <div class="loading-container" id="loadingState">
-                <div class="loading-spinner"></div>
-                <p>Loading products...</p>
+    <!-- Blog Grid -->
+    <section class="blog-section">
+        <div id="blog-grid" class="blog-grid">
+            <!-- Posts will be loaded here via JavaScript -->
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading latest articles...</p>
             </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="cta-section">
-            <h2>Need Personalized Guidance?</h2>
-            <p>Our eBooks provide great foundational knowledge, but every immigration case is unique. Schedule a consultation with Attorney Cynthia Azor for personalized advice.</p>
-            <a href="https://calendly.com/cynobas/foreign-attorney-strategy-call" class="cta-button">
-                <i class="fas fa-calendar-check"></i> Book a Consultation
-            </a>
         </div>
     </section>
-
-    <!-- Product Modal -->
-    <div class="modal-overlay" id="productModal">
-        <div class="modal">
-            <button class="modal-close" id="modalClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-content">
-                <div class="modal-image">
-                    <img src="" alt="" id="modalImage">
-                </div>
-                <div class="modal-details">
-                    <p class="modal-category" id="modalCategory"></p>
-                    <h2 class="modal-title" id="modalTitle"></h2>
-                    <p class="modal-price" id="modalPrice"></p>
-                    <p class="modal-description" id="modalDescription"></p>
-                    
-                    <div class="modal-features">
-                        <h4>What's Included:</h4>
-                        <ul id="modalFeatures">
-                            <li><i class="fas fa-check"></i> Instant PDF Download</li>
-                            <li><i class="fas fa-check"></i> Step-by-Step Instructions</li>
-                            <li><i class="fas fa-check"></i> Lifetime Access</li>
-                            <li><i class="fas fa-check"></i> Free Updates</li>
-                        </ul>
-                    </div>
-                    
-                    <a href="#" class="modal-buy-btn" id="modalBuyBtn">
-                        <i class="fas fa-shopping-cart"></i> Purchase Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <p><i class="fas fa-phone"></i> <a href="tel:+16292022006" style="color: rgba(255,255,255,0.8); text-decoration: none;">+1 (629) 202-2006</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:info@cyazorlawfirm.com" style="color: rgba(255,255,255,0.8); text-decoration: none;">info@cyazorlawfirm.com</a></p>
-                <p><i class="fas fa-map-marker-alt"></i> <a href="https://www.google.com/maps/search/?api=1&query=153+Dreville+Dr+LA+Vergne+Tennessee+37086" target="_blank" style="color: rgba(255,255,255,0.8); text-decoration: none;">153 Dreville Dr<br>La Vergne, Tennessee 37086</a></p>
-            </div>
-            <div class="footer-section">
-                <h3>Office Hours</h3>
-                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                <p>Saturday: 10:00 AM - 2:00 PM</p>
-                <p>Sunday: Closed</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="shop.html">Shop</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="testimonials.html">Testimonials</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="footer-bottom">
             <p>&copy; 2025 CYAzor Law Firm. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Supabase SDK -->
+    <!-- Supabase Logic -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <script>
-        // Initialize Supabase
+        // 1. Initialize Supabase
         const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // DOM Elements
-        const productsGrid = document.getElementById('productsGrid');
-        const loadingState = document.getElementById('loadingState');
-        const productModal = document.getElementById('productModal');
-        const modalClose = document.getElementById('modalClose');
+        // 2. Fetch and Display Posts
+        async function loadPosts() {
+            const grid = document.getElementById('blog-grid');
 
-        // Load Products
-        async function loadProducts() {
-            try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .eq('status', 'active')
-                    .order('created_at', { ascending: false });
+            // Fetch posts from database
+            const { data, error } = await supabase
+                .from('blog_posts')
+                .select('*')
+                .eq('status', 'published') // Only show published posts
+                .order('created_at', { ascending: false });
 
-                if (error) throw error;
+            if (error) {
+                grid.innerHTML = `<div class="loading"><p>Error loading posts. Please try again later.</p></div>`;
+                return;
+            }
 
-                loadingState.style.display = 'none';
+            if (!data || data.length === 0) {
+                grid.innerHTML = `<div class="loading"><p>No blog posts found. Check back soon!</p></div>`;
+                return;
+            }
 
-                if (!data || data.length === 0) {
-                    productsGrid.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-book-open"></i>
-                            <h3>Coming Soon!</h3>
-                            <p>Our immigration eBooks and guides are being prepared. Check back soon!</p>
-                        </div>
-                    `;
-                    return;
-                }
+            // Clear loading spinner
+            grid.innerHTML = '';
 
-                productsGrid.innerHTML = data.map(product => createProductCard(product)).join('');
-
-                // Add click handlers to cards
-                document.querySelectorAll('.product-card').forEach(card => {
-                    card.addEventListener('click', (e) => {
-                        if (!e.target.closest('.buy-btn')) {
-                            const productId = card.dataset.productId;
-                            const product = data.find(p => p.id == productId);
-                            openProductModal(product);
-                        }
-                    });
+            // Generate HTML for each post
+            data.forEach(post => {
+                const date = new Date(post.created_at).toLocaleDateString('en-US', {
+                    year: 'numeric', month: 'long', day: 'numeric'
                 });
 
-            } catch (error) {
-                console.error('Error loading products:', error);
-                loadingState.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <h3>Unable to Load Products</h3>
-                        <p>Please refresh the page or try again later.</p>
-                    </div>
-                `;
-            }
-        }
+                // Default image if none provided
+                const imgUrl = post.image_url || 'https://via.placeholder.com/400x250/0a2342/ffffff?text=CYAzor+Law';
 
-        // Create Product Card HTML
-        function createProductCard(product) {
-            const defaultImage = 'https://via.placeholder.com/400x500/0a2342/d4af37?text=' + encodeURIComponent(product.title || 'eBook');
-            const imageUrl = product.cover_image || defaultImage;
-            const hasDiscount = product.original_price && product.original_price > product.price;
-            
-            let badgeHtml = '';
-            if (product.badge) {
-                const badgeClass = product.badge.toLowerCase() === 'new' ? 'new' : 
-                                   product.badge.toLowerCase() === 'sale' ? 'sale' : '';
-                badgeHtml = `<span class="product-badge ${badgeClass}">${product.badge}</span>`;
-            }
-
-            let priceHtml = '';
-            if (hasDiscount) {
-                priceHtml = `
-                    <span class="original-price">$${product.original_price.toFixed(2)}</span>
-                    <span class="sale-price">$${product.price.toFixed(2)}</span>
-                `;
-            } else {
-                priceHtml = `$${product.price.toFixed(2)}`;
-            }
-
-            return `
-                <div class="product-card" data-product-id="${product.id}">
-                    <div class="product-image">
-                        <img src="${imageUrl}" alt="${product.title}" onerror="this.src='${defaultImage}'">
-                        ${badgeHtml}
-                    </div>
-                    <div class="product-content">
-                        <p class="product-category">${product.category || 'Immigration Guide'}</p>
-                        <h3 class="product-title">${product.title}</h3>
-                        <p class="product-description">${product.description || ''}</p>
-                        <div class="product-footer">
-                            <span class="product-price">${priceHtml}</span>
-                            <a href="${product.purchase_link || '#'}" class="buy-btn" target="_blank">
-                                <i class="fas fa-shopping-cart"></i> Buy Now
-                            </a>
+                // Link to the Single Post Page (using the file you shared earlier)
+                const postHtml = `
+                    <a href="blog-post.html?slug=${post.slug}" class="blog-card">
+                        <img src="${imgUrl}" alt="${post.title}" class="blog-img">
+                        <div class="blog-content">
+                            <span class="blog-date">${date}</span>
+                            <h3 class="blog-title">${post.title}</h3>
+                            <p class="blog-excerpt">${post.excerpt || 'Read this article to learn more...'}</p>
+                            <span class="read-more">Read Article <i class="fas fa-arrow-right"></i></span>
                         </div>
-                    </div>
-                </div>
-            `;
+                    </a>
+                `;
+                grid.innerHTML += postHtml;
+            });
         }
 
-        // Open Product Modal
-        function openProductModal(product) {
-            const defaultImage = 'https://via.placeholder.com/400x500/0a2342/d4af37?text=' + encodeURIComponent(product.title || 'eBook');
-            
-            document.getElementById('modalImage').src = product.cover_image || defaultImage;
-            document.getElementById('modalImage').alt = product.title;
-            document.getElementById('modalCategory').textContent = product.category || 'Immigration Guide';
-            document.getElementById('modalTitle').textContent = product.title;
-            document.getElementById('modalPrice').textContent = `$${product.price.toFixed(2)}`;
-            document.getElementById('modalDescription').textContent = product.full_description || product.description || '';
-            document.getElementById('modalBuyBtn').href = product.purchase_link || '#';
-
-            productModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Close Modal
-        function closeModal() {
-            productModal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        modalClose.addEventListener('click', closeModal);
-        productModal.addEventListener('click', (e) => {
-            if (e.target === productModal) closeModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // Hamburger Menu
+        // 3. Hamburger Menu Logic
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('nav');
-
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
             nav.classList.toggle('active');
         });
 
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
-                hamburger.classList.remove('active');
-                nav.classList.remove('active');
-            }
-        });
-
-        // Load products on page load
-        document.addEventListener('DOMContentLoaded', loadProducts);
+        // Run on load
+        loadPosts();
     </script>
 </body>
 </html>
