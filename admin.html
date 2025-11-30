@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Admin - CY Visa Help</title>
+    <title>Master Admin - CYazor law Firm </title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
@@ -75,7 +75,7 @@
         
         .btn {
             padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 500; cursor: pointer;
-            transition: 0.3s; background: var(--accent); color: var(--white); display: inline-flex; align-items: center; gap: 8px;
+            transition: 0.3s; background: var(--accent); color: var(--white); display: inline-flex; align-items: center; gap: 8px; justify-content: center;
         }
         .btn:hover { background: #b6932b; }
         .btn-primary { background: var(--primary); }
@@ -123,9 +123,9 @@
         <div class="login-box">
             <h1>CY <span>visa</span> help</h1>
             <h3 style="margin-bottom: 20px;">Admin Access</h3>
-            <input type="text" id="username" placeholder="Username">
+            <input type="text" id="username" placeholder="Username (or Email)">
             <input type="password" id="password" placeholder="Password">
-            <button class="btn btn-primary" onclick="handleLogin()" style="width:100%; justify-content:center;">Login</button>
+            <button id="login-btn" class="btn btn-primary" onclick="handleLogin()" style="width:100%;">Login</button>
             <p id="login-error" style="color: red; margin-top: 10px; display: none;">Invalid credentials</p>
         </div>
     </div>
@@ -202,4 +202,453 @@
             <input type="text" id="content-key" placeholder="Key (e.g. home_title)" readonly style="background:#f0f0f0;">
             <select id="content-type" onchange="toggleContentInput()">
                 <option value="text">Text</option>
-                <option value=
+                <option value="image">Image</option>
+            </select>
+            
+            <!-- Text Input -->
+            <div id="text-input-group">
+                <label>Text Content</label>
+                <textarea id="content-value" rows="5"></textarea>
+            </div>
+
+            <!-- Image Input -->
+            <div id="image-input-group" style="display:none;">
+                <label>Image Upload</label>
+                <div class="upload-area" onclick="document.getElementById('content-file').click()">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #ccc;"></i>
+                    <p>Click to upload image</p>
+                </div>
+                <input type="file" id="content-file" hidden onchange="handleFileSelect(this, 'content-preview')">
+                <img id="content-preview" class="preview-img">
+                <input type="text" id="content-image-url" placeholder="Or paste Image URL">
+            </div>
+
+            <button class="btn btn-primary" onclick="saveContent()">Save Changes</button>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Product / E-book</h3>
+                <button class="close-modal" onclick="closeModals()">&times;</button>
+            </div>
+            <input type="hidden" id="prod-id">
+            
+            <label>Product Title</label>
+            <input type="text" id="prod-title">
+            
+            <label>Price (e.g., $19.99)</label>
+            <input type="text" id="prod-price">
+            
+            <label>Payment Link (Stripe/PayPal)</label>
+            <input type="text" id="prod-pay-link" placeholder="https://buy.stripe.com/...">
+
+            <label>Description</label>
+            <textarea id="prod-desc" rows="3"></textarea>
+
+            <label>Cover Image</label>
+            <div class="upload-area" onclick="document.getElementById('prod-file').click()">
+                <i class="fas fa-image" style="font-size: 2rem; color: #ccc;"></i><p>Upload Cover</p>
+            </div>
+            <input type="file" id="prod-file" hidden onchange="handleFileSelect(this, 'prod-preview')">
+            <img id="prod-preview" class="preview-img">
+            <input type="hidden" id="prod-image-url">
+
+            <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+        </div>
+    </div>
+
+    <!-- Blog Modal -->
+    <div id="blog-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3>Blog Post</h3>
+                <button class="close-modal" onclick="closeModals()">&times;</button>
+            </div>
+            <input type="hidden" id="blog-id">
+            
+            <label>Title</label>
+            <input type="text" id="blog-title" onkeyup="generateSlug()">
+            
+            <label>Slug (URL)</label>
+            <input type="text" id="blog-slug">
+
+            <label>Featured Image</label>
+            <div class="upload-area" onclick="document.getElementById('blog-file').click()" style="padding: 1rem;">
+                <p>Upload Featured Image</p>
+            </div>
+            <input type="file" id="blog-file" hidden onchange="handleFileSelect(this, 'blog-preview')">
+            <img id="blog-preview" class="preview-img" style="height: 150px;">
+            <input type="hidden" id="blog-image-url">
+            
+            <label>Content</label>
+            <div id="quill-editor" style="height: 300px; margin-bottom: 20px;"></div>
+
+            <div style="display:flex; gap:10px; align-items:center; margin-top:10px;">
+                <label style="margin:0;">Status:</label>
+                <select id="blog-status" style="width:auto; margin:0;">
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 20px; text-align: right;">
+                <button class="btn btn-primary" onclick="saveBlog()">Publish Post</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Action Successful</div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <script>
+        // --- 1. SETUP ---
+        const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let quill;
+        let selectedFile = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check Auth
+            if(sessionStorage.getItem('admin_logged_in')) {
+                showDashboard();
+            }
+
+            // Init Quill
+            quill = new Quill('#quill-editor', {
+                theme: 'snow',
+                modules: { toolbar: [['bold', 'italic', 'underline'], ['link', 'image'], [{ 'list': 'ordered'}, { 'list': 'bullet' }]] }
+            });
+            
+            // Allow Enter key to login
+            document.getElementById('password').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') handleLogin();
+            });
+        });
+
+        // --- 2. AUTHENTICATION (UPDATED & FIXED) ---
+        async function handleLogin() {
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('login-error');
+            const loginBtn = document.getElementById('login-btn');
+
+            loginBtn.innerText = "Checking...";
+            errorMsg.style.display = 'none';
+
+            // OPTION 1: Check Hardcoded Username (Case Insensitive)
+            if(u.toLowerCase() === 'azor cynthia' && p === '2004') {
+                sessionStorage.setItem('admin_logged_in', true);
+                showDashboard();
+                return;
+            }
+
+            // OPTION 2: Check Supabase Auth (Email Login)
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: u,
+                    password: p
+                });
+
+                if (!error && data.user) {
+                    sessionStorage.setItem('admin_logged_in', true);
+                    showDashboard();
+                } else {
+                    throw new Error("Invalid");
+                }
+            } catch (err) {
+                errorMsg.style.display = 'block';
+                errorMsg.innerText = "Invalid Username or Password";
+                loginBtn.innerText = "Login";
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('admin_logged_in');
+            location.reload();
+        }
+
+        function showDashboard() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'flex'; 
+            loadContent(); // Load initial tab
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Highlight nav
+            const icons = {'content':0, 'shop':1, 'blog':2};
+            document.querySelectorAll('.nav-item')[icons[tabName]].classList.add('active');
+
+            if(tabName === 'content') loadContent();
+            if(tabName === 'shop') loadProducts();
+            if(tabName === 'blog') loadBlog();
+        }
+
+        // --- 3. HELPER FUNCTIONS ---
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function handleFileSelect(input, previewId) {
+            if (input.files && input.files[0]) {
+                selectedFile = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById(previewId);
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        async function uploadImageToSupabase() {
+            if (!selectedFile) return null;
+            const fileName = `admin_${Date.now()}_${selectedFile.name.replace(/\s/g, '_')}`;
+            const { data, error } = await supabase.storage.from('blog-images').upload(fileName, selectedFile);
+            if (error) { 
+                alert('Upload Error: ' + error.message); 
+                return null; 
+            }
+            
+            const { data: { publicUrl } } = supabase.storage.from('blog-images').getPublicUrl(fileName);
+            return publicUrl;
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            selectedFile = null;
+        }
+
+        // --- 4. SITE CONTENT LOGIC ---
+        async function loadContent() {
+            const list = document.getElementById('content-list');
+            const { data } = await supabase.from('site_content').select('*').order('key');
+            list.innerHTML = '';
+            if(!data) return;
+            data.forEach(item => {
+                list.innerHTML += `
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>${item.key}</h4>
+                            <small>${item.type} - ${item.content.substring(0,40)}...</small>
+                        </div>
+                        <button class="btn btn-sm" onclick="editContent('${item.key}', '${item.type}', \`${item.content.replace(/"/g, '&quot;')}\`)">Edit</button>
+                    </div>`;
+            });
+        }
+
+        function openContentModal() {
+            document.getElementById('content-key').removeAttribute('readonly');
+            document.getElementById('content-key').value = '';
+            document.getElementById('content-value').value = '';
+            document.getElementById('content-modal').style.display = 'flex';
+        }
+
+        function editContent(key, type, val) {
+            document.getElementById('content-key').value = key;
+            document.getElementById('content-key').setAttribute('readonly', true);
+            document.getElementById('content-type').value = type;
+            document.getElementById('content-value').value = val;
+            
+            if(type === 'image') {
+                document.getElementById('content-image-url').value = val;
+                document.getElementById('content-preview').src = val;
+                document.getElementById('content-preview').style.display = 'block';
+            }
+            toggleContentInput();
+            document.getElementById('content-modal').style.display = 'flex';
+        }
+
+        function toggleContentInput() {
+            const type = document.getElementById('content-type').value;
+            document.getElementById('text-input-group').style.display = type === 'text' ? 'block' : 'none';
+            document.getElementById('image-input-group').style.display = type === 'image' ? 'block' : 'none';
+        }
+
+        async function saveContent() {
+            const key = document.getElementById('content-key').value;
+            const type = document.getElementById('content-type').value;
+            let content = document.getElementById('content-value').value;
+
+            if (type === 'image') {
+                const uploadedUrl = await uploadImageToSupabase();
+                if (uploadedUrl) content = uploadedUrl;
+                else content = document.getElementById('content-image-url').value;
+            }
+
+            const { error } = await supabase.from('site_content').upsert({ key, type, content });
+            if (!error) { showToast('Content Updated'); closeModals(); loadContent(); }
+        }
+
+        // --- 5. SHOP LOGIC ---
+        async function loadProducts() {
+            const list = document.getElementById('product-list');
+            const { data } = await supabase.from('products').select('*').order('id');
+            list.innerHTML = '';
+            if(!data) return;
+            data.forEach(p => {
+                list.innerHTML += `
+                    <div class="item-row">
+                        <div class="item-info" style="display:flex; align-items:center; gap:10px;">
+                            <img src="${p.image_url}" style="width:40px; height:40px; border-radius:4px; object-fit:cover;">
+                            <div>
+                                <h4>${p.title}</h4>
+                                <small>${p.price}</small>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm" onclick='editProduct(${JSON.stringify(p)})'>Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function openProductModal() {
+            document.getElementById('prod-id').value = '';
+            document.querySelectorAll('#product-modal input, #product-modal textarea').forEach(i => i.value='');
+            document.getElementById('prod-preview').style.display = 'none';
+            document.getElementById('product-modal').style.display = 'flex';
+        }
+
+        function editProduct(p) {
+            document.getElementById('prod-id').value = p.id;
+            document.getElementById('prod-title').value = p.title;
+            document.getElementById('prod-price').value = p.price;
+            document.getElementById('prod-pay-link').value = p.payment_link;
+            document.getElementById('prod-desc').value = p.description;
+            document.getElementById('prod-image-url').value = p.image_url;
+            document.getElementById('prod-preview').src = p.image_url;
+            document.getElementById('prod-preview').style.display = 'block';
+            document.getElementById('product-modal').style.display = 'flex';
+        }
+
+        async function saveProduct() {
+            const id = document.getElementById('prod-id').value;
+            let imgUrl = document.getElementById('prod-image-url').value;
+            
+            const uploaded = await uploadImageToSupabase();
+            if(uploaded) imgUrl = uploaded;
+
+            const product = {
+                title: document.getElementById('prod-title').value,
+                price: document.getElementById('prod-price').value,
+                payment_link: document.getElementById('prod-pay-link').value,
+                description: document.getElementById('prod-desc').value,
+                image_url: imgUrl
+            };
+
+            let res;
+            if (id) res = await supabase.from('products').update(product).eq('id', id);
+            else res = await supabase.from('products').insert(product);
+
+            if (!res.error) { showToast('Product Saved'); closeModals(); loadProducts(); }
+        }
+
+        async function deleteProduct(id) {
+            if(confirm('Delete product?')) {
+                await supabase.from('products').delete().eq('id', id);
+                loadProducts();
+            }
+        }
+
+        // --- 6. BLOG LOGIC ---
+        async function loadBlog() {
+            const list = document.getElementById('blog-list');
+            const { data } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false});
+            list.innerHTML = '';
+            if(!data) return;
+            data.forEach(p => {
+                list.innerHTML += `
+                    <div class="item-row">
+                        <div class="item-info">
+                            <h4>${p.title}</h4>
+                            <small>${new Date(p.created_at).toLocaleDateString()} - ${p.status}</small>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm" onclick='editBlog(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteBlog(${p.id})">Delete</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function openBlogModal() {
+            document.getElementById('blog-id').value = '';
+            document.getElementById('blog-title').value = '';
+            document.getElementById('blog-slug').value = '';
+            document.getElementById('blog-status').value = 'draft';
+            document.getElementById('blog-image-url').value = '';
+            document.getElementById('blog-preview').style.display = 'none';
+            quill.root.innerHTML = '';
+            document.getElementById('blog-modal').style.display = 'flex';
+        }
+
+        function editBlog(p) {
+            document.getElementById('blog-id').value = p.id;
+            document.getElementById('blog-title').value = p.title;
+            document.getElementById('blog-slug').value = p.slug;
+            document.getElementById('blog-status').value = p.status;
+            document.getElementById('blog-image-url').value = p.image_url;
+            if(p.image_url) {
+                document.getElementById('blog-preview').src = p.image_url;
+                document.getElementById('blog-preview').style.display = 'block';
+            }
+            quill.root.innerHTML = p.content;
+            document.getElementById('blog-modal').style.display = 'flex';
+        }
+
+        function generateSlug() {
+            const t = document.getElementById('blog-title').value;
+            document.getElementById('blog-slug').value = t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
+        async function saveBlog() {
+            const id = document.getElementById('blog-id').value;
+            let imgUrl = document.getElementById('blog-image-url').value;
+            const uploaded = await uploadImageToSupabase();
+            if(uploaded) imgUrl = uploaded;
+
+            const post = {
+                title: document.getElementById('blog-title').value,
+                slug: document.getElementById('blog-slug').value,
+                content: quill.root.innerHTML,
+                excerpt: quill.getText().substring(0, 150) + '...',
+                status: document.getElementById('blog-status').value,
+                image_url: imgUrl,
+                category: 'News', // Default category
+                published_at: new Date()
+            };
+
+            let res;
+            if (id) res = await supabase.from('blog_posts').update(post).eq('id', id);
+            else res = await supabase.from('blog_posts').insert(post);
+
+            if (!res.error) { showToast('Post Saved'); closeModals(); loadBlog(); }
+        }
+
+        async function deleteBlog(id) {
+            if(confirm('Delete post?')) {
+                await supabase.from('blog_posts').delete().eq('id', id);
+                loadBlog();
+            }
+        }
+    </script>
+</body>
+</html>
