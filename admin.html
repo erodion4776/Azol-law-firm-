@@ -16,9 +16,13 @@
         /* Login */
         #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary) 0%, #05162b 100%); display: flex; justify-content: center; align-items: center; z-index: 2000; }
         .login-box { background: var(--white); padding: 2.5rem; border-radius: 12px; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; }
+        .login-box h1 { margin-bottom: 1.5rem; }
+        .login-box input { margin-bottom: 1rem; }
         
-        /* Layout */
-        #dashboard { display: none; height: 100vh; display: flex; position: relative; } 
+        /* Layout - FIXED: removed conflicting display property */
+        #dashboard { display: none; height: 100vh; position: relative; }
+        #dashboard.active { display: flex; }
+        
         .sidebar { width: 260px; background: var(--primary); color: var(--white); display: flex; flex-direction: column; padding: 1.5rem; flex-shrink: 0; transition: transform 0.3s ease; z-index: 1000; }
         .sidebar.open { transform: translateX(0); }
         .nav-item { padding: 1rem; margin-bottom: 0.5rem; cursor: pointer; border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.7); }
@@ -39,8 +43,9 @@
         .item-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid #eee; border-radius: 8px; background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .item-info { flex: 1; padding-right: 20px; }
         .item-info h4 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.1rem; }
-        .item-info .preview { font-size: 0.95rem; color: #555; background: #f4f4f4; padding: 8px; border-radius: 4px; border-left: 3px solid var(--accent); }
-        .badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .item-info .preview { font-size: 0.95rem; color: #555; background: #f4f4f4; padding: 8px; border-radius: 4px; border-left: 3px solid var(--accent); word-break: break-word; }
+        .badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-left: 8px; }
+        .btn-group { display: flex; gap: 8px; flex-shrink: 0; }
 
         /* Mobile */
         .mobile-header { display: none; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
@@ -51,25 +56,47 @@
             #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 900; }
             #overlay.active { display: block; }
             .item-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
-            .btn { width: 100%; }
+            .btn-group { width: 100%; }
+            .btn-group .btn { flex: 1; }
         }
 
         /* General UI */
-        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; background: var(--accent); color: var(--white); display: inline-flex; justify-content: center; align-items: center;}
-        .btn:hover { background: #b6932b; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; background: var(--accent); color: var(--white); display: inline-flex; justify-content: center; align-items: center; transition: 0.3s; }
+        .btn:hover { background: #b6932b; transform: translateY(-1px); }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .btn-primary { background: var(--primary); }
+        .btn-primary:hover { background: #0d2d52; }
         .btn-danger { background: var(--danger); }
-        .btn-sm { padding: 0.5rem 1rem; width: auto; }
-        input, textarea, select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 1rem; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.9rem; }
+        input, textarea, select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 1rem; font-size: 1rem; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(212,175,55,0.1); }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--primary); }
         
         /* Modals & Toast */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; justify-content: center; align-items: flex-start; padding-top: 20px; overflow-y: auto; }
-        .modal-content { background: var(--white); width: 95%; max-width: 800px; padding: 1.5rem; border-radius: 12px; margin-bottom: 50px; }
-        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 1rem 2rem; border-radius: 6px; transform: translateY(100px); transition: 0.3s; z-index: 4000; }
-        .toast.show { transform: translateY(0); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; justify-content: center; align-items: flex-start; padding: 20px; overflow-y: auto; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--white); width: 95%; max-width: 800px; padding: 2rem; border-radius: 12px; margin: auto; }
+        .modal-content h3 { margin-bottom: 1.5rem; color: var(--primary); }
+        .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; }
         
-        .preview-img { max-width: 100%; height: 200px; object-fit: cover; border-radius: 8px; display: none; margin-bottom: 1rem; }
-        .upload-area { border: 2px dashed #ccc; padding: 2rem; text-align: center; cursor: pointer; background: #fafafa; border-radius: 8px; margin-bottom: 1rem; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 1rem 2rem; border-radius: 6px; transform: translateY(100px); opacity: 0; transition: 0.3s; z-index: 4000; font-weight: 500; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.error { background: var(--danger); }
+        
+        .preview-img { max-width: 100%; height: 200px; object-fit: cover; border-radius: 8px; display: none; margin-bottom: 1rem; border: 2px solid #eee; }
+        .preview-img.show { display: block; }
+        .upload-area { border: 2px dashed #ccc; padding: 2rem; text-align: center; cursor: pointer; background: #fafafa; border-radius: 8px; margin-bottom: 1rem; transition: 0.3s; }
+        .upload-area:hover { border-color: var(--accent); background: #fff; }
+        .upload-area i { font-size: 2rem; color: #ccc; margin-bottom: 0.5rem; }
+        .upload-area p { margin: 0; color: #666; }
+
+        .loading { text-align: center; padding: 3rem; color: #666; }
+        .loading i { font-size: 2rem; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .empty-state { text-align: center; padding: 3rem; color: #666; background: white; border-radius: 10px; }
+        .empty-state i { font-size: 3rem; color: #ddd; margin-bottom: 1rem; }
     </style>
 </head>
 <body>
@@ -77,24 +104,29 @@
     <!-- LOGIN SCREEN -->
     <div id="login-screen">
         <div class="login-box">
-            <h1 style="color:var(--primary); margin-bottom:1rem;">CY <span>visa</span> help</h1>
-            <input type="text" id="username" placeholder="Username">
-            <input type="password" id="password" placeholder="Password">
-            <button id="login-btn" class="btn btn-primary" onclick="handleLogin()" style="width:100%;">Login</button>
-            <p id="login-error" style="color: red; margin-top: 10px; display: none;">Invalid credentials</p>
+            <h1 style="color:var(--primary);">CY <span style="color:var(--accent);">visa</span> help</h1>
+            <p style="color:#666; margin-bottom:1.5rem;">Admin Dashboard</p>
+            <input type="text" id="username" placeholder="Username" autocomplete="username">
+            <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+            <button id="login-btn" class="btn btn-primary" style="width:100%;">
+                <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i> Login
+            </button>
+            <p id="login-error" style="color: var(--danger); margin-top: 15px; display: none; font-size: 0.9rem;">
+                <i class="fas fa-exclamation-circle"></i> Invalid credentials
+            </p>
         </div>
     </div>
 
     <!-- MAIN DASHBOARD -->
     <div id="dashboard">
-        <div id="overlay" onclick="toggleSidebar()"></div>
+        <div id="overlay"></div>
 
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div style="font-size:1.5rem; font-weight:700; margin-bottom:2rem;">CY <span style="color:var(--accent);">visa</span> help</div>
-            <div class="nav-item active" onclick="switchTab('content')"><i class="fas fa-edit"></i> Edit Pages</div>
-            <div class="nav-item" onclick="switchTab('shop')"><i class="fas fa-shopping-bag"></i> Shop Manager</div>
-            <div class="nav-item" onclick="switchTab('blog')"><i class="fas fa-newspaper"></i> Blog Posts</div>
+            <div class="nav-item active" data-tab="content" onclick="switchTab('content')"><i class="fas fa-edit"></i> Edit Pages</div>
+            <div class="nav-item" data-tab="shop" onclick="switchTab('shop')"><i class="fas fa-shopping-bag"></i> Shop Manager</div>
+            <div class="nav-item" data-tab="blog" onclick="switchTab('blog')"><i class="fas fa-newspaper"></i> Blog Posts</div>
             <div style="margin-top: auto;">
                 <div class="nav-item" onclick="logout()" style="color: #ff8888;"><i class="fas fa-sign-out-alt"></i> Logout</div>
             </div>
@@ -107,19 +139,21 @@
                 <h3 style="margin:0; color:var(--primary);">Admin Panel</h3>
             </div>
             
-            <!-- SECTION 1: SITE CONTENT (With Page Dropdown) -->
+            <!-- SECTION 1: SITE CONTENT -->
             <div id="content-tab" class="section active">
                 
                 <!-- Initialization Button -->
                 <div id="init-box" style="display:none; background:#fff3cd; color:#856404; padding:1.5rem; border-radius:8px; margin-bottom:2rem; border:1px solid #ffeeba;">
-                    <h3>⚠️ Database Empty</h3>
-                    <p>Click below to load default content so you can start editing.</p>
-                    <button class="btn btn-primary" onclick="initializeDB()">🚀 Initialize Content</button>
+                    <h3><i class="fas fa-exclamation-triangle"></i> Database Empty</h3>
+                    <p style="margin: 0.5rem 0 1rem;">Click below to load default content so you can start editing.</p>
+                    <button class="btn btn-primary" onclick="initializeDB()">
+                        <i class="fas fa-rocket" style="margin-right:8px;"></i> Initialize Content
+                    </button>
                 </div>
 
                 <div class="page-selector">
                     <div>
-                        <h2 style="margin:0; color:var(--primary);">Select Page:</h2>
+                        <h2 style="margin:0; color:var(--primary);">Edit Page Content</h2>
                     </div>
                     <select id="page-filter" onchange="filterContent()">
                         <option value="all">Show All</option>
@@ -128,30 +162,40 @@
                         <option value="services">Services</option>
                         <option value="contact">Footer & Contact</option>
                     </select>
-                    <button class="btn" onclick="openContentModal()">+ Add New Key</button>
+                    <button class="btn" onclick="openContentModal()">
+                        <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Key
+                    </button>
                 </div>
 
                 <div id="content-list" class="item-list">
-                    <div class="loading">Loading...</div>
+                    <div class="loading"><i class="fas fa-spinner"></i><p>Loading content...</p></div>
                 </div>
             </div>
 
             <!-- SECTION 2: SHOP MANAGER -->
             <div id="shop-tab" class="section">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem;">
-                    <h2>Shop & E-books</h2>
-                    <button class="btn" onclick="openProductModal()">+ Add Product</button>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+                    <h2 style="margin:0; color:var(--primary);">Shop & E-books</h2>
+                    <button class="btn" onclick="openProductModal()">
+                        <i class="fas fa-plus" style="margin-right:8px;"></i> Add Product
+                    </button>
                 </div>
-                <div id="product-list" class="item-list"></div>
+                <div id="product-list" class="item-list">
+                    <div class="loading"><i class="fas fa-spinner"></i><p>Loading products...</p></div>
+                </div>
             </div>
 
             <!-- SECTION 3: BLOG MANAGER -->
             <div id="blog-tab" class="section">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem;">
-                    <h2>Blog Posts</h2>
-                    <button class="btn" onclick="openBlogModal()">+ New Post</button>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+                    <h2 style="margin:0; color:var(--primary);">Blog Posts</h2>
+                    <button class="btn" onclick="openBlogModal()">
+                        <i class="fas fa-plus" style="margin-right:8px;"></i> New Post
+                    </button>
                 </div>
-                <div id="blog-list" class="item-list"></div>
+                <div id="blog-list" class="item-list">
+                    <div class="loading"><i class="fas fa-spinner"></i><p>Loading posts...</p></div>
+                </div>
             </div>
 
         </div>
@@ -162,36 +206,48 @@
     <!-- Content Modal -->
     <div id="content-modal" class="modal">
         <div class="modal-content">
-            <h3>Edit Section</h3>
+            <h3><i class="fas fa-edit" style="margin-right:10px;"></i>Edit Section</h3>
+            
             <label>Key (Unique ID)</label>
-            <input type="text" id="content-key" readonly style="background:#f0f0f0;">
+            <input type="text" id="content-key" placeholder="e.g., hero_title">
+            
+            <label>Page Category</label>
+            <select id="content-page">
+                <option value="home">Home Page</option>
+                <option value="attorney">Attorney / About</option>
+                <option value="services">Services</option>
+                <option value="contact">Footer & Contact</option>
+            </select>
             
             <label>Type</label>
             <select id="content-type" onchange="toggleContentInput()">
                 <option value="text">Text</option>
-                <option value="image">Image URL</option>
+                <option value="image">Image</option>
                 <option value="link">Link URL</option>
             </select>
             
             <div id="text-input-group">
                 <label>Content</label>
-                <textarea id="content-value" rows="6"></textarea>
+                <textarea id="content-value" rows="6" placeholder="Enter your content here..."></textarea>
             </div>
 
             <div id="image-input-group" style="display:none;">
                 <label>Upload New Image</label>
                 <div class="upload-area" onclick="document.getElementById('content-file').click()">
-                    <i class="fas fa-cloud-upload-alt" style="font-size:2rem; color:#ccc;"></i><p>Click to Upload</p>
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to Upload Image</p>
                 </div>
-                <input type="file" id="content-file" hidden onchange="handleFileSelect(this, 'content-preview')">
+                <input type="file" id="content-file" hidden accept="image/*" onchange="handleFileSelect(this, 'content-preview')">
                 <img id="content-preview" class="preview-img">
-                <label>Or Image URL</label>
-                <input type="text" id="content-image-url">
+                <label>Or Enter Image URL</label>
+                <input type="text" id="content-image-url" placeholder="https://example.com/image.jpg">
             </div>
 
-            <div style="display:flex; gap:10px; justify-content:flex-end;">
+            <div class="modal-footer">
                 <button class="btn btn-danger" onclick="closeModals()">Cancel</button>
-                <button class="btn btn-primary" onclick="saveContent()">Save Changes</button>
+                <button class="btn btn-primary" onclick="saveContent()">
+                    <i class="fas fa-save" style="margin-right:8px;"></i>Save Changes
+                </button>
             </div>
         </div>
     </div>
@@ -199,19 +255,35 @@
     <!-- Product Modal -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
-            <h3>Edit Product</h3>
+            <h3><i class="fas fa-shopping-bag" style="margin-right:10px;"></i>Product Details</h3>
             <input type="hidden" id="prod-id">
-            <input type="text" id="prod-title" placeholder="Title">
-            <input type="text" id="prod-price" placeholder="Price">
-            <input type="text" id="prod-pay-link" placeholder="Payment Link">
-            <textarea id="prod-desc" rows="3" placeholder="Description"></textarea>
-            <div class="upload-area" onclick="document.getElementById('prod-file').click()"><p>Upload Cover</p></div>
-            <input type="file" id="prod-file" hidden onchange="handleFileSelect(this, 'prod-preview')">
+            
+            <label>Product Title</label>
+            <input type="text" id="prod-title" placeholder="Enter product title">
+            
+            <label>Price</label>
+            <input type="text" id="prod-price" placeholder="e.g., $29.99">
+            
+            <label>Payment Link</label>
+            <input type="text" id="prod-pay-link" placeholder="https://payment-link.com">
+            
+            <label>Description</label>
+            <textarea id="prod-desc" rows="3" placeholder="Product description..."></textarea>
+            
+            <label>Product Image</label>
+            <div class="upload-area" onclick="document.getElementById('prod-file').click()">
+                <i class="fas fa-image"></i>
+                <p>Upload Product Cover</p>
+            </div>
+            <input type="file" id="prod-file" hidden accept="image/*" onchange="handleFileSelect(this, 'prod-preview')">
             <img id="prod-preview" class="preview-img">
             <input type="hidden" id="prod-image-url">
-            <div style="display:flex; gap:10px; justify-content:flex-end;">
+            
+            <div class="modal-footer">
                 <button class="btn btn-danger" onclick="closeModals()">Cancel</button>
-                <button class="btn btn-primary" onclick="saveProduct()">Save</button>
+                <button class="btn btn-primary" onclick="saveProduct()">
+                    <i class="fas fa-save" style="margin-right:8px;"></i>Save Product
+                </button>
             </div>
         </div>
     </div>
@@ -219,19 +291,38 @@
     <!-- Blog Modal -->
     <div id="blog-modal" class="modal">
         <div class="modal-content" style="max-width: 900px;">
-            <h3>Edit Blog Post</h3>
+            <h3><i class="fas fa-newspaper" style="margin-right:10px;"></i>Blog Post</h3>
             <input type="hidden" id="blog-id">
-            <input type="text" id="blog-title" placeholder="Title" onkeyup="generateSlug()">
-            <input type="text" id="blog-slug" placeholder="Slug">
-            <div class="upload-area" onclick="document.getElementById('blog-file').click()"><p>Featured Image</p></div>
-            <input type="file" id="blog-file" hidden onchange="handleFileSelect(this, 'blog-preview')">
+            
+            <label>Post Title</label>
+            <input type="text" id="blog-title" placeholder="Enter post title" onkeyup="generateSlug()">
+            
+            <label>URL Slug</label>
+            <input type="text" id="blog-slug" placeholder="auto-generated-slug">
+            
+            <label>Featured Image</label>
+            <div class="upload-area" onclick="document.getElementById('blog-file').click()">
+                <i class="fas fa-image"></i>
+                <p>Upload Featured Image</p>
+            </div>
+            <input type="file" id="blog-file" hidden accept="image/*" onchange="handleFileSelect(this, 'blog-preview')">
             <img id="blog-preview" class="preview-img">
             <input type="hidden" id="blog-image-url">
-            <div id="quill-editor" style="height: 300px; margin-bottom: 20px;"></div>
-            <select id="blog-status" style="width:auto;"><option value="draft">Draft</option><option value="published">Published</option></select>
-            <div style="display:flex; gap:10px; justify-content:flex-end;">
+            
+            <label>Content</label>
+            <div id="quill-editor" style="height: 300px; margin-bottom: 60px; background: white;"></div>
+            
+            <label>Status</label>
+            <select id="blog-status" style="width:auto; min-width:150px;">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+            </select>
+            
+            <div class="modal-footer">
                 <button class="btn btn-danger" onclick="closeModals()">Cancel</button>
-                <button class="btn btn-primary" onclick="saveBlog()">Publish</button>
+                <button class="btn btn-primary" onclick="saveBlog()">
+                    <i class="fas fa-save" style="margin-right:8px;"></i>Publish Post
+                </button>
             </div>
         </div>
     </div>
@@ -242,103 +333,230 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
     <script>
-        // --- 1. SETUP ---
+        // ============================================
+        // 1. CONFIGURATION & SETUP
+        // ============================================
         const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
+        
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        let quill, selectedFile, allContent = [];
+        let quill = null;
+        let selectedFile = null;
+        let allContent = [];
+        let editingContentKey = null;
 
-        // --- PRE-FILLED CONTENT (Based on your index.html) ---
+        // --- PRE-FILLED DEFAULT CONTENT ---
         const defaultContent = [
-            { key: 'hero_slide1_title', type: 'text', content: 'Your Trusted Partner for U.S. Immigration & Visa Solutions' },
-            { key: 'hero_slide1_text', type: 'text', content: 'Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support to help you achieve your American dream with confidence.' },
-            { key: 'hero_slide1_btn', type: 'link', content: 'https://calendly.com/cynobas/foreign-attorney-strategy-call' },
-            { key: 'hero_slide2_title', type: 'text', content: 'Document Assessment Consultation' },
-            { key: 'hero_slide2_text', type: 'text', content: 'We help clients who previously filed, received denials, or have new documents they want evaluated.' },
-            { key: 'attorney_section_title', type: 'text', content: 'Meet the Attorney' },
-            { key: 'attorney_name', type: 'text', content: 'Attorney Cynthia Azor.' },
-            { key: 'attorney_photo', type: 'image', content: 'assets/images/attorney-cynthia-azor.png' },
-            { key: 'attorney_title', type: 'text', content: 'Immigration Attorney' },
-            { key: 'attorney_bio_1', type: 'text', content: 'Attorney Cynthia Azor. is licensed to practice law in Alabama and represents immigration clients in all 50 states.' },
-            { key: 'services_title', type: 'text', content: 'Our Visa & Immigration Services' },
-            { key: 'service1_title', type: 'text', content: 'Visa Applications' },
-            { key: 'service1_text', type: 'text', content: 'Expert assistance with all visa types including family, work, student visas, green cards, and citizenship.' },
-            { key: 'footer_phone', type: 'text', content: '+1 (629) 202-2006' },
-            { key: 'footer_email', type: 'text', content: 'info@cyazorlawfirm.com' }
+            { key: 'hero_slide1_title', type: 'text', content: 'Your Trusted Partner for U.S. Immigration & Visa Solutions', page: 'home' },
+            { key: 'hero_slide1_text', type: 'text', content: 'Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support to help you achieve your American dream with confidence.', page: 'home' },
+            { key: 'hero_slide1_btn', type: 'link', content: 'https://calendly.com/cynobas/foreign-attorney-strategy-call', page: 'home' },
+            { key: 'hero_slide2_title', type: 'text', content: 'Document Assessment Consultation', page: 'home' },
+            { key: 'hero_slide2_text', type: 'text', content: 'We help clients who previously filed, received denials, or have new documents they want evaluated.', page: 'home' },
+            { key: 'attorney_section_title', type: 'text', content: 'Meet the Attorney', page: 'attorney' },
+            { key: 'attorney_name', type: 'text', content: 'Attorney Cynthia Azor', page: 'attorney' },
+            { key: 'attorney_photo', type: 'image', content: 'assets/images/attorney-cynthia-azor.png', page: 'attorney' },
+            { key: 'attorney_title', type: 'text', content: 'Immigration Attorney', page: 'attorney' },
+            { key: 'attorney_bio_1', type: 'text', content: 'Attorney Cynthia Azor is licensed to practice law in Alabama and represents immigration clients in all 50 states.', page: 'attorney' },
+            { key: 'services_title', type: 'text', content: 'Our Visa & Immigration Services', page: 'services' },
+            { key: 'service1_title', type: 'text', content: 'Visa Applications', page: 'services' },
+            { key: 'service1_text', type: 'text', content: 'Expert assistance with all visa types including family, work, student visas, green cards, and citizenship.', page: 'services' },
+            { key: 'footer_phone', type: 'text', content: '+1 (629) 202-2006', page: 'contact' },
+            { key: 'footer_email', type: 'text', content: 'info@cyazorlawfirm.com', page: 'contact' }
         ];
 
+        // ============================================
+        // 2. INITIALIZATION
+        // ============================================
         document.addEventListener('DOMContentLoaded', () => {
-            if(sessionStorage.getItem('admin_logged_in')) showDashboard();
-            quill = new Quill('#quill-editor', { theme: 'snow', modules: { toolbar: [['bold', 'italic', 'underline'], ['link', 'image'], [{ 'list': 'ordered'}, { 'list': 'bullet' }]] } });
-            document.getElementById('page-filter').value = 'home';
-            document.getElementById('password').addEventListener('keypress', e => { if(e.key==='Enter') handleLogin() });
+            // Check if already logged in
+            if (sessionStorage.getItem('admin_logged_in') === 'true') {
+                showDashboard();
+            }
+
+            // Initialize Quill Editor
+            quill = new Quill('#quill-editor', { 
+                theme: 'snow', 
+                modules: { 
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        ['link', 'image'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['clean']
+                    ] 
+                } 
+            });
+
+            // Set default filter
+            document.getElementById('page-filter').value = 'all';
+
+            // Add event listeners
+            document.getElementById('login-btn').addEventListener('click', handleLogin);
+            document.getElementById('password').addEventListener('keypress', (e) => { 
+                if (e.key === 'Enter') handleLogin();
+            });
+            document.getElementById('username').addEventListener('keypress', (e) => { 
+                if (e.key === 'Enter') document.getElementById('password').focus();
+            });
+
+            // Overlay click handler
+            document.getElementById('overlay').addEventListener('click', toggleSidebar);
         });
 
-        // --- AUTHENTICATION FIXED ---
+        // ============================================
+        // 3. AUTHENTICATION
+        // ============================================
         async function handleLogin() { 
-            const u = document.getElementById('username').value.trim(); 
-            const p = document.getElementById('password').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
             const btn = document.getElementById('login-btn');
+            const errorEl = document.getElementById('login-error');
             
-            btn.innerText = "Checking...";
-            let valid = false;
-
-            // 1. Check Hardcoded (Case Insensitive)
-            if(u.toLowerCase() === 'azor cynthia' && p === '2004') valid = true;
-            else { 
-                // 2. Check Supabase
-                try {
-                    const { data, error } = await supabase.auth.signInWithPassword({ email: u, password: p });
-                    if(!error && data.user) valid = true;
-                } catch(e) { console.error(e); }
+            // Validation
+            if (!username || !password) {
+                errorEl.textContent = 'Please enter both username and password';
+                errorEl.style.display = 'block';
+                return;
             }
 
-            if(valid) { 
-                sessionStorage.setItem('admin_logged_in', true); 
-                showDashboard(); 
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            btn.disabled = true;
+            errorEl.style.display = 'none';
+
+            let isValid = false;
+
+            // Method 1: Check hardcoded credentials (case-insensitive username)
+            if (username.toLowerCase() === 'azor cynthia' && password === '2004') {
+                isValid = true;
+            }
+            // Method 2: Check with Supabase Auth
+            else {
+                try {
+                    const { data, error } = await supabase.auth.signInWithPassword({ 
+                        email: username, 
+                        password: password 
+                    });
+                    if (!error && data.user) {
+                        isValid = true;
+                    }
+                } catch (e) { 
+                    console.log('Supabase auth error:', e);
+                }
+            }
+
+            if (isValid) { 
+                sessionStorage.setItem('admin_logged_in', 'true');
+                showDashboard();
             } else { 
-                alert("Login Failed. Please check your username and password.");
-                btn.innerText = "Login";
+                errorEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Invalid username or password';
+                errorEl.style.display = 'block';
+                btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i> Login';
+                btn.disabled = false;
             }
         }
 
-        function logout() { sessionStorage.removeItem('admin_logged_in'); location.reload(); }
-        function showDashboard() { document.getElementById('login-screen').style.display='none'; document.getElementById('dashboard').style.display='flex'; loadContent(); }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); }
+        function logout() { 
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('admin_logged_in');
+                location.reload();
+            }
+        }
+
+        function showDashboard() { 
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+            loadContent();
+        }
+
+        // ============================================
+        // 4. NAVIGATION & UI
+        // ============================================
+        function toggleSidebar() { 
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
 
         function switchTab(tabName) {
+            // Update sections
             document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(tabName + '-tab').classList.add('active');
-            if(tabName === 'content') loadContent();
-            if(tabName === 'shop') loadProducts();
-            if(tabName === 'blog') loadBlog();
-            if(window.innerWidth <= 768) toggleSidebar();
+
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.nav-item[data-tab="${tabName}"]`)?.classList.add('active');
+
+            // Load data
+            if (tabName === 'content') loadContent();
+            if (tabName === 'shop') loadProducts();
+            if (tabName === 'blog') loadBlog();
+
+            // Close sidebar on mobile
+            if (window.innerWidth <= 768) toggleSidebar();
         }
 
-        // --- CONTENT LOGIC ---
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = isError ? 'toast error show' : 'toast show';
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+            selectedFile = null;
+            editingContentKey = null;
+            
+            // Reset forms
+            document.getElementById('content-key').value = '';
+            document.getElementById('content-value').value = '';
+            document.getElementById('content-image-url').value = '';
+            document.getElementById('content-preview').classList.remove('show');
+            document.getElementById('content-file').value = '';
+        }
+
+        // ============================================
+        // 5. CONTENT MANAGEMENT
+        // ============================================
         async function loadContent() {
             const list = document.getElementById('content-list');
-            const { data } = await supabase.from('site_content').select('*').order('key');
-            
-            if(!data || data.length === 0) {
-                document.getElementById('init-box').style.display = 'block';
-                list.innerHTML = '';
-                return;
-            } else {
-                document.getElementById('init-box').style.display = 'none';
-            }
+            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Loading content...</p></div>';
 
-            allContent = data;
-            filterContent(); 
+            try {
+                const { data, error } = await supabase
+                    .from('site_content')
+                    .select('*')
+                    .order('key');
+                
+                if (error) throw error;
+                
+                if (!data || data.length === 0) {
+                    document.getElementById('init-box').style.display = 'block';
+                    list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No content found. Initialize the database to get started.</p></div>';
+                    return;
+                }
+
+                document.getElementById('init-box').style.display = 'none';
+                allContent = data;
+                filterContent();
+            } catch (err) {
+                console.error('Load error:', err);
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading content. Check console for details.</p></div>';
+            }
         }
 
         async function initializeDB() {
-            if(!confirm("This will populate your database with default text. Continue?")) return;
-            const { error } = await supabase.from('site_content').upsert(defaultContent);
-            if(error) alert("Error: " + error.message);
-            else { showToast("Content Initialized!"); loadContent(); }
+            if (!confirm('This will populate your database with default content. Continue?')) return;
+            
+            try {
+                const { error } = await supabase.from('site_content').upsert(defaultContent);
+                if (error) throw error;
+                showToast('Content initialized successfully!');
+                loadContent();
+            } catch (err) {
+                console.error('Init error:', err);
+                showToast('Error initializing: ' + err.message, true);
+            }
         }
 
         function filterContent() {
@@ -347,69 +565,486 @@
             list.innerHTML = '';
 
             let filtered = [];
-            if (page === 'all') filtered = allContent;
-            else if (page === 'home') filtered = allContent.filter(i => i.key.includes('home') || i.key.includes('hero') || i.key.includes('testimonial') || i.key.includes('faq'));
-            else if (page === 'attorney') filtered = allContent.filter(i => i.key.includes('about') || i.key.includes('attorney'));
-            else if (page === 'services') filtered = allContent.filter(i => i.key.includes('service'));
-            else if (page === 'contact') filtered = allContent.filter(i => i.key.includes('footer') || i.key.includes('contact'));
+            
+            if (page === 'all') {
+                filtered = allContent;
+            } else if (page === 'home') {
+                filtered = allContent.filter(i => 
+                    i.page === 'home' || 
+                    i.key.includes('home') || 
+                    i.key.includes('hero') || 
+                    i.key.includes('testimonial') || 
+                    i.key.includes('faq')
+                );
+            } else if (page === 'attorney') {
+                filtered = allContent.filter(i => 
+                    i.page === 'attorney' || 
+                    i.key.includes('about') || 
+                    i.key.includes('attorney')
+                );
+            } else if (page === 'services') {
+                filtered = allContent.filter(i => 
+                    i.page === 'services' || 
+                    i.key.includes('service')
+                );
+            } else if (page === 'contact') {
+                filtered = allContent.filter(i => 
+                    i.page === 'contact' || 
+                    i.key.includes('footer') || 
+                    i.key.includes('contact')
+                );
+            }
 
-            if(filtered.length === 0) {
-                list.innerHTML = `<div style="text-align:center; padding:2rem; color:#666;">No content found for this section yet.</div>`;
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>No content found for this section.</p></div>';
+                return;
             }
 
             filtered.forEach(item => {
-                let badgeClass = item.type === 'image' ? 'background:#e0f2fe; color:#0369a1;' : 'background:#f3f4f6; color:#374151;';
+                const typeColors = {
+                    'text': 'background:#f3f4f6; color:#374151;',
+                    'image': 'background:#e0f2fe; color:#0369a1;',
+                    'link': 'background:#fef3c7; color:#92400e;'
+                };
+                
+                const displayContent = item.type === 'image' 
+                    ? `<img src="${item.content}" style="max-height:60px; border-radius:4px;" onerror="this.src='https://via.placeholder.com/100x60?text=No+Image'">` 
+                    : item.content.substring(0, 100) + (item.content.length > 100 ? '...' : '');
+
                 list.innerHTML += `
                     <div class="item-row">
                         <div class="item-info">
-                            <h4>${item.key.replace(/_/g, ' ').toUpperCase()} <span class="badge" style="${badgeClass}">${item.type}</span></h4>
-                            <div class="preview">${item.content.substring(0, 100)}...</div>
+                            <h4>${item.key.replace(/_/g, ' ').toUpperCase()} 
+                                <span class="badge" style="${typeColors[item.type] || typeColors['text']}">${item.type}</span>
+                            </h4>
+                            <div class="preview">${displayContent}</div>
                         </div>
-                        <button class="btn btn-sm" onclick="editContent('${item.key}', '${item.type}', \`${item.content.replace(/"/g, '&quot;')}\`)">Edit</button>
+                        <div class="btn-group">
+                            <button class="btn btn-sm" onclick="editContent('${item.key}')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteContent('${item.key}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>`;
             });
         }
 
-        function openContentModal() {
-            document.getElementById('content-key').removeAttribute('readonly');
+        function openContentModal(isNew = true) {
+            editingContentKey = null;
             document.getElementById('content-key').value = '';
+            document.getElementById('content-key').removeAttribute('readonly');
+            document.getElementById('content-type').value = 'text';
             document.getElementById('content-value').value = '';
-            document.getElementById('content-modal').style.display = 'flex';
-        }
-        function editContent(key, type, val) {
-            document.getElementById('content-key').value = key;
-            document.getElementById('content-key').setAttribute('readonly', true);
-            document.getElementById('content-type').value = type;
-            document.getElementById('content-value').value = val;
-            if(type === 'image') {
-                document.getElementById('content-image-url').value = val;
-                document.getElementById('content-preview').src = val;
-                document.getElementById('content-preview').style.display = 'block';
-            }
+            document.getElementById('content-image-url').value = '';
+            document.getElementById('content-preview').classList.remove('show');
+            document.getElementById('content-file').value = '';
             toggleContentInput();
-            document.getElementById('content-modal').style.display = 'flex';
-        }
-        function toggleContentInput() {
-            const type = document.getElementById('content-type').value;
-            document.getElementById('text-input-group').style.display = type === 'text' ? 'block' : 'none';
-            document.getElementById('image-input-group').style.display = type === 'image' ? 'block' : 'none';
-        }
-        async function saveContent() {
-            const key = document.getElementById('content-key').value;
-            const type = document.getElementById('content-type').value;
-            let content = document.getElementById('content-value').value;
-            const uploadedUrl = await uploadImageToSupabase();
-            if(uploadedUrl) content = uploadedUrl;
-            else if(type === 'image') content = document.getElementById('content-image-url').value;
-            const { error } = await supabase.from('site_content').upsert({ key, type, content });
-            if(!error) { showToast('Saved'); closeModals(); loadContent(); }
+            document.getElementById('content-modal').classList.add('active');
         }
 
-        // --- SHOP & BLOG ---
-        async function loadProducts() { 
-            const { data } = await supabase.from('products').select('*').order('id');
-            const list = document.getElementById('product-list'); list.innerHTML='';
-            data.forEach(p => list.innerHTML += `<div class="item-row"><div class="item-info"><h4>${p.title}</h4><div class="preview">${p.price}</div></div><div><button class="btn btn-sm" onclick='editProduct(${JSON.stringify(p)})'>Edit</button><button class="btn btn-sm btn-danger" onclick="deleteItem('products',${p.id})">Del</button></div></div>`);
+        function editContent(key) {
+            const item = allContent.find(c => c.key === key);
+            if (!item) return;
+
+            editingContentKey = key;
+            document.getElementById('content-key').value = item.key;
+            document.getElementById('content-key').setAttribute('readonly', true);
+            document.getElementById('content-type').value = item.type;
+            document.getElementById('content-page').value = item.page || 'home';
+            
+            if (item.type === 'image') {
+                document.getElementById('content-image-url').value = item.content;
+                document.getElementById('content-preview').src = item.content;
+                document.getElementById('content-preview').classList.add('show');
+                document.getElementById('content-value').value = '';
+            } else {
+                document.getElementById('content-value').value = item.content;
+                document.getElementById('content-image-url').value = '';
+                document.getElementById('content-preview').classList.remove('show');
+            }
+            
+            toggleContentInput();
+            document.getElementById('content-modal').classList.add('active');
         }
+
+        function toggleContentInput() {
+            const type = document.getElementById('content-type').value;
+            document.getElementById('text-input-group').style.display = (type === 'text' || type === 'link') ? 'block' : 'none';
+            document.getElementById('image-input-group').style.display = type === 'image' ? 'block' : 'none';
+        }
+
+        async function saveContent() {
+            const key = document.getElementById('content-key').value.trim();
+            const type = document.getElementById('content-type').value;
+            const page = document.getElementById('content-page').value;
+            
+            if (!key) {
+                showToast('Please enter a key', true);
+                return;
+            }
+
+            let content = '';
+            
+            if (type === 'image') {
+                // Try to upload file first
+                const uploadedUrl = await uploadImageToSupabase('content-file');
+                if (uploadedUrl) {
+                    content = uploadedUrl;
+                } else {
+                    content = document.getElementById('content-image-url').value.trim();
+                }
+            } else {
+                content = document.getElementById('content-value').value.trim();
+            }
+
+            if (!content) {
+                showToast('Please enter content', true);
+                return;
+            }
+
+            try {
+                const { error } = await supabase
+                    .from('site_content')
+                    .upsert({ key, type, content, page });
+                
+                if (error) throw error;
+                
+                showToast('Content saved successfully!');
+                closeModals();
+                loadContent();
+            } catch (err) {
+                console.error('Save error:', err);
+                showToast('Error saving: ' + err.message, true);
+            }
+        }
+
+        async function deleteContent(key) {
+            if (!confirm(`Delete "${key}"? This cannot be undone.`)) return;
+            
+            try {
+                const { error } = await supabase
+                    .from('site_content')
+                    .delete()
+                    .eq('key', key);
+                
+                if (error) throw error;
+                
+                showToast('Content deleted');
+                loadContent();
+            } catch (err) {
+                showToast('Error deleting: ' + err.message, true);
+            }
+        }
+
+        // ============================================
+        // 6. PRODUCT MANAGEMENT
+        // ============================================
+        async function loadProducts() { 
+            const list = document.getElementById('product-list');
+            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Loading products...</p></div>';
+
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .order('id');
+                
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-bag"></i><p>No products yet. Add your first product!</p></div>';
+                    return;
+                }
+
+                list.innerHTML = '';
+                data.forEach(p => {
+                    list.innerHTML += `
+                        <div class="item-row">
+                            <div class="item-info">
+                                <h4>${p.title}</h4>
+                                <div class="preview"><strong>${p.price}</strong> - ${p.description || 'No description'}</div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-sm" onclick='editProduct(${JSON.stringify(p).replace(/'/g, "\\'")})'>
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem('products', ${p.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>`;
+                });
+            } catch (err) {
+                console.error('Products error:', err);
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading products</p></div>';
+            }
+        }
+
+        function openProductModal() {
+            document.getElementById('prod-id').value = '';
+            document.getElementById('prod-title').value = '';
+            document.getElementById('prod-price').value = '';
+            document.getElementById('prod-pay-link').value = '';
+            document.getElementById('prod-desc').value = '';
+            document.getElementById('prod-image-url').value = '';
+            document.getElementById('prod-preview').classList.remove('show');
+            document.getElementById('prod-file').value = '';
+            document.getElementById('product-modal').classList.add('active');
+        }
+
+        function editProduct(product) {
+            document.getElementById('prod-id').value = product.id;
+            document.getElementById('prod-title').value = product.title || '';
+            document.getElementById('prod-price').value = product.price || '';
+            document.getElementById('prod-pay-link').value = product.payment_link || '';
+            document.getElementById('prod-desc').value = product.description || '';
+            document.getElementById('prod-image-url').value = product.image_url || '';
+            
+            if (product.image_url) {
+                document.getElementById('prod-preview').src = product.image_url;
+                document.getElementById('prod-preview').classList.add('show');
+            }
+            
+            document.getElementById('product-modal').classList.add('active');
+        }
+
+        async function saveProduct() {
+            const id = document.getElementById('prod-id').value;
+            const title = document.getElementById('prod-title').value.trim();
+            const price = document.getElementById('prod-price').value.trim();
+            const payment_link = document.getElementById('prod-pay-link').value.trim();
+            const description = document.getElementById('prod-desc').value.trim();
+            
+            if (!title || !price) {
+                showToast('Title and price are required', true);
+                return;
+            }
+
+            let image_url = document.getElementById('prod-image-url').value;
+            const uploadedUrl = await uploadImageToSupabase('prod-file');
+            if (uploadedUrl) image_url = uploadedUrl;
+
+            const productData = { title, price, payment_link, description, image_url };
+
+            try {
+                let error;
+                if (id) {
+                    ({ error } = await supabase.from('products').update(productData).eq('id', id));
+                } else {
+                    ({ error } = await supabase.from('products').insert(productData));
+                }
+                
+                if (error) throw error;
+                
+                showToast('Product saved!');
+                closeModals();
+                loadProducts();
+            } catch (err) {
+                showToast('Error saving product: ' + err.message, true);
+            }
+        }
+
+        // ============================================
+        // 7. BLOG MANAGEMENT
+        // ============================================
         async function loadBlog() {
-            const { data } = await supabase.from('blog_posts').select('*').order('created_at', {ascending:false});
+            const list = document.getElementById('blog-list');
+            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Loading posts...</p></div>';
+
+            try {
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><i class="fas fa-newspaper"></i><p>No blog posts yet. Create your first post!</p></div>';
+                    return;
+                }
+
+                list.innerHTML = '';
+                data.forEach(post => {
+                    const statusBadge = post.status === 'published' 
+                        ? '<span class="badge" style="background:#d1fae5; color:#065f46;">Published</span>'
+                        : '<span class="badge" style="background:#fef3c7; color:#92400e;">Draft</span>';
+                    
+                    const date = new Date(post.created_at).toLocaleDateString();
+                    
+                    list.innerHTML += `
+                        <div class="item-row">
+                            <div class="item-info">
+                                <h4>${post.title} ${statusBadge}</h4>
+                                <div class="preview">/${post.slug} • ${date}</div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-sm" onclick='editBlog(${JSON.stringify(post).replace(/'/g, "\\'")})'>
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteItem('blog_posts', ${post.id})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>`;
+                });
+            } catch (err) {
+                console.error('Blog error:', err);
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading blog posts</p></div>';
+            }
+        }
+
+        function openBlogModal() {
+            document.getElementById('blog-id').value = '';
+            document.getElementById('blog-title').value = '';
+            document.getElementById('blog-slug').value = '';
+            document.getElementById('blog-status').value = 'draft';
+            document.getElementById('blog-image-url').value = '';
+            document.getElementById('blog-preview').classList.remove('show');
+            document.getElementById('blog-file').value = '';
+            quill.setContents([]);
+            document.getElementById('blog-modal').classList.add('active');
+        }
+
+        function editBlog(post) {
+            document.getElementById('blog-id').value = post.id;
+            document.getElementById('blog-title').value = post.title || '';
+            document.getElementById('blog-slug').value = post.slug || '';
+            document.getElementById('blog-status').value = post.status || 'draft';
+            document.getElementById('blog-image-url').value = post.featured_image || '';
+            
+            if (post.featured_image) {
+                document.getElementById('blog-preview').src = post.featured_image;
+                document.getElementById('blog-preview').classList.add('show');
+            }
+            
+            if (post.content) {
+                quill.root.innerHTML = post.content;
+            } else {
+                quill.setContents([]);
+            }
+            
+            document.getElementById('blog-modal').classList.add('active');
+        }
+
+        function generateSlug() {
+            const title = document.getElementById('blog-title').value;
+            const slug = title
+                .toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .trim();
+            document.getElementById('blog-slug').value = slug;
+        }
+
+        async function saveBlog() {
+            const id = document.getElementById('blog-id').value;
+            const title = document.getElementById('blog-title').value.trim();
+            const slug = document.getElementById('blog-slug').value.trim();
+            const status = document.getElementById('blog-status').value;
+            const content = quill.root.innerHTML;
+            
+            if (!title || !slug) {
+                showToast('Title and slug are required', true);
+                return;
+            }
+
+            let featured_image = document.getElementById('blog-image-url').value;
+            const uploadedUrl = await uploadImageToSupabase('blog-file');
+            if (uploadedUrl) featured_image = uploadedUrl;
+
+            const postData = { title, slug, content, status, featured_image };
+
+            try {
+                let error;
+                if (id) {
+                    ({ error } = await supabase.from('blog_posts').update(postData).eq('id', id));
+                } else {
+                    postData.created_at = new Date().toISOString();
+                    ({ error } = await supabase.from('blog_posts').insert(postData));
+                }
+                
+                if (error) throw error;
+                
+                showToast('Blog post saved!');
+                closeModals();
+                loadBlog();
+            } catch (err) {
+                showToast('Error saving post: ' + err.message, true);
+            }
+        }
+
+        // ============================================
+        // 8. UTILITY FUNCTIONS
+        // ============================================
+        async function deleteItem(table, id) {
+            if (!confirm('Are you sure you want to delete this item?')) return;
+            
+            try {
+                const { error } = await supabase.from(table).delete().eq('id', id);
+                if (error) throw error;
+                
+                showToast('Item deleted');
+                if (table === 'products') loadProducts();
+                if (table === 'blog_posts') loadBlog();
+            } catch (err) {
+                showToast('Error deleting: ' + err.message, true);
+            }
+        }
+
+        function handleFileSelect(input, previewId) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                showToast('Please select an image file', true);
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Image must be less than 5MB', true);
+                return;
+            }
+
+            selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const preview = document.getElementById(previewId);
+                preview.src = e.target.result;
+                preview.classList.add('show');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function uploadImageToSupabase(inputId) {
+            const input = document.getElementById(inputId);
+            const file = input?.files[0];
+            
+            if (!file) return null;
+            
+            const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+            
+            try {
+                const { data, error } = await supabase.storage
+                    .from('images')
+                    .upload(fileName, file, { cacheControl: '3600', upsert: false });
+                
+                if (error) throw error;
+                
+                const { data: urlData } = supabase.storage
+                    .from('images')
+                    .getPublicUrl(fileName);
+                
+                return urlData.publicUrl;
+            } catch (err) {
+                console.error('Upload error:', err);
+                showToast('Image upload failed: ' + err.message, true);
+                return null;
+            }
+        }
+    </script>
+</body>
+</html>
