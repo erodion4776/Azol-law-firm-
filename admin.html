@@ -9,1042 +9,1544 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     
     <style>
-        :root { --primary: #0a2342; --accent: #d4af37; --light: #f9fafb; --white: #ffffff; --danger: #ef4444; --success: #10b981; --text: #1f2937; }
+        :root {
+            --primary: #0a2342;
+            --accent: #d4af37;
+            --light: #f9fafb;
+            --white: #ffffff;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --sidebar-width: 280px;
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--light); color: var(--text); height: 100vh; overflow: hidden; }
+        body { background: var(--light); color: var(--text); min-height: 100vh; }
 
-        /* Login */
-        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--primary) 0%, #05162b 100%); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-        .login-box { background: var(--white); padding: 2.5rem; border-radius: 12px; width: 90%; max-width: 400px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); text-align: center; }
-        .login-box h1 { margin-bottom: 1.5rem; }
-        .login-box input { margin-bottom: 1rem; }
+        /* ===== LOGIN SCREEN ===== */
+        #login-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, #05162b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #login-screen.hidden { display: none; }
         
-        /* Layout - FIXED: removed conflicting display property */
-        #dashboard { display: none; height: 100vh; position: relative; }
+        .login-box {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .login-box .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .login-box .logo span { color: var(--accent); }
+        .login-box p { color: var(--text-light); margin-bottom: 2rem; }
+        
+        /* ===== DASHBOARD LAYOUT ===== */
+        #dashboard {
+            display: none;
+            min-height: 100vh;
+        }
         #dashboard.active { display: flex; }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--primary);
+            color: var(--white);
+            position: fixed;
+            top: 0; left: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .sidebar-logo span { color: var(--accent); }
+        .sidebar-subtitle {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.25rem;
+        }
         
-        .sidebar { width: 260px; background: var(--primary); color: var(--white); display: flex; flex-direction: column; padding: 1.5rem; flex-shrink: 0; transition: transform 0.3s ease; z-index: 1000; }
-        .sidebar.open { transform: translateX(0); }
-        .nav-item { padding: 1rem; margin-bottom: 0.5rem; cursor: pointer; border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.7); }
-        .nav-item:hover, .nav-item.active { background: rgba(255,255,255,0.1); color: var(--white); }
+        .sidebar-nav { padding: 1rem 0; flex: 1; }
+        .nav-section {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 1rem;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.875rem 1.5rem;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        .nav-item:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--white);
+        }
+        .nav-item.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            border-left-color: var(--accent);
+        }
+        .nav-item i { width: 20px; text-align: center; }
         
-        /* Content */
-        .main-content { flex: 1; overflow-y: auto; padding: 2rem; background: var(--light); position: relative; }
-        .section { display: none; animation: fadeIn 0.3s ease; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Controls */
-        .page-selector { background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: space-between; }
-        .page-selector select { flex: 1; min-width: 200px; padding: 10px; font-size: 1rem; border: 2px solid var(--accent); border-radius: 6px; }
-
-        /* Items Grid */
-        .item-list { display: grid; gap: 1rem; }
-        .item-row { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border: 1px solid #eee; border-radius: 8px; background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .item-info { flex: 1; padding-right: 20px; }
-        .item-info h4 { color: var(--primary); margin-bottom: 0.5rem; font-size: 1.1rem; }
-        .item-info .preview { font-size: 0.95rem; color: #555; background: #f4f4f4; padding: 8px; border-radius: 4px; border-left: 3px solid var(--accent); word-break: break-word; }
-        .badge { background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; margin-left: 8px; }
-        .btn-group { display: flex; gap: 8px; flex-shrink: 0; }
-
-        /* Mobile */
-        .mobile-header { display: none; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
-        .menu-toggle { font-size: 1.5rem; color: var(--primary); cursor: pointer; }
-        @media (max-width: 768px) {
-            .sidebar { position: absolute; top: 0; left: 0; height: 100%; transform: translateX(-100%); width: 80%; }
-            .mobile-header { display: flex; }
-            #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 900; }
-            #overlay.active { display: block; }
-            .item-row { flex-direction: column; align-items: flex-start; gap: 1rem; }
-            .btn-group { width: 100%; }
-            .btn-group .btn { flex: 1; }
+        .sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ff8888;
+            cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .logout-btn:hover {
+            background: rgba(255,0,0,0.1);
         }
 
-        /* General UI */
-        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; background: var(--accent); color: var(--white); display: inline-flex; justify-content: center; align-items: center; transition: 0.3s; }
-        .btn:hover { background: #b6932b; transform: translateY(-1px); }
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .top-bar h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARDS & COMPONENTS ===== */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .card-header h2 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-header h2 i { color: var(--accent); }
+        .card-body { padding: 1.5rem; }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        .stat-icon.blue { background: #dbeafe; color: #2563eb; }
+        .stat-icon.green { background: #d1fae5; color: #059669; }
+        .stat-icon.yellow { background: #fef3c7; color: #d97706; }
+        .stat-icon.purple { background: #ede9fe; color: #7c3aed; }
+        .stat-info h3 { font-size: 1.75rem; color: var(--primary); }
+        .stat-info p { font-size: 0.85rem; color: var(--text-light); }
+
+        /* ===== FORMS ===== */
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        .form-group small {
+            display: block;
+            margin-top: 0.25rem;
+            color: var(--text-light);
+            font-size: 0.8rem;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+        }
+        textarea { resize: vertical; min-height: 100px; }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        /* Color Input */
+        .color-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .color-input-wrapper input[type="color"] {
+            width: 50px;
+            height: 40px;
+            padding: 2px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .color-input-wrapper input[type="text"] {
+            flex: 1;
+            text-transform: uppercase;
+        }
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 2px solid var(--border);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover { transform: translateY(-1px); }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .btn-primary { background: var(--primary); }
+        .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: #0d2d52; }
-        .btn-danger { background: var(--danger); }
-        .btn-danger:hover { background: #dc2626; }
-        .btn-sm { padding: 0.5rem 1rem; font-size: 0.9rem; }
-        input, textarea, select { width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 1rem; font-size: 1rem; }
-        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(212,175,55,0.1); }
-        label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--primary); }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-accent:hover { background: #c4a030; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .btn-outline:hover { background: var(--light); }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+        .btn-lg { padding: 1rem 2rem; font-size: 1rem; }
         
-        /* Modals & Toast */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3000; justify-content: center; align-items: flex-start; padding: 20px; overflow-y: auto; }
+        .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+        /* ===== DATA TABLE ===== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .data-table th {
+            background: var(--light);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+        }
+        .data-table tr:hover { background: #fafafa; }
+        .data-table .actions { white-space: nowrap; }
+
+        /* Item List (alternative to table) */
+        .item-list { display: grid; gap: 1rem; }
+        .item-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+        .item-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-color: var(--accent);
+        }
+        .item-info { flex: 1; min-width: 0; }
+        .item-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .item-info .preview {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 400px;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-primary { background: #dbeafe; color: #1d4ed8; }
+        .badge-success { background: #d1fae5; color: #059669; }
+        .badge-warning { background: #fef3c7; color: #d97706; }
+        .badge-danger { background: #fee2e2; color: #dc2626; }
+        .badge-gray { background: #f3f4f6; color: #6b7280; }
+
+        /* ===== SETTINGS GRID ===== */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .setting-item {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .setting-item label {
+            display: block;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .setting-item small {
+            display: block;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ===== UPLOAD AREA ===== */
+        .upload-area {
+            border: 2px dashed var(--border);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            background: #fafafa;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+        .upload-area:hover {
+            border-color: var(--accent);
+            background: white;
+        }
+        .upload-area i {
+            font-size: 2.5rem;
+            color: #ccc;
+            margin-bottom: 0.75rem;
+        }
+        .upload-area p { color: var(--text-light); margin: 0; }
+        .upload-area small { color: #999; font-size: 0.8rem; }
+        
+        .preview-image {
+            max-width: 200px;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            border: 1px solid var(--border);
+        }
+        .preview-image.show { display: block; }
+
+        /* ===== MODALS ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 5000;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+            overflow-y: auto;
+        }
         .modal.active { display: flex; }
-        .modal-content { background: var(--white); width: 95%; max-width: 800px; padding: 2rem; border-radius: 12px; margin: auto; }
-        .modal-content h3 { margin-bottom: 1.5rem; color: var(--primary); }
-        .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee; }
-        
-        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 1rem 2rem; border-radius: 6px; transform: translateY(100px); opacity: 0; transition: 0.3s; z-index: 4000; font-weight: 500; }
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 700px;
+            border-radius: 16px;
+            margin: auto;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+        .modal-header h3 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+        }
+        .modal-close:hover { color: var(--danger); }
+        .modal-body { padding: 1.5rem; }
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            background: var(--light);
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 6000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
         .toast.show { transform: translateY(0); opacity: 1; }
         .toast.error { background: var(--danger); }
-        
-        .preview-img { max-width: 100%; height: 200px; object-fit: cover; border-radius: 8px; display: none; margin-bottom: 1rem; border: 2px solid #eee; }
-        .preview-img.show { display: block; }
-        .upload-area { border: 2px dashed #ccc; padding: 2rem; text-align: center; cursor: pointer; background: #fafafa; border-radius: 8px; margin-bottom: 1rem; transition: 0.3s; }
-        .upload-area:hover { border-color: var(--accent); background: #fff; }
-        .upload-area i { font-size: 2rem; color: #ccc; margin-bottom: 0.5rem; }
-        .upload-area p { margin: 0; color: #666; }
+        .toast.warning { background: var(--warning); }
 
-        .loading { text-align: center; padding: 3rem; color: #666; }
-        .loading i { font-size: 2rem; animation: spin 1s linear infinite; }
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: 0.2s;
+        }
+        .tab:hover { color: var(--primary); }
+        .tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ===== FILTER BAR ===== */
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-bar .search-input {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        .filter-bar .search-input input {
+            padding-left: 2.5rem;
+        }
+        .filter-bar .search-input i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        .filter-bar select { min-width: 150px; }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+        .empty-state i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        .empty-state h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== LOADING ===== */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .empty-state { text-align: center; padding: 3rem; color: #666; background: white; border-radius: 10px; }
-        .empty-state i { font-size: 3rem; color: #ddd; margin-bottom: 1rem; }
+        /* ===== INIT BOX ===== */
+        .init-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #fbbf24;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .init-box h3 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+        .init-box p {
+            color: #a16207;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .form-row { grid-template-columns: 1fr; }
+            .form-row-3 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 85%;
+                max-width: 300px;
+            }
+            .sidebar.open { transform: translateX(0); }
+            
+            .main-content { margin-left: 0; }
+            
+            .menu-toggle { display: block; }
+            
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            .overlay.active { display: block; }
+            
+            .top-bar h1 { font-size: 1.2rem; }
+            .user-info span { display: none; }
+            
+            .content-area { padding: 1rem; }
+            
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            
+            .item-card {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            .item-info .preview { max-width: 100%; }
+            .btn-group { width: 100%; }
+            .btn-group .btn { flex: 1; }
+            
+            .data-table { display: block; overflow-x: auto; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .settings-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Quill Editor Fixes */
+        .ql-container { min-height: 200px; font-size: 1rem; }
+        .ql-editor { min-height: 200px; }
     </style>
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
+    <!-- ==================== LOGIN SCREEN ==================== -->
     <div id="login-screen">
         <div class="login-box">
-            <h1 style="color:var(--primary);">CY <span style="color:var(--accent);">visa</span> help</h1>
-            <p style="color:#666; margin-bottom:1.5rem;">Admin Dashboard</p>
-            <input type="text" id="username" placeholder="Username" autocomplete="username">
-            <input type="password" id="password" placeholder="Password" autocomplete="current-password">
-            <button id="login-btn" class="btn btn-primary" style="width:100%;">
-                <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i> Login
+            <div class="logo">CY <span>visa</span> help</div>
+            <p>Admin Dashboard</p>
+            
+            <div class="form-group">
+                <input type="text" id="login-username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" id="login-password" placeholder="Password">
+            </div>
+            <button class="btn btn-primary btn-lg" style="width: 100%;" id="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
             </button>
-            <p id="login-error" style="color: var(--danger); margin-top: 15px; display: none; font-size: 0.9rem;">
+            <p id="login-error" style="color: var(--danger); margin-top: 1rem; display: none;">
                 <i class="fas fa-exclamation-circle"></i> Invalid credentials
             </p>
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD -->
+    <!-- ==================== DASHBOARD ==================== -->
     <div id="dashboard">
-        <div id="overlay"></div>
+        <div class="overlay" id="overlay"></div>
 
         <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div style="font-size:1.5rem; font-weight:700; margin-bottom:2rem;">CY <span style="color:var(--accent);">visa</span> help</div>
-            <div class="nav-item active" data-tab="content" onclick="switchTab('content')"><i class="fas fa-edit"></i> Edit Pages</div>
-            <div class="nav-item" data-tab="shop" onclick="switchTab('shop')"><i class="fas fa-shopping-bag"></i> Shop Manager</div>
-            <div class="nav-item" data-tab="blog" onclick="switchTab('blog')"><i class="fas fa-newspaper"></i> Blog Posts</div>
-            <div style="margin-top: auto;">
-                <div class="nav-item" onclick="logout()" style="color: #ff8888;"><i class="fas fa-sign-out-alt"></i> Logout</div>
-            </div>
-        </div>
-
-        <!-- Content Area -->
-        <div class="main-content">
-            <div class="mobile-header">
-                <i class="fas fa-bars menu-toggle" onclick="toggleSidebar()"></i>
-                <h3 style="margin:0; color:var(--primary);">Admin Panel</h3>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">CY <span>visa</span> help</div>
+                <div class="sidebar-subtitle">Admin Dashboard</div>
             </div>
             
-            <!-- SECTION 1: SITE CONTENT -->
-            <div id="content-tab" class="section active">
+            <nav class="sidebar-nav">
+                <div class="nav-section">Overview</div>
+                <div class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </div>
                 
-                <!-- Initialization Button -->
-                <div id="init-box" style="display:none; background:#fff3cd; color:#856404; padding:1.5rem; border-radius:8px; margin-bottom:2rem; border:1px solid #ffeeba;">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Database Empty</h3>
-                    <p style="margin: 0.5rem 0 1rem;">Click below to load default content so you can start editing.</p>
-                    <button class="btn btn-primary" onclick="initializeDB()">
-                        <i class="fas fa-rocket" style="margin-right:8px;"></i> Initialize Content
-                    </button>
+                <div class="nav-section">Site Management</div>
+                <div class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i> Site Settings
                 </div>
+                <div class="nav-item" data-section="theme">
+                    <i class="fas fa-palette"></i> Theme & Colors
+                </div>
+                <div class="nav-item" data-section="content">
+                    <i class="fas fa-edit"></i> Page Content
+                </div>
+                <div class="nav-item" data-section="navigation">
+                    <i class="fas fa-bars"></i> Navigation Menu
+                </div>
+                
+                <div class="nav-section">Content</div>
+                <div class="nav-item" data-section="products">
+                    <i class="fas fa-shopping-bag"></i> Products
+                </div>
+                <div class="nav-item" data-section="blog">
+                    <i class="fas fa-newspaper"></i> Blog Posts
+                </div>
+                
+                <div class="nav-section">Communication</div>
+                <div class="nav-item" data-section="messages">
+                    <i class="fas fa-envelope"></i> Messages
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </div>
+            </div>
+        </aside>
 
-                <div class="page-selector">
-                    <div>
-                        <h2 style="margin:0; color:var(--primary);">Edit Page Content</h2>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="page-title"><i class="fas fa-th-large"></i> Dashboard</h1>
+                </div>
+                <div class="user-info">
+                    <span>Welcome, Admin</span>
+                    <div class="user-avatar">CA</div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                
+                <!-- ========== DASHBOARD SECTION ========== -->
+                <section id="dashboard-section" class="section active">
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue"><i class="fas fa-file-alt"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-content">0</h3>
+                                <p>Content Items</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green"><i class="fas fa-shopping-bag"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-products">0</h3>
+                                <p>Products</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon yellow"><i class="fas fa-newspaper"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-posts">0</h3>
+                                <p>Blog Posts</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple"><i class="fas fa-envelope"></i></div>
+                            <div class="stat-info">
+                                <h3 id="stat-messages">0</h3>
+                                <p>Messages</p>
+                            </div>
+                        </div>
                     </div>
-                    <select id="page-filter" onchange="filterContent()">
-                        <option value="all">Show All</option>
-                        <option value="home">Home Page</option>
-                        <option value="attorney">Attorney / About</option>
-                        <option value="services">Services</option>
-                        <option value="contact">Footer & Contact</option>
-                    </select>
-                    <button class="btn" onclick="openContentModal()">
-                        <i class="fas fa-plus" style="margin-right:8px;"></i> Add New Key
-                    </button>
-                </div>
 
-                <div id="content-list" class="item-list">
-                    <div class="loading"><i class="fas fa-spinner"></i><p>Loading content...</p></div>
-                </div>
+                    <!-- Quick Actions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" onclick="switchSection('content')">
+                                    <i class="fas fa-edit"></i> Edit Content
+                                </button>
+                                <button class="btn btn-accent" onclick="switchSection('products'); openProductModal()">
+                                    <i class="fas fa-plus"></i> Add Product
+                                </button>
+                                <button class="btn btn-success" onclick="switchSection('blog'); openBlogModal()">
+                                    <i class="fas fa-plus"></i> New Blog Post
+                                </button>
+                                <button class="btn btn-outline" onclick="window.open('index.html', '_blank')">
+                                    <i class="fas fa-external-link-alt"></i> View Site
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-clock"></i> Recent Messages</h2>
+                            <button class="btn btn-sm btn-outline" onclick="switchSection('messages')">View All</button>
+                        </div>
+                        <div class="card-body">
+                            <div id="recent-messages">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== SITE SETTINGS SECTION ========== -->
+                <section id="settings-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-cog"></i> General Settings</h2>
+                            <button class="btn btn-primary" id="save-settings-btn">
+                                <i class="fas fa-save"></i> Save All Settings
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <!-- Tabs -->
+                            <div class="tabs">
+                                <div class="tab active" data-tab="general">General</div>
+                                <div class="tab" data-tab="contact">Contact Info</div>
+                                <div class="tab" data-tab="social">Social Media</div>
+                                <div class="tab" data-tab="seo">SEO</div>
+                            </div>
+
+                            <!-- General Tab -->
+                            <div class="tab-content active" id="tab-general">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Site Name</label>
+                                        <input type="text" id="setting-site_name" data-setting="site_name">
+                                        <small>Your website/business name</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tagline</label>
+                                        <input type="text" id="setting-site_tagline" data-setting="site_tagline">
+                                        <small>Short description of your business</small>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Logo Text</label>
+                                        <input type="text" id="setting-logo_text" data-setting="logo_text">
+                                        <small>Text displayed in the logo area</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Copyright Text</label>
+                                        <input type="text" id="setting-copyright_text" data-setting="copyright_text">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Logo Image (Optional)</label>
+                                    <div class="upload-area" onclick="document.getElementById('logo-file').click()">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Click to upload logo image</p>
+                                        <small>Recommended: PNG with transparent background, 200x60px</small>
+                                    </div>
+                                    <input type="file" id="logo-file" hidden accept="image/*" onchange="handleLogoUpload(this)">
+                                    <img id="logo-preview" class="preview-image">
+                                    <input type="hidden" id="setting-logo_image" data-setting="logo_image">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Footer About Text</label>
+                                    <textarea id="setting-footer_text" data-setting="footer_text" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Contact Tab -->
+                            <div class="tab-content" id="tab-contact">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Phone Number</label>
+                                        <input type="text" id="setting-contact_phone" data-setting="contact_phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" id="setting-contact_email" data-setting="contact_email">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <input type="text" id="setting-contact_address" data-setting="contact_address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Business Hours</label>
+                                        <input type="text" id="setting-contact_hours" data-setting="contact_hours">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Consultation Booking Link</label>
+                                    <input type="url" id="setting-consultation_link" data-setting="consultation_link">
+                                    <small>Calendly or other booking service URL</small>
+                                </div>
+                            </div>
+
+                            <!-- Social Tab -->
+                            <div class="tab-content" id="tab-social">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook</label>
+                                        <input type="url" id="setting-social_facebook" data-setting="social_facebook" placeholder="https://facebook.com/yourpage">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fab fa-twitter" style="color:#1da1f2"></i> Twitter</label>
+                                        <input type="url" id="setting-social_twitter" data-setting="social_twitter" placeholder="https://twitter.com/yourhandle">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label><i class="fab fa-instagram" style="color:#e4405f"></i> Instagram</label>
+                                        <input type="url" id="setting-social_instagram" data-setting="social_instagram" placeholder="https://instagram.com/yourhandle">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fab fa-linkedin" style="color:#0077b5"></i> LinkedIn</label>
+                                        <input type="url" id="setting-social_linkedin" data-setting="social_linkedin" placeholder="https://linkedin.com/company/yourcompany">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label><i class="fab fa-youtube" style="color:#ff0000"></i> YouTube</label>
+                                        <input type="url" id="setting-social_youtube" data-setting="social_youtube" placeholder="https://youtube.com/yourchannel">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fab fa-tiktok"></i> TikTok</label>
+                                        <input type="url" id="setting-social_tiktok" data-setting="social_tiktok" placeholder="https://tiktok.com/@yourhandle">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SEO Tab -->
+                            <div class="tab-content" id="tab-seo">
+                                <div class="form-group">
+                                    <label>Meta Title</label>
+                                    <input type="text" id="setting-meta_title" data-setting="meta_title">
+                                    <small>Appears in browser tab and search results (50-60 characters recommended)</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Description</label>
+                                    <textarea id="setting-meta_description" data-setting="meta_description" rows="3"></textarea>
+                                    <small>Search engine description (150-160 characters recommended)</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Keywords</label>
+                                    <input type="text" id="setting-meta_keywords" data-setting="meta_keywords">
+                                    <small>Comma-separated keywords</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Google Analytics ID</label>
+                                    <input type="text" id="setting-google_analytics" data-setting="google_analytics" placeholder="G-XXXXXXXXXX">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== THEME SECTION ========== -->
+                <section id="theme-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-palette"></i> Theme & Colors</h2>
+                            <button class="btn btn-primary" id="save-theme-btn">
+                                <i class="fas fa-save"></i> Save Theme
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 1.5rem; color: var(--text-light);">
+                                Customize your website's colors and fonts. Changes will apply across all pages.
+                            </p>
+
+                            <h3 style="margin-bottom: 1rem; color: var(--primary);">Colors</h3>
+                            <div class="settings-grid">
+                                <div class="setting-item">
+                                    <label>Primary Color</label>
+                                    <small>Main brand color (header, buttons)</small>
+                                    <div class="color-input-wrapper">
+                                        <input type="color" id="color-primary" value="#0a2342" onchange="updateColorText(this, 'color-primary-text')">
+                                        <input type="text" id="color-primary-text" value="#0a2342" data-setting="color_primary" onchange="updateColorPicker(this, 'color-primary')">
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Accent Color</label>
+                                    <small>Highlight color (gold accents)</small>
+                                    <div class="color-input-wrapper">
+                                        <input type="color" id="color-accent" value="#d4af37" onchange="updateColorText(this, 'color-accent-text')">
+                                        <input type="text" id="color-accent-text" value="#d4af37" data-setting="color_accent" onchange="updateColorPicker(this, 'color-accent')">
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Secondary Color</label>
+                                    <small>Darker shade for gradients</small>
+                                    <div class="color-input-wrapper">
+                                        <input type="color" id="color-secondary" value="#05162b" onchange="updateColorText(this, 'color-secondary-text')">
+                                        <input type="text" id="color-secondary-text" value="#05162b" data-setting="color_secondary" onchange="updateColorPicker(this, 'color-secondary')">
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Text Color</label>
+                                    <small>Main body text color</small>
+                                    <div class="color-input-wrapper">
+                                        <input type="color" id="color-text" value="#333333" onchange="updateColorText(this, 'color-text-text')">
+                                        <input type="text" id="color-text-text" value="#333333" data-setting="color_text" onchange="updateColorPicker(this, 'color-text')">
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Background Color</label>
+                                    <small>Page background color</small>
+                                    <div class="color-input-wrapper">
+                                        <input type="color" id="color-background" value="#f9f9f9" onchange="updateColorText(this, 'color-background-text')">
+                                        <input type="text" id="color-background-text" value="#f9f9f9" data-setting="color_background" onchange="updateColorPicker(this, 'color-background')">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 style="margin: 2rem 0 1rem; color: var(--primary);">Fonts</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Heading Font</label>
+                                    <select id="setting-font_heading" data-setting="font_heading">
+                                        <option value="Playfair Display">Playfair Display (Elegant)</option>
+                                        <option value="Merriweather">Merriweather (Classic)</option>
+                                        <option value="Lora">Lora (Traditional)</option>
+                                        <option value="Poppins">Poppins (Modern)</option>
+                                        <option value="Montserrat">Montserrat (Clean)</option>
+                                        <option value="Roboto Slab">Roboto Slab (Bold)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Body Font</label>
+                                    <select id="setting-font_body" data-setting="font_body">
+                                        <option value="Roboto">Roboto (Clean)</option>
+                                        <option value="Open Sans">Open Sans (Friendly)</option>
+                                        <option value="Lato">Lato (Warm)</option>
+                                        <option value="Inter">Inter (Modern)</option>
+                                        <option value="Source Sans Pro">Source Sans Pro (Professional)</option>
+                                        <option value="Nunito">Nunito (Rounded)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Preview -->
+                            <h3 style="margin: 2rem 0 1rem; color: var(--primary);">Preview</h3>
+                            <div id="theme-preview" style="padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
+                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 1rem; border-radius: 8px;" id="preview-header">
+                                    <span style="font-weight: 700; font-size: 1.25rem;" id="preview-logo">CY<span>Azor</span> Law</span>
+                                </div>
+                                <h2 style="margin-bottom: 0.5rem;" id="preview-heading">Heading Example</h2>
+                                <p id="preview-text">This is how your body text will look with the selected colors and fonts.</p>
+                                <button style="margin-top: 1rem; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer;" id="preview-button">Sample Button</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== PAGE CONTENT SECTION ========== -->
+                <section id="content-section" class="section">
+                    <!-- Init Box -->
+                    <div class="init-box" id="content-init-box" style="display: none;">
+                        <h3><i class="fas fa-database"></i> Initialize Content</h3>
+                        <p>Your content database is empty. Click below to add default content for all pages.</p>
+                        <button class="btn btn-primary btn-lg" id="init-content-btn">
+                            <i class="fas fa-rocket"></i> Initialize Default Content
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-edit"></i> Page Content</h2>
+                            <button class="btn btn-accent" onclick="openContentModal()">
+                                <i class="fas fa-plus"></i> Add Content
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-bar">
+                                <div class="search-input">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="content-search" placeholder="Search content..." onkeyup="filterContentList()">
+                                </div>
+                                <select id="content-page-filter" onchange="filterContentList()">
+                                    <option value="all">All Pages</option>
+                                    <option value="home">Home Page</option>
+                                    <option value="attorney">Attorney/About</option>
+                                    <option value="services">Services</option>
+                                    <option value="contact">Contact/Footer</option>
+                                </select>
+                                <select id="content-type-filter" onchange="filterContentList()">
+                                    <option value="all">All Types</option>
+                                    <option value="text">Text</option>
+                                    <option value="image">Image</option>
+                                    <option value="link">Link</option>
+                                </select>
+                            </div>
+
+                            <div id="content-list" class="item-list">
+                                <div class="loading"><div class="spinner"></div><p>Loading content...</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== NAVIGATION SECTION ========== -->
+                <section id="navigation-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-bars"></i> Navigation Menu</h2>
+                            <button class="btn btn-accent" onclick="openNavModal()">
+                                <i class="fas fa-plus"></i> Add Menu Item
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <p style="margin-bottom: 1.5rem; color: var(--text-light);">
+                                Manage your website's navigation menu. Drag items to reorder.
+                            </p>
+                            <div id="nav-list" class="item-list">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== PRODUCTS SECTION ========== -->
+                <section id="products-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-shopping-bag"></i> Products / E-Books</h2>
+                            <button class="btn btn-accent" onclick="openProductModal()">
+                                <i class="fas fa-plus"></i> Add Product
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="products-list" class="item-list">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== BLOG SECTION ========== -->
+                <section id="blog-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-newspaper"></i> Blog Posts</h2>
+                            <button class="btn btn-accent" onclick="openBlogModal()">
+                                <i class="fas fa-plus"></i> New Post
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="filter-bar">
+                                <div class="search-input">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="blog-search" placeholder="Search posts...">
+                                </div>
+                                <select id="blog-status-filter">
+                                    <option value="all">All Status</option>
+                                    <option value="published">Published</option>
+                                    <option value="draft">Draft</option>
+                                </select>
+                            </div>
+                            <div id="blog-list" class="item-list">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ========== MESSAGES SECTION ========== -->
+                <section id="messages-section" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-envelope"></i> Contact Messages</h2>
+                            <button class="btn btn-outline" onclick="loadMessages()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="messages-list" class="item-list">
+                                <div class="loading"><div class="spinner"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
             </div>
-
-            <!-- SECTION 2: SHOP MANAGER -->
-            <div id="shop-tab" class="section">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
-                    <h2 style="margin:0; color:var(--primary);">Shop & E-books</h2>
-                    <button class="btn" onclick="openProductModal()">
-                        <i class="fas fa-plus" style="margin-right:8px;"></i> Add Product
-                    </button>
-                </div>
-                <div id="product-list" class="item-list">
-                    <div class="loading"><i class="fas fa-spinner"></i><p>Loading products...</p></div>
-                </div>
-            </div>
-
-            <!-- SECTION 3: BLOG MANAGER -->
-            <div id="blog-tab" class="section">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
-                    <h2 style="margin:0; color:var(--primary);">Blog Posts</h2>
-                    <button class="btn" onclick="openBlogModal()">
-                        <i class="fas fa-plus" style="margin-right:8px;"></i> New Post
-                    </button>
-                </div>
-                <div id="blog-list" class="item-list">
-                    <div class="loading"><i class="fas fa-spinner"></i><p>Loading posts...</p></div>
-                </div>
-            </div>
-
-        </div>
+        </main>
     </div>
 
-    <!-- MODALS -->
+    <!-- ==================== MODALS ==================== -->
     
     <!-- Content Modal -->
-    <div id="content-modal" class="modal">
+    <div class="modal" id="content-modal">
         <div class="modal-content">
-            <h3><i class="fas fa-edit" style="margin-right:10px;"></i>Edit Section</h3>
-            
-            <label>Key (Unique ID)</label>
-            <input type="text" id="content-key" placeholder="e.g., hero_title">
-            
-            <label>Page Category</label>
-            <select id="content-page">
-                <option value="home">Home Page</option>
-                <option value="attorney">Attorney / About</option>
-                <option value="services">Services</option>
-                <option value="contact">Footer & Contact</option>
-            </select>
-            
-            <label>Type</label>
-            <select id="content-type" onchange="toggleContentInput()">
-                <option value="text">Text</option>
-                <option value="image">Image</option>
-                <option value="link">Link URL</option>
-            </select>
-            
-            <div id="text-input-group">
-                <label>Content</label>
-                <textarea id="content-value" rows="6" placeholder="Enter your content here..."></textarea>
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> <span id="content-modal-title">Add Content</span></h3>
+                <button class="modal-close" onclick="closeModal('content-modal')">&times;</button>
             </div>
-
-            <div id="image-input-group" style="display:none;">
-                <label>Upload New Image</label>
-                <div class="upload-area" onclick="document.getElementById('content-file').click()">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Click to Upload Image</p>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Content Key *</label>
+                        <input type="text" id="content-key" placeholder="e.g., hero_title">
+                        <small>Unique identifier (use underscores, no spaces)</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Label (Optional)</label>
+                        <input type="text" id="content-label" placeholder="e.g., Hero Section Title">
+                        <small>Human-readable name for this content</small>
+                    </div>
                 </div>
-                <input type="file" id="content-file" hidden accept="image/*" onchange="handleFileSelect(this, 'content-preview')">
-                <img id="content-preview" class="preview-img">
-                <label>Or Enter Image URL</label>
-                <input type="text" id="content-image-url" placeholder="https://example.com/image.jpg">
-            </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Page</label>
+                        <select id="content-page">
+                            <option value="home">Home Page</option>
+                            <option value="attorney">Attorney/About</option>
+                            <option value="services">Services</option>
+                            <option value="contact">Contact/Footer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="content-type" onchange="toggleContentType()">
+                            <option value="text">Text</option>
+                            <option value="image">Image</option>
+                            <option value="link">Link</option>
+                        </select>
+                    </div>
+                </div>
 
+                <div id="content-text-input" class="form-group">
+                    <label>Content *</label>
+                    <textarea id="content-value" rows="4" placeholder="Enter content..."></textarea>
+                </div>
+
+                <div id="content-image-input" class="form-group" style="display: none;">
+                    <label>Image</label>
+                    <div class="upload-area" onclick="document.getElementById('content-file').click()">
+                        <i class="fas fa-image"></i>
+                        <p>Click to upload image</p>
+                    </div>
+                    <input type="file" id="content-file" hidden accept="image/*" onchange="handleContentImageUpload(this)">
+                    <img id="content-image-preview" class="preview-image">
+                    <div style="margin-top: 1rem;">
+                        <label>Or enter image URL</label>
+                        <input type="url" id="content-image-url" placeholder="https://...">
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" onclick="closeModals()">Cancel</button>
+                <button class="btn btn-outline" onclick="closeModal('content-modal')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveContent()">
-                    <i class="fas fa-save" style="margin-right:8px;"></i>Save Changes
+                    <i class="fas fa-save"></i> Save Content
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Product Modal -->
-    <div id="product-modal" class="modal">
+    <div class="modal" id="product-modal">
         <div class="modal-content">
-            <h3><i class="fas fa-shopping-bag" style="margin-right:10px;"></i>Product Details</h3>
-            <input type="hidden" id="prod-id">
-            
-            <label>Product Title</label>
-            <input type="text" id="prod-title" placeholder="Enter product title">
-            
-            <label>Price</label>
-            <input type="text" id="prod-price" placeholder="e.g., $29.99">
-            
-            <label>Payment Link</label>
-            <input type="text" id="prod-pay-link" placeholder="https://payment-link.com">
-            
-            <label>Description</label>
-            <textarea id="prod-desc" rows="3" placeholder="Product description..."></textarea>
-            
-            <label>Product Image</label>
-            <div class="upload-area" onclick="document.getElementById('prod-file').click()">
-                <i class="fas fa-image"></i>
-                <p>Upload Product Cover</p>
+            <div class="modal-header">
+                <h3><i class="fas fa-shopping-bag"></i> <span id="product-modal-title">Add Product</span></h3>
+                <button class="modal-close" onclick="closeModal('product-modal')">&times;</button>
             </div>
-            <input type="file" id="prod-file" hidden accept="image/*" onchange="handleFileSelect(this, 'prod-preview')">
-            <img id="prod-preview" class="preview-img">
-            <input type="hidden" id="prod-image-url">
-            
+            <div class="modal-body">
+                <input type="hidden" id="product-id">
+                <div class="form-group">
+                    <label>Product Title *</label>
+                    <input type="text" id="product-title" placeholder="Enter product title">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Price *</label>
+                        <input type="text" id="product-price" placeholder="$29.99">
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Link</label>
+                        <input type="url" id="product-payment-link" placeholder="https://...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="product-description" rows="3" placeholder="Product description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <div class="upload-area" onclick="document.getElementById('product-file').click()">
+                        <i class="fas fa-image"></i>
+                        <p>Click to upload image</p>
+                    </div>
+                    <input type="file" id="product-file" hidden accept="image/*" onchange="handleProductImageUpload(this)">
+                    <img id="product-image-preview" class="preview-image">
+                </div>
+                <div class="form-group">
+                    <label>Download Link (for e-books)</label>
+                    <input type="url" id="product-download-link" placeholder="https://...">
+                </div>
+            </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" onclick="closeModals()">Cancel</button>
+                <button class="btn btn-outline" onclick="closeModal('product-modal')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveProduct()">
-                    <i class="fas fa-save" style="margin-right:8px;"></i>Save Product
+                    <i class="fas fa-save"></i> Save Product
                 </button>
             </div>
         </div>
     </div>
 
     <!-- Blog Modal -->
-    <div id="blog-modal" class="modal">
+    <div class="modal" id="blog-modal">
         <div class="modal-content" style="max-width: 900px;">
-            <h3><i class="fas fa-newspaper" style="margin-right:10px;"></i>Blog Post</h3>
-            <input type="hidden" id="blog-id">
-            
-            <label>Post Title</label>
-            <input type="text" id="blog-title" placeholder="Enter post title" onkeyup="generateSlug()">
-            
-            <label>URL Slug</label>
-            <input type="text" id="blog-slug" placeholder="auto-generated-slug">
-            
-            <label>Featured Image</label>
-            <div class="upload-area" onclick="document.getElementById('blog-file').click()">
-                <i class="fas fa-image"></i>
-                <p>Upload Featured Image</p>
+            <div class="modal-header">
+                <h3><i class="fas fa-newspaper"></i> <span id="blog-modal-title">New Blog Post</span></h3>
+                <button class="modal-close" onclick="closeModal('blog-modal')">&times;</button>
             </div>
-            <input type="file" id="blog-file" hidden accept="image/*" onchange="handleFileSelect(this, 'blog-preview')">
-            <img id="blog-preview" class="preview-img">
-            <input type="hidden" id="blog-image-url">
-            
-            <label>Content</label>
-            <div id="quill-editor" style="height: 300px; margin-bottom: 60px; background: white;"></div>
-            
-            <label>Status</label>
-            <select id="blog-status" style="width:auto; min-width:150px;">
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-            </select>
-            
+            <div class="modal-body">
+                <input type="hidden" id="blog-id">
+                <div class="form-group">
+                    <label>Post Title *</label>
+                    <input type="text" id="blog-title" placeholder="Enter post title" oninput="generateSlug()">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>URL Slug</label>
+                        <input type="text" id="blog-slug" placeholder="auto-generated-from-title">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="blog-category">
+                            <option value="News">News</option>
+                            <option value="Guide">Guide</option>
+                            <option value="Updates">Updates</option>
+                            <option value="Tips">Tips</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Excerpt (Short description)</label>
+                    <textarea id="blog-excerpt" rows="2" placeholder="Brief summary for previews..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Featured Image</label>
+                    <div class="upload-area" onclick="document.getElementById('blog-file').click()">
+                        <i class="fas fa-image"></i>
+                        <p>Click to upload featured image</p>
+                    </div>
+                    <input type="file" id="blog-file" hidden accept="image/*" onchange="handleBlogImageUpload(this)">
+                    <img id="blog-image-preview" class="preview-image">
+                </div>
+                <div class="form-group">
+                    <label>Content *</label>
+                    <div id="blog-editor" style="height: 300px; background: white;"></div>
+                </div>
+                <div class="form-row" style="margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="blog-status">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Author</label>
+                        <input type="text" id="blog-author" value="Admin">
+                    </div>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button class="btn btn-danger" onclick="closeModals()">Cancel</button>
+                <button class="btn btn-outline" onclick="closeModal('blog-modal')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveBlog()">
-                    <i class="fas fa-save" style="margin-right:8px;"></i>Publish Post
+                    <i class="fas fa-save"></i> Save Post
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="toast" class="toast">Success!</div>
+    <!-- Navigation Modal -->
+    <div class="modal" id="nav-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-link"></i> <span id="nav-modal-title">Add Menu Item</span></h3>
+                <button class="modal-close" onclick="closeModal('nav-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="nav-id">
+                <div class="form-group">
+                    <label>Label *</label>
+                    <input type="text" id="nav-label" placeholder="e.g., About Us">
+                </div>
+                <div class="form-group">
+                    <label>URL *</label>
+                    <input type="text" id="nav-url" placeholder="e.g., about.html or #about">
+                </div>
+                <div class="form-group">
+                    <label>Position</label>
+                    <input type="number" id="nav-position" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="nav-active" checked> Active
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('nav-modal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveNavItem()">
+                    <i class="fas fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
     <script>
-        // ============================================
-        // 1. CONFIGURATION & SETUP
-        // ============================================
+        // =============================================
+        // CONFIGURATION
+        // =============================================
         const SUPABASE_URL = 'https://tqcazpmpepyavpklskop.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxY2F6cG1wZXB5YXZwa2xza29wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxODQxMzEsImV4cCI6MjA3ODc2MDEzMX0.LWAUPB215tzvfeLvaO_VT7ba2vstXy0L2f28CQkM3lI';
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        const ADMIN_USERNAME = 'azor cynthia';
+        const ADMIN_PASSWORD = '2004';
+
+        // Global state
         let quill = null;
-        let selectedFile = null;
         let allContent = [];
+        let allSettings = {};
         let editingContentKey = null;
+        let pendingImageUrl = null;
 
-        // --- PRE-FILLED DEFAULT CONTENT ---
+        // Default content for initialization
         const defaultContent = [
-            { key: 'hero_slide1_title', type: 'text', content: 'Your Trusted Partner for U.S. Immigration & Visa Solutions', page: 'home' },
-            { key: 'hero_slide1_text', type: 'text', content: 'Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support to help you achieve your American dream with confidence.', page: 'home' },
-            { key: 'hero_slide1_btn', type: 'link', content: 'https://calendly.com/cynobas/foreign-attorney-strategy-call', page: 'home' },
-            { key: 'hero_slide2_title', type: 'text', content: 'Document Assessment Consultation', page: 'home' },
-            { key: 'hero_slide2_text', type: 'text', content: 'We help clients who previously filed, received denials, or have new documents they want evaluated.', page: 'home' },
-            { key: 'attorney_section_title', type: 'text', content: 'Meet the Attorney', page: 'attorney' },
-            { key: 'attorney_name', type: 'text', content: 'Attorney Cynthia Azor', page: 'attorney' },
-            { key: 'attorney_photo', type: 'image', content: 'assets/images/attorney-cynthia-azor.png', page: 'attorney' },
-            { key: 'attorney_title', type: 'text', content: 'Immigration Attorney', page: 'attorney' },
-            { key: 'attorney_bio_1', type: 'text', content: 'Attorney Cynthia Azor is licensed to practice law in Alabama and represents immigration clients in all 50 states.', page: 'attorney' },
-            { key: 'services_title', type: 'text', content: 'Our Visa & Immigration Services', page: 'services' },
-            { key: 'service1_title', type: 'text', content: 'Visa Applications', page: 'services' },
-            { key: 'service1_text', type: 'text', content: 'Expert assistance with all visa types including family, work, student visas, green cards, and citizenship.', page: 'services' },
-            { key: 'footer_phone', type: 'text', content: '+1 (629) 202-2006', page: 'contact' },
-            { key: 'footer_email', type: 'text', content: 'info@cyazorlawfirm.com', page: 'contact' }
-        ];
-
-        // ============================================
-        // 2. INITIALIZATION
-        // ============================================
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check if already logged in
-            if (sessionStorage.getItem('admin_logged_in') === 'true') {
-                showDashboard();
-            }
-
-            // Initialize Quill Editor
-            quill = new Quill('#quill-editor', { 
-                theme: 'snow', 
-                modules: { 
-                    toolbar: [
-                        ['bold', 'italic', 'underline', 'strike'],
-                        ['link', 'image'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'header': [1, 2, 3, false] }],
-                        ['clean']
-                    ] 
-                } 
-            });
-
-            // Set default filter
-            document.getElementById('page-filter').value = 'all';
-
-            // Add event listeners
-            document.getElementById('login-btn').addEventListener('click', handleLogin);
-            document.getElementById('password').addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter') handleLogin();
-            });
-            document.getElementById('username').addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter') document.getElementById('password').focus();
-            });
-
-            // Overlay click handler
-            document.getElementById('overlay').addEventListener('click', toggleSidebar);
-        });
-
-        // ============================================
-        // 3. AUTHENTICATION
-        // ============================================
-        async function handleLogin() { 
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const btn = document.getElementById('login-btn');
-            const errorEl = document.getElementById('login-error');
-            
-            // Validation
-            if (!username || !password) {
-                errorEl.textContent = 'Please enter both username and password';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
-            btn.disabled = true;
-            errorEl.style.display = 'none';
-
-            let isValid = false;
-
-            // Method 1: Check hardcoded credentials (case-insensitive username)
-            if (username.toLowerCase() === 'azor cynthia' && password === '2004') {
-                isValid = true;
-            }
-            // Method 2: Check with Supabase Auth
-            else {
-                try {
-                    const { data, error } = await supabase.auth.signInWithPassword({ 
-                        email: username, 
-                        password: password 
-                    });
-                    if (!error && data.user) {
-                        isValid = true;
-                    }
-                } catch (e) { 
-                    console.log('Supabase auth error:', e);
-                }
-            }
-
-            if (isValid) { 
-                sessionStorage.setItem('admin_logged_in', 'true');
-                showDashboard();
-            } else { 
-                errorEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Invalid username or password';
-                errorEl.style.display = 'block';
-                btn.innerHTML = '<i class="fas fa-sign-in-alt" style="margin-right:8px;"></i> Login';
-                btn.disabled = false;
-            }
-        }
-
-        function logout() { 
-            if (confirm('Are you sure you want to logout?')) {
-                sessionStorage.removeItem('admin_logged_in');
-                location.reload();
-            }
-        }
-
-        function showDashboard() { 
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('dashboard').classList.add('active');
-            loadContent();
-        }
-
-        // ============================================
-        // 4. NAVIGATION & UI
-        // ============================================
-        function toggleSidebar() { 
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('active');
-        }
-
-        function switchTab(tabName) {
-            // Update sections
-            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabName + '-tab').classList.add('active');
-
-            // Update nav items
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.querySelector(`.nav-item[data-tab="${tabName}"]`)?.classList.add('active');
-
-            // Load data
-            if (tabName === 'content') loadContent();
-            if (tabName === 'shop') loadProducts();
-            if (tabName === 'blog') loadBlog();
-
-            // Close sidebar on mobile
-            if (window.innerWidth <= 768) toggleSidebar();
-        }
-
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = isError ? 'toast error show' : 'toast show';
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        function closeModals() {
-            document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
-            selectedFile = null;
-            editingContentKey = null;
-            
-            // Reset forms
-            document.getElementById('content-key').value = '';
-            document.getElementById('content-value').value = '';
-            document.getElementById('content-image-url').value = '';
-            document.getElementById('content-preview').classList.remove('show');
-            document.getElementById('content-file').value = '';
-        }
-
-        // ============================================
-        // 5. CONTENT MANAGEMENT
-        // ============================================
-        async function loadContent() {
-            const list = document.getElementById('content-list');
-            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Loading content...</p></div>';
-
-            try {
-                const { data, error } = await supabase
-                    .from('site_content')
-                    .select('*')
-                    .order('key');
-                
-                if (error) throw error;
-                
-                if (!data || data.length === 0) {
-                    document.getElementById('init-box').style.display = 'block';
-                    list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No content found. Initialize the database to get started.</p></div>';
-                    return;
-                }
-
-                document.getElementById('init-box').style.display = 'none';
-                allContent = data;
-                filterContent();
-            } catch (err) {
-                console.error('Load error:', err);
-                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading content. Check console for details.</p></div>';
-            }
-        }
-
-        async function initializeDB() {
-            if (!confirm('This will populate your database with default content. Continue?')) return;
-            
-            try {
-                const { error } = await supabase.from('site_content').upsert(defaultContent);
-                if (error) throw error;
-                showToast('Content initialized successfully!');
-                loadContent();
-            } catch (err) {
-                console.error('Init error:', err);
-                showToast('Error initializing: ' + err.message, true);
-            }
-        }
-
-        function filterContent() {
-            const page = document.getElementById('page-filter').value;
-            const list = document.getElementById('content-list');
-            list.innerHTML = '';
-
-            let filtered = [];
-            
-            if (page === 'all') {
-                filtered = allContent;
-            } else if (page === 'home') {
-                filtered = allContent.filter(i => 
-                    i.page === 'home' || 
-                    i.key.includes('home') || 
-                    i.key.includes('hero') || 
-                    i.key.includes('testimonial') || 
-                    i.key.includes('faq')
-                );
-            } else if (page === 'attorney') {
-                filtered = allContent.filter(i => 
-                    i.page === 'attorney' || 
-                    i.key.includes('about') || 
-                    i.key.includes('attorney')
-                );
-            } else if (page === 'services') {
-                filtered = allContent.filter(i => 
-                    i.page === 'services' || 
-                    i.key.includes('service')
-                );
-            } else if (page === 'contact') {
-                filtered = allContent.filter(i => 
-                    i.page === 'contact' || 
-                    i.key.includes('footer') || 
-                    i.key.includes('contact')
-                );
-            }
-
-            if (filtered.length === 0) {
-                list.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>No content found for this section.</p></div>';
-                return;
-            }
-
-            filtered.forEach(item => {
-                const typeColors = {
-                    'text': 'background:#f3f4f6; color:#374151;',
-                    'image': 'background:#e0f2fe; color:#0369a1;',
-                    'link': 'background:#fef3c7; color:#92400e;'
-                };
-                
-                const displayContent = item.type === 'image' 
-                    ? `<img src="${item.content}" style="max-height:60px; border-radius:4px;" onerror="this.src='https://via.placeholder.com/100x60?text=No+Image'">` 
-                    : item.content.substring(0, 100) + (item.content.length > 100 ? '...' : '');
-
-                list.innerHTML += `
-                    <div class="item-row">
-                        <div class="item-info">
-                            <h4>${item.key.replace(/_/g, ' ').toUpperCase()} 
-                                <span class="badge" style="${typeColors[item.type] || typeColors['text']}">${item.type}</span>
-                            </h4>
-                            <div class="preview">${displayContent}</div>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn btn-sm" onclick="editContent('${item.key}')">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteContent('${item.key}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function openContentModal(isNew = true) {
-            editingContentKey = null;
-            document.getElementById('content-key').value = '';
-            document.getElementById('content-key').removeAttribute('readonly');
-            document.getElementById('content-type').value = 'text';
-            document.getElementById('content-value').value = '';
-            document.getElementById('content-image-url').value = '';
-            document.getElementById('content-preview').classList.remove('show');
-            document.getElementById('content-file').value = '';
-            toggleContentInput();
-            document.getElementById('content-modal').classList.add('active');
-        }
-
-        function editContent(key) {
-            const item = allContent.find(c => c.key === key);
-            if (!item) return;
-
-            editingContentKey = key;
-            document.getElementById('content-key').value = item.key;
-            document.getElementById('content-key').setAttribute('readonly', true);
-            document.getElementById('content-type').value = item.type;
-            document.getElementById('content-page').value = item.page || 'home';
-            
-            if (item.type === 'image') {
-                document.getElementById('content-image-url').value = item.content;
-                document.getElementById('content-preview').src = item.content;
-                document.getElementById('content-preview').classList.add('show');
-                document.getElementById('content-value').value = '';
-            } else {
-                document.getElementById('content-value').value = item.content;
-                document.getElementById('content-image-url').value = '';
-                document.getElementById('content-preview').classList.remove('show');
-            }
-            
-            toggleContentInput();
-            document.getElementById('content-modal').classList.add('active');
-        }
-
-        function toggleContentInput() {
-            const type = document.getElementById('content-type').value;
-            document.getElementById('text-input-group').style.display = (type === 'text' || type === 'link') ? 'block' : 'none';
-            document.getElementById('image-input-group').style.display = type === 'image' ? 'block' : 'none';
-        }
-
-        async function saveContent() {
-            const key = document.getElementById('content-key').value.trim();
-            const type = document.getElementById('content-type').value;
-            const page = document.getElementById('content-page').value;
-            
-            if (!key) {
-                showToast('Please enter a key', true);
-                return;
-            }
-
-            let content = '';
-            
-            if (type === 'image') {
-                // Try to upload file first
-                const uploadedUrl = await uploadImageToSupabase('content-file');
-                if (uploadedUrl) {
-                    content = uploadedUrl;
-                } else {
-                    content = document.getElementById('content-image-url').value.trim();
-                }
-            } else {
-                content = document.getElementById('content-value').value.trim();
-            }
-
-            if (!content) {
-                showToast('Please enter content', true);
-                return;
-            }
-
-            try {
-                const { error } = await supabase
-                    .from('site_content')
-                    .upsert({ key, type, content, page });
-                
-                if (error) throw error;
-                
-                showToast('Content saved successfully!');
-                closeModals();
-                loadContent();
-            } catch (err) {
-                console.error('Save error:', err);
-                showToast('Error saving: ' + err.message, true);
-            }
-        }
-
-        async function deleteContent(key) {
-            if (!confirm(`Delete "${key}"? This cannot be undone.`)) return;
-            
-            try {
-                const { error } = await supabase
-                    .from('site_content')
-                    .delete()
-                    .eq('key', key);
-                
-                if (error) throw error;
-                
-                showToast('Content deleted');
-                loadContent();
-            } catch (err) {
-                showToast('Error deleting: ' + err.message, true);
-            }
-        }
-
-        // ============================================
-        // 6. PRODUCT MANAGEMENT
-        // ============================================
-        async function loadProducts() { 
-            const list = document.getElementById('product-list');
-            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Loading products...</p></div>';
-
-            try {
-                const { data, error } = await supabase
-                    .from('products')
-                    .select('*')
-                    .order('id');
-                
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    list.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-bag"></i><p>No products yet. Add your first product!</p></div>';
-                    return;
-                }
-
-                list.innerHTML = '';
-                data.forEach(p => {
-                    list.innerHTML += `
-                        <div class="item-row">
-                            <div class="item-info">
-                                <h4>${p.title}</h4>
-                                <div class="preview"><strong>${p.price}</strong> - ${p.description || 'No description'}</div>
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn btn-sm" onclick='editProduct(${JSON.stringify(p).replace(/'/g, "\\'")})'>
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteItem('products', ${p.id})">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>`;
-                });
-            } catch (err) {
-                console.error('Products error:', err);
-                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading products</p></div>';
-            }
-        }
-
-        function openProductModal() {
-            document.getElementById('prod-id').value = '';
-            document.getElementById('prod-title').value = '';
-            document.getElementById('prod-price').value = '';
-            document.getElementById('prod-pay-link').value = '';
-            document.getElementById('prod-desc').value = '';
-            document.getElementById('prod-image-url').value = '';
-            document.getElementById('prod-preview').classList.remove('show');
-            document.getElementById('prod-file').value = '';
-            document.getElementById('product-modal').classList.add('active');
-        }
-
-        function editProduct(product) {
-            document.getElementById('prod-id').value = product.id;
-            document.getElementById('prod-title').value = product.title || '';
-            document.getElementById('prod-price').value = product.price || '';
-            document.getElementById('prod-pay-link').value = product.payment_link || '';
-            document.getElementById('prod-desc').value = product.description || '';
-            document.getElementById('prod-image-url').value = product.image_url || '';
-            
-            if (product.image_url) {
-                document.getElementById('prod-preview').src = product.image_url;
-                document.getElementById('prod-preview').classList.add('show');
-            }
-            
-            document.getElementById('product-modal').classList.add('active');
-        }
-
-        async function saveProduct() {
-            const id = document.getElementById('prod-id').value;
-            const title = document.getElementById('prod-title').value.trim();
-            const price = document.getElementById('prod-price').value.trim();
-            const payment_link = document.getElementById('prod-pay-link').value.trim();
-            const description = document.getElementById('prod-desc').value.trim();
-            
-            if (!title || !price) {
-                showToast('Title and price are required', true);
-                return;
-            }
-
-            let image_url = document.getElementById('prod-image-url').value;
-            const uploadedUrl = await uploadImageToSupabase('prod-file');
-            if (uploadedUrl) image_url = uploadedUrl;
-
-            const productData = { title, price, payment_link, description, image_url };
-
-            try {
-                let error;
-                if (id) {
-                    ({ error } = await supabase.from('products').update(productData).eq('id', id));
-                } else {
-                    ({ error } = await supabase.from('products').insert(productData));
-                }
-                
-                if (error) throw error;
-                
-                showToast('Product saved!');
-                closeModals();
-                loadProducts();
-            } catch (err) {
-                showToast('Error saving product: ' + err.message, true);
-            }
-        }
-
-        // ============================================
-        // 7. BLOG MANAGEMENT
-        // ============================================
-        async function loadBlog() {
-            const list = document.getElementById('blog-list');
-            list.innerHTML = '<div class="loading"><i class="fas fa-spinner"></i><p>Loading posts...</p></div>';
-
-            try {
-                const { data, error } = await supabase
-                    .from('blog_posts')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-                
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    list.innerHTML = '<div class="empty-state"><i class="fas fa-newspaper"></i><p>No blog posts yet. Create your first post!</p></div>';
-                    return;
-                }
-
-                list.innerHTML = '';
-                data.forEach(post => {
-                    const statusBadge = post.status === 'published' 
-                        ? '<span class="badge" style="background:#d1fae5; color:#065f46;">Published</span>'
-                        : '<span class="badge" style="background:#fef3c7; color:#92400e;">Draft</span>';
-                    
-                    const date = new Date(post.created_at).toLocaleDateString();
-                    
-                    list.innerHTML += `
-                        <div class="item-row">
-                            <div class="item-info">
-                                <h4>${post.title} ${statusBadge}</h4>
-                                <div class="preview">/${post.slug} • ${date}</div>
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn btn-sm" onclick='editBlog(${JSON.stringify(post).replace(/'/g, "\\'")})'>
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteItem('blog_posts', ${post.id})">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>`;
-                });
-            } catch (err) {
-                console.error('Blog error:', err);
-                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading blog posts</p></div>';
-            }
-        }
-
-        function openBlogModal() {
-            document.getElementById('blog-id').value = '';
-            document.getElementById('blog-title').value = '';
-            document.getElementById('blog-slug').value = '';
-            document.getElementById('blog-status').value = 'draft';
-            document.getElementById('blog-image-url').value = '';
-            document.getElementById('blog-preview').classList.remove('show');
-            document.getElementById('blog-file').value = '';
-            quill.setContents([]);
-            document.getElementById('blog-modal').classList.add('active');
-        }
-
-        function editBlog(post) {
-            document.getElementById('blog-id').value = post.id;
-            document.getElementById('blog-title').value = post.title || '';
-            document.getElementById('blog-slug').value = post.slug || '';
-            document.getElementById('blog-status').value = post.status || 'draft';
-            document.getElementById('blog-image-url').value = post.featured_image || '';
-            
-            if (post.featured_image) {
-                document.getElementById('blog-preview').src = post.featured_image;
-                document.getElementById('blog-preview').classList.add('show');
-            }
-            
-            if (post.content) {
-                quill.root.innerHTML = post.content;
-            } else {
-                quill.setContents([]);
-            }
-            
-            document.getElementById('blog-modal').classList.add('active');
-        }
-
-        function generateSlug() {
-            const title = document.getElementById('blog-title').value;
-            const slug = title
-                .toLowerCase()
-                .replace(/[^a-z0-9\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-')
-                .trim();
-            document.getElementById('blog-slug').value = slug;
-        }
-
-        async function saveBlog() {
-            const id = document.getElementById('blog-id').value;
-            const title = document.getElementById('blog-title').value.trim();
-            const slug = document.getElementById('blog-slug').value.trim();
-            const status = document.getElementById('blog-status').value;
-            const content = quill.root.innerHTML;
-            
-            if (!title || !slug) {
-                showToast('Title and slug are required', true);
-                return;
-            }
-
-            let featured_image = document.getElementById('blog-image-url').value;
-            const uploadedUrl = await uploadImageToSupabase('blog-file');
-            if (uploadedUrl) featured_image = uploadedUrl;
-
-            const postData = { title, slug, content, status, featured_image };
-
-            try {
-                let error;
-                if (id) {
-                    ({ error } = await supabase.from('blog_posts').update(postData).eq('id', id));
-                } else {
-                    postData.created_at = new Date().toISOString();
-                    ({ error } = await supabase.from('blog_posts').insert(postData));
-                }
-                
-                if (error) throw error;
-                
-                showToast('Blog post saved!');
-                closeModals();
-                loadBlog();
-            } catch (err) {
-                showToast('Error saving post: ' + err.message, true);
-            }
-        }
-
-        // ============================================
-        // 8. UTILITY FUNCTIONS
-        // ============================================
-        async function deleteItem(table, id) {
-            if (!confirm('Are you sure you want to delete this item?')) return;
-            
-            try {
-                const { error } = await supabase.from(table).delete().eq('id', id);
-                if (error) throw error;
-                
-                showToast('Item deleted');
-                if (table === 'products') loadProducts();
-                if (table === 'blog_posts') loadBlog();
-            } catch (err) {
-                showToast('Error deleting: ' + err.message, true);
-            }
-        }
-
-        function handleFileSelect(input, previewId) {
-            const file = input.files[0];
-            if (!file) return;
-            
-            if (!file.type.startsWith('image/')) {
-                showToast('Please select an image file', true);
-                return;
-            }
-
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('Image must be less than 5MB', true);
-                return;
-            }
-
-            selectedFile = file;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const preview = document.getElementById(previewId);
-                preview.src = e.target.result;
-                preview.classList.add('show');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        async function uploadImageToSupabase(inputId) {
-            const input = document.getElementById(inputId);
-            const file = input?.files[0];
-            
-            if (!file) return null;
-            
-            const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-            
-            try {
-                const { data, error } = await supabase.storage
-                    .from('images')
-                    .upload(fileName, file, { cacheControl: '3600', upsert: false });
-                
-                if (error) throw error;
-                
-                const { data: urlData } = supabase.storage
-                    .from('images')
-                    .getPublicUrl(fileName);
-                
-                return urlData.publicUrl;
-            } catch (err) {
-                console.error('Upload error:', err);
-                showToast('Image upload failed: ' + err.message, true);
-                return null;
-            }
-        }
-    </script>
-</body>
-</html>
+            { key: 'hero_slide1_title', content: 'Your Trusted Partner for U.S. Immigration & Visa Solutions', type: 'text', page: 'home', label: 'Hero Slide 1 Title' },
+            { key: 'hero_slide1_text', content: 'Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support.', type: 'text', page: 'home', label: 'Hero Slide 1 Text' },
+            { key: 'hero_slide1_btn', content: 'https://calendly.com/cynobas/foreign-attorney-strategy-call', type: 'link', page: 'home', label: 'Hero Slide 1 Button Link' },
+            { key: 'hero_slide2_title', content: 'Document Assessment Consultation', type: 'text', page: 'home', label: 'Hero Slide 2 Title' },
+            { key: 'hero_slide2_text', content: 'We help clients who previously filed, received denials, or have new documents they want evaluated.', type: 'text', page: 'home', label: 'Hero Slide 2 Text' },
+            { key: 'attorney_name', content: 'Attorney Cynthia Azor', type: 'text', page: 'attorney', label: 'Attorney Name' },
+            { key: 'attorney_title', content: 'Immigration Attorney', type: 'text', page: 'attorney', label: 'Attorney Title' },
+            { key: 'attorney_subtitle', content: 'Licensed in Alabama | Serving clients in all 50 states', type: 'text', page: 'attorney', label: 'Attorney Subtitle' },
+            { key: 'attorney_bio_1', content: 'Attorney Cynthia Azor is licensed to practice law in Alabama and represents immigration clients in all 50 states.', type: 'text', page: 'attorney', label: 'Attorney Bio Paragraph 1' },
+            { key: 'attorney_bio_2', content: 'With years of experience in immigration law, she has successfully helped hundreds of families navigate the complex U.S. immigration system.', type: 'text', page: 'attorney', label: 'Attorney Bio Paragraph 2' },
+            { key: 'attorney_photo', content: 'assets/images/attorney-cynthia-azor.png', type: 'image', page: 'attorney', label: 'Attorney Photo' },
+            { key: 'services_title', content: 'Our Visa & Immigration Services', type: 'text', page: 'services', label: 'Services Section Title' },
+            { key: 'services_subtitle', content: 'Comprehensive legal solutions for all your immigration needs', type: 'text', page: 'services', label: 'Services Section Subtitle' },
+            { key: 'service1_title', content: 'Family-Based Immigration', type: 'text', page: 'services', label: 'Service 1 Title' },
+            { key: 'service1_text', content: 'Reunite with your loved ones through spouse visas, parent petitions, and family-based green cards.', type: 'text', page: 'services', label: 'Service 1 Description' }0
