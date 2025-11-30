@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Admin - CY Visa Help</title>
+    <title>Admin Panel - CY Visa Help</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
@@ -16,18 +16,15 @@
             --white: #ffffff;
             --danger: #ef4444;
             --success: #10b981;
-            --warning: #f59e0b;
             --text: #1f2937;
-            --text-light: #6b7280;
             --border: #e5e7eb;
-            --sidebar-width: 280px;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--light); color: var(--text); min-height: 100vh; }
 
-        /* ===== LOGIN SCREEN ===== */
-        #login-screen {
+        /* LOGIN */
+        .login-screen {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
@@ -37,122 +34,128 @@
             align-items: center;
             z-index: 9999;
         }
-        #login-screen.hidden { display: none; }
+        .login-screen.hidden { display: none; }
         
         .login-box {
             background: var(--white);
-            padding: 3rem;
+            padding: 2.5rem;
             border-radius: 16px;
             width: 90%;
-            max-width: 420px;
+            max-width: 400px;
             box-shadow: 0 25px 60px rgba(0,0,0,0.3);
             text-align: center;
         }
-        .login-box .logo {
-            font-size: 2rem;
-            font-weight: 700;
+        .login-box h1 {
+            font-size: 1.8rem;
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
-        .login-box .logo span { color: var(--accent); }
-        .login-box p { color: var(--text-light); margin-bottom: 2rem; }
-        
-        /* ===== DASHBOARD LAYOUT ===== */
-        #dashboard {
-            display: none;
-            min-height: 100vh;
+        .login-box h1 span { color: var(--accent); }
+        .login-box p { color: #666; margin-bottom: 2rem; }
+        .login-box .form-group { margin-bottom: 1rem; text-align: left; }
+        .login-box label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--primary); }
+        .login-box input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
         }
-        #dashboard.active { display: flex; }
-
-        /* Sidebar */
-        .sidebar {
-            width: var(--sidebar-width);
+        .login-box input:focus { outline: none; border-color: var(--accent); }
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
             background: var(--primary);
-            color: var(--white);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: #0d2d52; }
+        .login-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        .login-error {
+            color: var(--danger);
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+        .login-error.show { display: block; }
+
+        /* DASHBOARD */
+        .dashboard { display: none; min-height: 100vh; }
+        .dashboard.active { display: flex; }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: var(--primary);
+            color: white;
             position: fixed;
             top: 0; left: 0;
             height: 100vh;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             z-index: 1000;
-            transition: transform 0.3s ease;
-            overflow-y: auto;
-        }
-        .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
         }
         .sidebar-logo {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
+            margin-bottom: 0.25rem;
         }
         .sidebar-logo span { color: var(--accent); }
-        .sidebar-subtitle {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.5);
-            margin-top: 0.25rem;
-        }
+        .sidebar-subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-bottom: 2rem; }
         
-        .sidebar-nav { padding: 1rem 0; flex: 1; }
         .nav-section {
-            padding: 0.5rem 1rem;
             font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: rgba(255,255,255,0.4);
-            margin-top: 1rem;
+            margin: 1.5rem 0 0.5rem;
         }
         .nav-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 0.875rem 1.5rem;
+            padding: 0.875rem 1rem;
             color: rgba(255,255,255,0.7);
             cursor: pointer;
+            border-radius: 8px;
             transition: all 0.2s;
-            border-left: 3px solid transparent;
+            margin-bottom: 0.25rem;
         }
-        .nav-item:hover {
-            background: rgba(255,255,255,0.05);
-            color: var(--white);
-        }
-        .nav-item.active {
-            background: rgba(255,255,255,0.1);
-            color: var(--white);
-            border-left-color: var(--accent);
-        }
+        .nav-item:hover { background: rgba(255,255,255,0.1); color: white; }
+        .nav-item.active { background: rgba(255,255,255,0.15); color: white; }
         .nav-item i { width: 20px; text-align: center; }
         
-        .sidebar-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+        .sidebar-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
         .logout-btn {
             display: flex;
             align-items: center;
             gap: 10px;
             color: #ff8888;
             cursor: pointer;
-            padding: 0.75rem;
+            padding: 0.75rem 1rem;
             border-radius: 8px;
             transition: 0.2s;
         }
-        .logout-btn:hover {
-            background: rgba(255,0,0,0.1);
-        }
+        .logout-btn:hover { background: rgba(255,0,0,0.1); }
 
-        /* Main Content */
+        /* MAIN CONTENT */
         .main-content {
             flex: 1;
-            margin-left: var(--sidebar-width);
+            margin-left: 260px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
         
-        /* Top Bar */
         .top-bar {
-            background: var(--white);
+            background: white;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -162,13 +165,7 @@
             top: 0;
             z-index: 100;
         }
-        .top-bar h1 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .top-bar h1 { font-size: 1.4rem; color: var(--primary); }
         .menu-toggle {
             display: none;
             background: none;
@@ -177,45 +174,19 @@
             color: var(--primary);
             cursor: pointer;
         }
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-light);
-        }
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
 
-        /* Content Area */
-        .content-area {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-        }
+        .content-area { padding: 2rem; }
         
-        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section { display: none; animation: fadeIn 0.3s; }
         .section.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* ===== CARDS & COMPONENTS ===== */
+        /* CARDS */
         .card {
-            background: var(--white);
+            background: white;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             margin-bottom: 1.5rem;
-            overflow: hidden;
         }
         .card-header {
             padding: 1.25rem 1.5rem;
@@ -226,17 +197,10 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-        .card-header h2 {
-            font-size: 1.1rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .card-header h2 i { color: var(--accent); }
+        .card-header h2 { font-size: 1.1rem; color: var(--primary); }
         .card-body { padding: 1.5rem; }
-        
-        /* Stats Grid */
+
+        /* STATS */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -244,96 +208,33 @@
             margin-bottom: 2rem;
         }
         .stat-card {
-            background: var(--white);
+            background: white;
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
         }
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-        .stat-icon.blue { background: #dbeafe; color: #2563eb; }
-        .stat-icon.green { background: #d1fae5; color: #059669; }
-        .stat-icon.yellow { background: #fef3c7; color: #d97706; }
-        .stat-icon.purple { background: #ede9fe; color: #7c3aed; }
-        .stat-info h3 { font-size: 1.75rem; color: var(--primary); }
-        .stat-info p { font-size: 0.85rem; color: var(--text-light); }
+        .stat-card h3 { font-size: 2rem; color: var(--primary); }
+        .stat-card p { color: #666; font-size: 0.9rem; }
 
-        /* ===== FORMS ===== */
+        /* FORMS */
         .form-group { margin-bottom: 1.25rem; }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-        .form-group small {
-            display: block;
-            margin-top: 0.25rem;
-            color: var(--text-light);
-            font-size: 0.8rem;
-        }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--primary); }
+        .form-group small { display: block; margin-top: 0.25rem; color: #888; font-size: 0.8rem; }
         input, textarea, select {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 0.95rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
         }
         textarea { resize: vertical; min-height: 100px; }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-        .form-row-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-        /* Color Input */
-        .color-input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .color-input-wrapper input[type="color"] {
-            width: 50px;
-            height: 40px;
-            padding: 2px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .color-input-wrapper input[type="text"] {
-            flex: 1;
-            text-transform: uppercase;
-        }
-        .color-preview {
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            border: 2px solid var(--border);
-        }
-
-        /* ===== BUTTONS ===== */
+        /* BUTTONS */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -343,158 +244,68 @@
             border: none;
             border-radius: 8px;
             font-weight: 500;
-            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
         }
-        .btn:hover { transform: translateY(-1px); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-primary:hover { background: #0d2d52; }
         .btn-accent { background: var(--accent); color: white; }
         .btn-accent:hover { background: #c4a030; }
-        .btn-success { background: var(--success); color: white; }
         .btn-danger { background: var(--danger); color: white; }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text);
-        }
-        .btn-outline:hover { background: var(--light); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
         .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
-        .btn-lg { padding: 1rem 2rem; font-size: 1rem; }
-        
         .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
-        /* ===== DATA TABLE ===== */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .data-table th, .data-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-        .data-table th {
-            background: var(--light);
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-light);
-        }
-        .data-table tr:hover { background: #fafafa; }
-        .data-table .actions { white-space: nowrap; }
-
-        /* Item List (alternative to table) */
+        /* ITEM LIST */
         .item-list { display: grid; gap: 1rem; }
         .item-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.25rem;
-            background: var(--white);
+            background: white;
             border: 1px solid var(--border);
             border-radius: 10px;
             transition: 0.2s;
         }
-        .item-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-color: var(--accent);
-        }
+        .item-card:hover { border-color: var(--accent); }
         .item-info { flex: 1; min-width: 0; }
-        .item-info h4 {
-            color: var(--primary);
-            margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .item-info h4 { color: var(--primary); margin-bottom: 0.25rem; }
         .item-info .preview {
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: #666;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 400px;
         }
-
-        /* Badges */
+        
         .badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.2rem 0.6rem;
             border-radius: 20px;
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
+            margin-left: 0.5rem;
         }
-        .badge-primary { background: #dbeafe; color: #1d4ed8; }
+        .badge-text { background: #f3f4f6; color: #374151; }
+        .badge-image { background: #dbeafe; color: #1d4ed8; }
+        .badge-link { background: #fef3c7; color: #92400e; }
         .badge-success { background: #d1fae5; color: #059669; }
         .badge-warning { background: #fef3c7; color: #d97706; }
-        .badge-danger { background: #fee2e2; color: #dc2626; }
-        .badge-gray { background: #f3f4f6; color: #6b7280; }
 
-        /* ===== SETTINGS GRID ===== */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+        /* FILTER BAR */
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
-        .setting-item {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1.25rem;
-        }
-        .setting-item label {
-            display: block;
-            font-weight: 500;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        .setting-item small {
-            display: block;
-            color: var(--text-light);
-            font-size: 0.8rem;
-            margin-bottom: 0.75rem;
-        }
+        .filter-bar input, .filter-bar select { max-width: 200px; }
 
-        /* ===== UPLOAD AREA ===== */
-        .upload-area {
-            border: 2px dashed var(--border);
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            background: #fafafa;
-            border-radius: 10px;
-            transition: 0.2s;
-        }
-        .upload-area:hover {
-            border-color: var(--accent);
-            background: white;
-        }
-        .upload-area i {
-            font-size: 2.5rem;
-            color: #ccc;
-            margin-bottom: 0.75rem;
-        }
-        .upload-area p { color: var(--text-light); margin: 0; }
-        .upload-area small { color: #999; font-size: 0.8rem; }
-        
-        .preview-image {
-            max-width: 200px;
-            max-height: 150px;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-top: 1rem;
-            display: none;
-            border: 1px solid var(--border);
-        }
-        .preview-image.show { display: block; }
-
-        /* ===== MODALS ===== */
+        /* MODALS */
         .modal {
             display: none;
             position: fixed;
@@ -509,53 +320,57 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: var(--white);
+            background: white;
             width: 100%;
-            max-width: 700px;
-            border-radius: 16px;
+            max-width: 600px;
+            border-radius: 12px;
             margin: auto;
-            max-height: 90vh;
-            overflow-y: auto;
         }
         .modal-header {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 10;
         }
-        .modal-header h3 {
-            font-size: 1.25rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .modal-header h3 { color: var(--primary); }
         .modal-close {
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: var(--text-light);
+            color: #999;
             cursor: pointer;
-            padding: 0.5rem;
-            line-height: 1;
         }
-        .modal-close:hover { color: var(--danger); }
         .modal-body { padding: 1.5rem; }
         .modal-footer {
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
             border-top: 1px solid var(--border);
             display: flex;
             justify-content: flex-end;
             gap: 0.75rem;
-            background: var(--light);
         }
 
-        /* ===== TOAST ===== */
+        /* UPLOAD */
+        .upload-area {
+            border: 2px dashed var(--border);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .upload-area:hover { border-color: var(--accent); }
+        .upload-area i { font-size: 2rem; color: #ccc; }
+        .preview-img {
+            max-width: 200px;
+            max-height: 150px;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+        .preview-img.show { display: block; }
+
+        /* TOAST */
         .toast {
             position: fixed;
             bottom: 2rem;
@@ -563,93 +378,19 @@
             background: var(--success);
             color: white;
             padding: 1rem 1.5rem;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            border-radius: 8px;
             transform: translateY(100px);
             opacity: 0;
             transition: 0.3s;
-            z-index: 6000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 9999;
         }
         .toast.show { transform: translateY(0); opacity: 1; }
         .toast.error { background: var(--danger); }
-        .toast.warning { background: var(--warning); }
 
-        /* ===== TABS ===== */
-        .tabs {
-            display: flex;
-            gap: 0;
-            border-bottom: 2px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-        .tab {
-            padding: 1rem 1.5rem;
-            cursor: pointer;
-            color: var(--text-light);
-            font-weight: 500;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: 0.2s;
-        }
-        .tab:hover { color: var(--primary); }
-        .tab.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* ===== FILTER BAR ===== */
-        .filter-bar {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .filter-bar .search-input {
-            flex: 1;
-            min-width: 200px;
-            position: relative;
-        }
-        .filter-bar .search-input input {
-            padding-left: 2.5rem;
-        }
-        .filter-bar .search-input i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-        }
-        .filter-bar select { min-width: 150px; }
-
-        /* ===== EMPTY STATE ===== */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-light);
-        }
-        .empty-state i {
-            font-size: 4rem;
-            color: #ddd;
-            margin-bottom: 1rem;
-        }
-        .empty-state h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        /* ===== LOADING ===== */
-        .loading {
-            text-align: center;
-            padding: 3rem;
-        }
+        /* LOADING */
+        .loading { text-align: center; padding: 2rem; color: #666; }
         .spinner {
-            width: 40px;
-            height: 40px;
+            width: 30px; height: 30px;
             border: 3px solid var(--border);
             border-top-color: var(--accent);
             border-radius: 50%;
@@ -658,210 +399,192 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ===== INIT BOX ===== */
+        /* EMPTY */
+        .empty-state { text-align: center; padding: 3rem; color: #888; }
+        .empty-state i { font-size: 3rem; color: #ddd; margin-bottom: 1rem; }
+
+        /* INIT BOX */
         .init-box {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            background: #fef3c7;
             border: 1px solid #fbbf24;
             border-radius: 12px;
             padding: 2rem;
-            margin-bottom: 2rem;
             text-align: center;
+            margin-bottom: 2rem;
         }
-        .init-box h3 {
-            color: #92400e;
-            margin-bottom: 0.5rem;
-        }
-        .init-box p {
-            color: #a16207;
-            margin-bottom: 1.5rem;
-        }
+        .init-box h3 { color: #92400e; margin-bottom: 0.5rem; }
+        .init-box p { color: #a16207; margin-bottom: 1.5rem; }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .form-row { grid-template-columns: 1fr; }
-            .form-row-3 { grid-template-columns: 1fr; }
+        /* TABS */
+        .tabs { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem; }
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            color: #666;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
         }
+        .tab:hover { color: var(--primary); }
+        .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
+        /* COLOR INPUT */
+        .color-wrapper { display: flex; align-items: center; gap: 10px; }
+        .color-wrapper input[type="color"] { width: 50px; height: 40px; padding: 2px; border-radius: 8px; cursor: pointer; }
+        .color-wrapper input[type="text"] { flex: 1; }
+
+        /* SETTINGS GRID */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .setting-item {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .setting-item label { font-weight: 500; color: var(--primary); margin-bottom: 0.5rem; display: block; }
+
+        /* OVERLAY */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+        .overlay.active { display: block; }
+
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                width: 85%;
-                max-width: 300px;
-            }
+            .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
-            
             .main-content { margin-left: 0; }
-            
             .menu-toggle { display: block; }
-            
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0; left: 0;
-                width: 100%; height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 999;
-            }
-            .overlay.active { display: block; }
-            
-            .top-bar h1 { font-size: 1.2rem; }
-            .user-info span { display: none; }
-            
-            .content-area { padding: 1rem; }
-            
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            
-            .item-card {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
+            .form-row { grid-template-columns: 1fr; }
+            .item-card { flex-direction: column; align-items: stretch; gap: 1rem; }
             .item-info .preview { max-width: 100%; }
             .btn-group { width: 100%; }
             .btn-group .btn { flex: 1; }
-            
-            .data-table { display: block; overflow-x: auto; }
+            .filter-bar { flex-direction: column; }
+            .filter-bar input, .filter-bar select { max-width: 100%; }
         }
 
-        @media (max-width: 480px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .settings-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Quill Editor Fixes */
-        .ql-container { min-height: 200px; font-size: 1rem; }
-        .ql-editor { min-height: 200px; }
+        /* QUILL */
+        .ql-container { min-height: 200px; }
     </style>
 </head>
 <body>
 
-    <!-- ==================== LOGIN SCREEN ==================== -->
-    <div id="login-screen">
+    <!-- LOGIN SCREEN -->
+    <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <div class="logo">CY <span>visa</span> help</div>
+            <h1>CY <span>visa</span> help</h1>
             <p>Admin Dashboard</p>
             
             <div class="form-group">
-                <input type="text" id="login-username" placeholder="Username">
+                <label>Username</label>
+                <input type="text" id="loginUsername" placeholder="Enter username">
             </div>
             <div class="form-group">
-                <input type="password" id="login-password" placeholder="Password">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter password">
             </div>
-            <button class="btn btn-primary btn-lg" style="width: 100%;" id="login-btn">
+            
+            <button class="login-btn" id="loginBtn">
                 <i class="fas fa-sign-in-alt"></i> Login
             </button>
-            <p id="login-error" style="color: var(--danger); margin-top: 1rem; display: none;">
-                <i class="fas fa-exclamation-circle"></i> Invalid credentials
+            
+            <p class="login-error" id="loginError">
+                <i class="fas fa-exclamation-circle"></i> Invalid username or password
             </p>
         </div>
     </div>
 
-    <!-- ==================== DASHBOARD ==================== -->
-    <div id="dashboard">
+    <!-- DASHBOARD -->
+    <div class="dashboard" id="dashboard">
         <div class="overlay" id="overlay"></div>
 
-        <!-- Sidebar -->
+        <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-logo">CY <span>visa</span> help</div>
-                <div class="sidebar-subtitle">Admin Dashboard</div>
+            <div class="sidebar-logo">CY <span>visa</span> help</div>
+            <div class="sidebar-subtitle">Admin Dashboard</div>
+            
+            <div class="nav-section">Overview</div>
+            <div class="nav-item active" data-section="dashboard">
+                <i class="fas fa-th-large"></i> Dashboard
             </div>
             
-            <nav class="sidebar-nav">
-                <div class="nav-section">Overview</div>
-                <div class="nav-item active" data-section="dashboard">
-                    <i class="fas fa-th-large"></i> Dashboard
-                </div>
-                
-                <div class="nav-section">Site Management</div>
-                <div class="nav-item" data-section="settings">
-                    <i class="fas fa-cog"></i> Site Settings
-                </div>
-                <div class="nav-item" data-section="theme">
-                    <i class="fas fa-palette"></i> Theme & Colors
-                </div>
-                <div class="nav-item" data-section="content">
-                    <i class="fas fa-edit"></i> Page Content
-                </div>
-                <div class="nav-item" data-section="navigation">
-                    <i class="fas fa-bars"></i> Navigation Menu
-                </div>
-                
-                <div class="nav-section">Content</div>
-                <div class="nav-item" data-section="products">
-                    <i class="fas fa-shopping-bag"></i> Products
-                </div>
-                <div class="nav-item" data-section="blog">
-                    <i class="fas fa-newspaper"></i> Blog Posts
-                </div>
-                
-                <div class="nav-section">Communication</div>
-                <div class="nav-item" data-section="messages">
-                    <i class="fas fa-envelope"></i> Messages
-                </div>
-            </nav>
+            <div class="nav-section">Site Settings</div>
+            <div class="nav-item" data-section="settings">
+                <i class="fas fa-cog"></i> General Settings
+            </div>
+            <div class="nav-item" data-section="theme">
+                <i class="fas fa-palette"></i> Theme & Colors
+            </div>
+            
+            <div class="nav-section">Content</div>
+            <div class="nav-item" data-section="content">
+                <i class="fas fa-edit"></i> Page Content
+            </div>
+            <div class="nav-item" data-section="products">
+                <i class="fas fa-shopping-bag"></i> Products
+            </div>
+            <div class="nav-item" data-section="blog">
+                <i class="fas fa-newspaper"></i> Blog Posts
+            </div>
+            
+            <div class="nav-section">Other</div>
+            <div class="nav-item" data-section="messages">
+                <i class="fas fa-envelope"></i> Messages
+            </div>
             
             <div class="sidebar-footer">
-                <div class="logout-btn" id="logout-btn">
+                <div class="logout-btn" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content -->
+        <!-- MAIN CONTENT -->
         <main class="main-content">
-            <!-- Top Bar -->
             <header class="top-bar">
                 <div style="display: flex; align-items: center; gap: 1rem;">
-                    <button class="menu-toggle" id="menu-toggle">
+                    <button class="menu-toggle" id="menuToggle">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <h1 id="page-title"><i class="fas fa-th-large"></i> Dashboard</h1>
+                    <h1 id="pageTitle">Dashboard</h1>
                 </div>
-                <div class="user-info">
-                    <span>Welcome, Admin</span>
-                    <div class="user-avatar">CA</div>
-                </div>
+                <span style="color: #666;">Welcome, Admin</span>
             </header>
 
-            <!-- Content Area -->
             <div class="content-area">
                 
-                <!-- ========== DASHBOARD SECTION ========== -->
-                <section id="dashboard-section" class="section active">
-                    <!-- Stats -->
+                <!-- DASHBOARD SECTION -->
+                <section class="section active" id="dashboardSection">
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-icon blue"><i class="fas fa-file-alt"></i></div>
-                            <div class="stat-info">
-                                <h3 id="stat-content">0</h3>
-                                <p>Content Items</p>
-                            </div>
+                            <h3 id="statContent">0</h3>
+                            <p>Content Items</p>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon green"><i class="fas fa-shopping-bag"></i></div>
-                            <div class="stat-info">
-                                <h3 id="stat-products">0</h3>
-                                <p>Products</p>
-                            </div>
+                            <h3 id="statProducts">0</h3>
+                            <p>Products</p>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon yellow"><i class="fas fa-newspaper"></i></div>
-                            <div class="stat-info">
-                                <h3 id="stat-posts">0</h3>
-                                <p>Blog Posts</p>
-                            </div>
+                            <h3 id="statPosts">0</h3>
+                            <p>Blog Posts</p>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon purple"><i class="fas fa-envelope"></i></div>
-                            <div class="stat-info">
-                                <h3 id="stat-messages">0</h3>
-                                <p>Messages</p>
-                            </div>
+                            <h3 id="statMessages">0</h3>
+                            <p>Messages</p>
                         </div>
                     </div>
 
-                    <!-- Quick Actions -->
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
@@ -871,291 +594,184 @@
                                 <button class="btn btn-primary" onclick="switchSection('content')">
                                     <i class="fas fa-edit"></i> Edit Content
                                 </button>
-                                <button class="btn btn-accent" onclick="switchSection('products'); openProductModal()">
-                                    <i class="fas fa-plus"></i> Add Product
-                                </button>
-                                <button class="btn btn-success" onclick="switchSection('blog'); openBlogModal()">
-                                    <i class="fas fa-plus"></i> New Blog Post
+                                <button class="btn btn-accent" onclick="switchSection('products')">
+                                    <i class="fas fa-shopping-bag"></i> Manage Products
                                 </button>
                                 <button class="btn btn-outline" onclick="window.open('index.html', '_blank')">
-                                    <i class="fas fa-external-link-alt"></i> View Site
+                                    <i class="fas fa-external-link-alt"></i> View Website
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Activity -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-clock"></i> Recent Messages</h2>
-                            <button class="btn btn-sm btn-outline" onclick="switchSection('messages')">View All</button>
-                        </div>
-                        <div class="card-body">
-                            <div id="recent-messages">
-                                <div class="loading"><div class="spinner"></div></div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ========== SITE SETTINGS SECTION ========== -->
-                <section id="settings-section" class="section">
+                <!-- SETTINGS SECTION -->
+                <section class="section" id="settingsSection">
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-cog"></i> General Settings</h2>
-                            <button class="btn btn-primary" id="save-settings-btn">
-                                <i class="fas fa-save"></i> Save All Settings
+                            <button class="btn btn-primary" onclick="saveSettings()">
+                                <i class="fas fa-save"></i> Save Settings
                             </button>
                         </div>
                         <div class="card-body">
-                            <!-- Tabs -->
                             <div class="tabs">
                                 <div class="tab active" data-tab="general">General</div>
-                                <div class="tab" data-tab="contact">Contact Info</div>
+                                <div class="tab" data-tab="contact">Contact</div>
                                 <div class="tab" data-tab="social">Social Media</div>
-                                <div class="tab" data-tab="seo">SEO</div>
                             </div>
 
-                            <!-- General Tab -->
-                            <div class="tab-content active" id="tab-general">
+                            <div class="tab-content active" id="tabGeneral">
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label>Site Name</label>
-                                        <input type="text" id="setting-site_name" data-setting="site_name">
-                                        <small>Your website/business name</small>
+                                        <input type="text" id="settingSiteName" placeholder="CYAzor Law Firm">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Tagline</label>
-                                        <input type="text" id="setting-site_tagline" data-setting="site_tagline">
-                                        <small>Short description of your business</small>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
                                     <div class="form-group">
                                         <label>Logo Text</label>
-                                        <input type="text" id="setting-logo_text" data-setting="logo_text">
-                                        <small>Text displayed in the logo area</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Copyright Text</label>
-                                        <input type="text" id="setting-copyright_text" data-setting="copyright_text">
+                                        <input type="text" id="settingLogoText" placeholder="CYAzor Law">
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Tagline</label>
+                                    <input type="text" id="settingTagline" placeholder="Expert Immigration & Visa Services">
+                                </div>
                                 <div class="form-group">
                                     <label>Logo Image (Optional)</label>
-                                    <div class="upload-area" onclick="document.getElementById('logo-file').click()">
+                                    <div class="upload-area" onclick="document.getElementById('logoFile').click()">
                                         <i class="fas fa-cloud-upload-alt"></i>
-                                        <p>Click to upload logo image</p>
-                                        <small>Recommended: PNG with transparent background, 200x60px</small>
+                                        <p>Click to upload logo</p>
                                     </div>
-                                    <input type="file" id="logo-file" hidden accept="image/*" onchange="handleLogoUpload(this)">
-                                    <img id="logo-preview" class="preview-image">
-                                    <input type="hidden" id="setting-logo_image" data-setting="logo_image">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Footer About Text</label>
-                                    <textarea id="setting-footer_text" data-setting="footer_text" rows="3"></textarea>
+                                    <input type="file" id="logoFile" hidden accept="image/*">
+                                    <img id="logoPreview" class="preview-img">
                                 </div>
                             </div>
 
-                            <!-- Contact Tab -->
-                            <div class="tab-content" id="tab-contact">
+                            <div class="tab-content" id="tabContact">
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label>Phone Number</label>
-                                        <input type="text" id="setting-contact_phone" data-setting="contact_phone">
+                                        <input type="text" id="settingPhone" placeholder="+1 (629) 202-2006">
                                     </div>
                                     <div class="form-group">
                                         <label>Email Address</label>
-                                        <input type="email" id="setting-contact_email" data-setting="contact_email">
+                                        <input type="email" id="settingEmail" placeholder="info@cyazorlawfirm.com">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <input type="text" id="setting-contact_address" data-setting="contact_address">
+                                        <input type="text" id="settingAddress" placeholder="Alabama, United States">
                                     </div>
                                     <div class="form-group">
                                         <label>Business Hours</label>
-                                        <input type="text" id="setting-contact_hours" data-setting="contact_hours">
+                                        <input type="text" id="settingHours" placeholder="Mon - Fri: 9:00 AM - 6:00 PM">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Consultation Booking Link</label>
-                                    <input type="url" id="setting-consultation_link" data-setting="consultation_link">
-                                    <small>Calendly or other booking service URL</small>
+                                    <input type="url" id="settingConsultationLink" placeholder="https://calendly.com/...">
                                 </div>
                             </div>
 
-                            <!-- Social Tab -->
-                            <div class="tab-content" id="tab-social">
+                            <div class="tab-content" id="tabSocial">
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook</label>
-                                        <input type="url" id="setting-social_facebook" data-setting="social_facebook" placeholder="https://facebook.com/yourpage">
+                                        <label><i class="fab fa-facebook"></i> Facebook</label>
+                                        <input type="url" id="settingFacebook" placeholder="https://facebook.com/...">
                                     </div>
                                     <div class="form-group">
-                                        <label><i class="fab fa-twitter" style="color:#1da1f2"></i> Twitter</label>
-                                        <input type="url" id="setting-social_twitter" data-setting="social_twitter" placeholder="https://twitter.com/yourhandle">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label><i class="fab fa-instagram" style="color:#e4405f"></i> Instagram</label>
-                                        <input type="url" id="setting-social_instagram" data-setting="social_instagram" placeholder="https://instagram.com/yourhandle">
-                                    </div>
-                                    <div class="form-group">
-                                        <label><i class="fab fa-linkedin" style="color:#0077b5"></i> LinkedIn</label>
-                                        <input type="url" id="setting-social_linkedin" data-setting="social_linkedin" placeholder="https://linkedin.com/company/yourcompany">
+                                        <label><i class="fab fa-instagram"></i> Instagram</label>
+                                        <input type="url" id="settingInstagram" placeholder="https://instagram.com/...">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label><i class="fab fa-youtube" style="color:#ff0000"></i> YouTube</label>
-                                        <input type="url" id="setting-social_youtube" data-setting="social_youtube" placeholder="https://youtube.com/yourchannel">
+                                        <label><i class="fab fa-twitter"></i> Twitter</label>
+                                        <input type="url" id="settingTwitter" placeholder="https://twitter.com/...">
                                     </div>
                                     <div class="form-group">
-                                        <label><i class="fab fa-tiktok"></i> TikTok</label>
-                                        <input type="url" id="setting-social_tiktok" data-setting="social_tiktok" placeholder="https://tiktok.com/@yourhandle">
+                                        <label><i class="fab fa-linkedin"></i> LinkedIn</label>
+                                        <input type="url" id="settingLinkedin" placeholder="https://linkedin.com/...">
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- SEO Tab -->
-                            <div class="tab-content" id="tab-seo">
-                                <div class="form-group">
-                                    <label>Meta Title</label>
-                                    <input type="text" id="setting-meta_title" data-setting="meta_title">
-                                    <small>Appears in browser tab and search results (50-60 characters recommended)</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>Meta Description</label>
-                                    <textarea id="setting-meta_description" data-setting="meta_description" rows="3"></textarea>
-                                    <small>Search engine description (150-160 characters recommended)</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>Meta Keywords</label>
-                                    <input type="text" id="setting-meta_keywords" data-setting="meta_keywords">
-                                    <small>Comma-separated keywords</small>
-                                </div>
-                                <div class="form-group">
-                                    <label>Google Analytics ID</label>
-                                    <input type="text" id="setting-google_analytics" data-setting="google_analytics" placeholder="G-XXXXXXXXXX">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ========== THEME SECTION ========== -->
-                <section id="theme-section" class="section">
+                <!-- THEME SECTION -->
+                <section class="section" id="themeSection">
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-palette"></i> Theme & Colors</h2>
-                            <button class="btn btn-primary" id="save-theme-btn">
+                            <button class="btn btn-primary" onclick="saveTheme()">
                                 <i class="fas fa-save"></i> Save Theme
                             </button>
                         </div>
                         <div class="card-body">
-                            <p style="margin-bottom: 1.5rem; color: var(--text-light);">
-                                Customize your website's colors and fonts. Changes will apply across all pages.
-                            </p>
-
-                            <h3 style="margin-bottom: 1rem; color: var(--primary);">Colors</h3>
                             <div class="settings-grid">
                                 <div class="setting-item">
                                     <label>Primary Color</label>
-                                    <small>Main brand color (header, buttons)</small>
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="color-primary" value="#0a2342" onchange="updateColorText(this, 'color-primary-text')">
-                                        <input type="text" id="color-primary-text" value="#0a2342" data-setting="color_primary" onchange="updateColorPicker(this, 'color-primary')">
+                                    <div class="color-wrapper">
+                                        <input type="color" id="colorPrimary" value="#0a2342">
+                                        <input type="text" id="colorPrimaryText" value="#0a2342">
                                     </div>
                                 </div>
                                 <div class="setting-item">
-                                    <label>Accent Color</label>
-                                    <small>Highlight color (gold accents)</small>
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="color-accent" value="#d4af37" onchange="updateColorText(this, 'color-accent-text')">
-                                        <input type="text" id="color-accent-text" value="#d4af37" data-setting="color_accent" onchange="updateColorPicker(this, 'color-accent')">
-                                    </div>
-                                </div>
-                                <div class="setting-item">
-                                    <label>Secondary Color</label>
-                                    <small>Darker shade for gradients</small>
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="color-secondary" value="#05162b" onchange="updateColorText(this, 'color-secondary-text')">
-                                        <input type="text" id="color-secondary-text" value="#05162b" data-setting="color_secondary" onchange="updateColorPicker(this, 'color-secondary')">
+                                    <label>Accent Color (Gold)</label>
+                                    <div class="color-wrapper">
+                                        <input type="color" id="colorAccent" value="#d4af37">
+                                        <input type="text" id="colorAccentText" value="#d4af37">
                                     </div>
                                 </div>
                                 <div class="setting-item">
                                     <label>Text Color</label>
-                                    <small>Main body text color</small>
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="color-text" value="#333333" onchange="updateColorText(this, 'color-text-text')">
-                                        <input type="text" id="color-text-text" value="#333333" data-setting="color_text" onchange="updateColorPicker(this, 'color-text')">
+                                    <div class="color-wrapper">
+                                        <input type="color" id="colorText" value="#333333">
+                                        <input type="text" id="colorTextText" value="#333333">
                                     </div>
                                 </div>
                                 <div class="setting-item">
                                     <label>Background Color</label>
-                                    <small>Page background color</small>
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="color-background" value="#f9f9f9" onchange="updateColorText(this, 'color-background-text')">
-                                        <input type="text" id="color-background-text" value="#f9f9f9" data-setting="color_background" onchange="updateColorPicker(this, 'color-background')">
+                                    <div class="color-wrapper">
+                                        <input type="color" id="colorBackground" value="#f9f9f9">
+                                        <input type="text" id="colorBackgroundText" value="#f9f9f9">
                                     </div>
                                 </div>
                             </div>
 
-                            <h3 style="margin: 2rem 0 1rem; color: var(--primary);">Fonts</h3>
-                            <div class="form-row">
+                            <div class="form-row" style="margin-top: 1.5rem;">
                                 <div class="form-group">
                                     <label>Heading Font</label>
-                                    <select id="setting-font_heading" data-setting="font_heading">
-                                        <option value="Playfair Display">Playfair Display (Elegant)</option>
-                                        <option value="Merriweather">Merriweather (Classic)</option>
-                                        <option value="Lora">Lora (Traditional)</option>
-                                        <option value="Poppins">Poppins (Modern)</option>
-                                        <option value="Montserrat">Montserrat (Clean)</option>
-                                        <option value="Roboto Slab">Roboto Slab (Bold)</option>
+                                    <select id="fontHeading">
+                                        <option value="Playfair Display">Playfair Display</option>
+                                        <option value="Merriweather">Merriweather</option>
+                                        <option value="Poppins">Poppins</option>
+                                        <option value="Montserrat">Montserrat</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Body Font</label>
-                                    <select id="setting-font_body" data-setting="font_body">
-                                        <option value="Roboto">Roboto (Clean)</option>
-                                        <option value="Open Sans">Open Sans (Friendly)</option>
-                                        <option value="Lato">Lato (Warm)</option>
-                                        <option value="Inter">Inter (Modern)</option>
-                                        <option value="Source Sans Pro">Source Sans Pro (Professional)</option>
-                                        <option value="Nunito">Nunito (Rounded)</option>
+                                    <select id="fontBody">
+                                        <option value="Roboto">Roboto</option>
+                                        <option value="Open Sans">Open Sans</option>
+                                        <option value="Lato">Lato</option>
+                                        <option value="Inter">Inter</option>
                                     </select>
                                 </div>
-                            </div>
-
-                            <!-- Preview -->
-                            <h3 style="margin: 2rem 0 1rem; color: var(--primary);">Preview</h3>
-                            <div id="theme-preview" style="padding: 2rem; border-radius: 12px; border: 1px solid var(--border);">
-                                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; padding: 1rem; border-radius: 8px;" id="preview-header">
-                                    <span style="font-weight: 700; font-size: 1.25rem;" id="preview-logo">CY<span>Azor</span> Law</span>
-                                </div>
-                                <h2 style="margin-bottom: 0.5rem;" id="preview-heading">Heading Example</h2>
-                                <p id="preview-text">This is how your body text will look with the selected colors and fonts.</p>
-                                <button style="margin-top: 1rem; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer;" id="preview-button">Sample Button</button>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ========== PAGE CONTENT SECTION ========== -->
-                <section id="content-section" class="section">
-                    <!-- Init Box -->
-                    <div class="init-box" id="content-init-box" style="display: none;">
+                <!-- CONTENT SECTION -->
+                <section class="section" id="contentSection">
+                    <div class="init-box" id="initBox" style="display: none;">
                         <h3><i class="fas fa-database"></i> Initialize Content</h3>
-                        <p>Your content database is empty. Click below to add default content for all pages.</p>
-                        <button class="btn btn-primary btn-lg" id="init-content-btn">
-                            <i class="fas fa-rocket"></i> Initialize Default Content
+                        <p>Your database is empty. Click below to add default content.</p>
+                        <button class="btn btn-primary" onclick="initializeContent()">
+                            <i class="fas fa-rocket"></i> Initialize Content
                         </button>
                     </div>
 
@@ -1168,71 +784,41 @@
                         </div>
                         <div class="card-body">
                             <div class="filter-bar">
-                                <div class="search-input">
-                                    <i class="fas fa-search"></i>
-                                    <input type="text" id="content-search" placeholder="Search content..." onkeyup="filterContentList()">
-                                </div>
-                                <select id="content-page-filter" onchange="filterContentList()">
+                                <input type="text" id="contentSearch" placeholder="Search..." onkeyup="filterContent()">
+                                <select id="contentPageFilter" onchange="filterContent()">
                                     <option value="all">All Pages</option>
-                                    <option value="home">Home Page</option>
-                                    <option value="attorney">Attorney/About</option>
+                                    <option value="home">Home</option>
+                                    <option value="attorney">Attorney</option>
                                     <option value="services">Services</option>
-                                    <option value="contact">Contact/Footer</option>
-                                </select>
-                                <select id="content-type-filter" onchange="filterContentList()">
-                                    <option value="all">All Types</option>
-                                    <option value="text">Text</option>
-                                    <option value="image">Image</option>
-                                    <option value="link">Link</option>
+                                    <option value="contact">Contact</option>
                                 </select>
                             </div>
-
-                            <div id="content-list" class="item-list">
-                                <div class="loading"><div class="spinner"></div><p>Loading content...</p></div>
+                            <div class="item-list" id="contentList">
+                                <div class="loading"><div class="spinner"></div><p>Loading...</p></div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ========== NAVIGATION SECTION ========== -->
-                <section id="navigation-section" class="section">
+                <!-- PRODUCTS SECTION -->
+                <section class="section" id="productsSection">
                     <div class="card">
                         <div class="card-header">
-                            <h2><i class="fas fa-bars"></i> Navigation Menu</h2>
-                            <button class="btn btn-accent" onclick="openNavModal()">
-                                <i class="fas fa-plus"></i> Add Menu Item
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <p style="margin-bottom: 1.5rem; color: var(--text-light);">
-                                Manage your website's navigation menu. Drag items to reorder.
-                            </p>
-                            <div id="nav-list" class="item-list">
-                                <div class="loading"><div class="spinner"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ========== PRODUCTS SECTION ========== -->
-                <section id="products-section" class="section">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-shopping-bag"></i> Products / E-Books</h2>
+                            <h2><i class="fas fa-shopping-bag"></i> Products</h2>
                             <button class="btn btn-accent" onclick="openProductModal()">
                                 <i class="fas fa-plus"></i> Add Product
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="products-list" class="item-list">
-                                <div class="loading"><div class="spinner"></div></div>
+                            <div class="item-list" id="productsList">
+                                <div class="loading"><div class="spinner"></div><p>Loading...</p></div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ========== BLOG SECTION ========== -->
-                <section id="blog-section" class="section">
+                <!-- BLOG SECTION -->
+                <section class="section" id="blogSection">
                     <div class="card">
                         <div class="card-header">
                             <h2><i class="fas fa-newspaper"></i> Blog Posts</h2>
@@ -1241,36 +827,25 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div class="filter-bar">
-                                <div class="search-input">
-                                    <i class="fas fa-search"></i>
-                                    <input type="text" id="blog-search" placeholder="Search posts...">
-                                </div>
-                                <select id="blog-status-filter">
-                                    <option value="all">All Status</option>
-                                    <option value="published">Published</option>
-                                    <option value="draft">Draft</option>
-                                </select>
-                            </div>
-                            <div id="blog-list" class="item-list">
-                                <div class="loading"><div class="spinner"></div></div>
+                            <div class="item-list" id="blogList">
+                                <div class="loading"><div class="spinner"></div><p>Loading...</p></div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ========== MESSAGES SECTION ========== -->
-                <section id="messages-section" class="section">
+                <!-- MESSAGES SECTION -->
+                <section class="section" id="messagesSection">
                     <div class="card">
                         <div class="card-header">
-                            <h2><i class="fas fa-envelope"></i> Contact Messages</h2>
+                            <h2><i class="fas fa-envelope"></i> Messages</h2>
                             <button class="btn btn-outline" onclick="loadMessages()">
-                                <i class="fas fa-sync-alt"></i> Refresh
+                                <i class="fas fa-sync"></i> Refresh
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="messages-list" class="item-list">
-                                <div class="loading"><div class="spinner"></div></div>
+                            <div class="item-list" id="messagesList">
+                                <div class="loading"><div class="spinner"></div><p>Loading...</p></div>
                             </div>
                         </div>
                     </div>
@@ -1280,237 +855,159 @@
         </main>
     </div>
 
-    <!-- ==================== MODALS ==================== -->
-    
-    <!-- Content Modal -->
-    <div class="modal" id="content-modal">
+    <!-- CONTENT MODAL -->
+    <div class="modal" id="contentModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-edit"></i> <span id="content-modal-title">Add Content</span></h3>
-                <button class="modal-close" onclick="closeModal('content-modal')">&times;</button>
+                <h3 id="contentModalTitle">Add Content</h3>
+                <button class="modal-close" onclick="closeModal('contentModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Content Key *</label>
-                        <input type="text" id="content-key" placeholder="e.g., hero_title">
-                        <small>Unique identifier (use underscores, no spaces)</small>
+                        <label>Key *</label>
+                        <input type="text" id="contentKey" placeholder="hero_title">
+                        <small>Unique ID (no spaces)</small>
                     </div>
-                    <div class="form-group">
-                        <label>Label (Optional)</label>
-                        <input type="text" id="content-label" placeholder="e.g., Hero Section Title">
-                        <small>Human-readable name for this content</small>
-                    </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group">
                         <label>Page</label>
-                        <select id="content-page">
-                            <option value="home">Home Page</option>
-                            <option value="attorney">Attorney/About</option>
+                        <select id="contentPage">
+                            <option value="home">Home</option>
+                            <option value="attorney">Attorney</option>
                             <option value="services">Services</option>
-                            <option value="contact">Contact/Footer</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Type</label>
-                        <select id="content-type" onchange="toggleContentType()">
-                            <option value="text">Text</option>
-                            <option value="image">Image</option>
-                            <option value="link">Link</option>
+                            <option value="contact">Contact</option>
                         </select>
                     </div>
                 </div>
-
-                <div id="content-text-input" class="form-group">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="contentType" onchange="toggleContentType()">
+                        <option value="text">Text</option>
+                        <option value="image">Image</option>
+                        <option value="link">Link</option>
+                    </select>
+                </div>
+                <div class="form-group" id="contentTextGroup">
                     <label>Content *</label>
-                    <textarea id="content-value" rows="4" placeholder="Enter content..."></textarea>
+                    <textarea id="contentValue" rows="4"></textarea>
                 </div>
-
-                <div id="content-image-input" class="form-group" style="display: none;">
+                <div class="form-group" id="contentImageGroup" style="display:none;">
                     <label>Image</label>
-                    <div class="upload-area" onclick="document.getElementById('content-file').click()">
+                    <div class="upload-area" onclick="document.getElementById('contentFile').click()">
                         <i class="fas fa-image"></i>
-                        <p>Click to upload image</p>
+                        <p>Click to upload</p>
                     </div>
-                    <input type="file" id="content-file" hidden accept="image/*" onchange="handleContentImageUpload(this)">
-                    <img id="content-image-preview" class="preview-image">
-                    <div style="margin-top: 1rem;">
-                        <label>Or enter image URL</label>
-                        <input type="url" id="content-image-url" placeholder="https://...">
-                    </div>
+                    <input type="file" id="contentFile" hidden accept="image/*">
+                    <img id="contentImagePreview" class="preview-img">
+                    <input type="url" id="contentImageUrl" placeholder="Or enter URL" style="margin-top:1rem;">
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('content-modal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveContent()">
-                    <i class="fas fa-save"></i> Save Content
-                </button>
+                <button class="btn btn-outline" onclick="closeModal('contentModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveContent()">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- Product Modal -->
-    <div class="modal" id="product-modal">
+    <!-- PRODUCT MODAL -->
+    <div class="modal" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-shopping-bag"></i> <span id="product-modal-title">Add Product</span></h3>
-                <button class="modal-close" onclick="closeModal('product-modal')">&times;</button>
+                <h3 id="productModalTitle">Add Product</h3>
+                <button class="modal-close" onclick="closeModal('productModal')">&times;</button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="product-id">
+                <input type="hidden" id="productId">
                 <div class="form-group">
-                    <label>Product Title *</label>
-                    <input type="text" id="product-title" placeholder="Enter product title">
+                    <label>Title *</label>
+                    <input type="text" id="productTitle">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Price *</label>
-                        <input type="text" id="product-price" placeholder="$29.99">
+                        <input type="text" id="productPrice" placeholder="$29.99">
                     </div>
                     <div class="form-group">
                         <label>Payment Link</label>
-                        <input type="url" id="product-payment-link" placeholder="https://...">
+                        <input type="url" id="productPaymentLink">
                     </div>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea id="product-description" rows="3" placeholder="Product description..."></textarea>
+                    <textarea id="productDescription" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Product Image</label>
-                    <div class="upload-area" onclick="document.getElementById('product-file').click()">
+                    <label>Image</label>
+                    <div class="upload-area" onclick="document.getElementById('productFile').click()">
                         <i class="fas fa-image"></i>
-                        <p>Click to upload image</p>
+                        <p>Click to upload</p>
                     </div>
-                    <input type="file" id="product-file" hidden accept="image/*" onchange="handleProductImageUpload(this)">
-                    <img id="product-image-preview" class="preview-image">
-                </div>
-                <div class="form-group">
-                    <label>Download Link (for e-books)</label>
-                    <input type="url" id="product-download-link" placeholder="https://...">
+                    <input type="file" id="productFile" hidden accept="image/*">
+                    <img id="productImagePreview" class="preview-img">
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('product-modal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveProduct()">
-                    <i class="fas fa-save"></i> Save Product
-                </button>
+                <button class="btn btn-outline" onclick="closeModal('productModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProduct()">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- Blog Modal -->
-    <div class="modal" id="blog-modal">
-        <div class="modal-content" style="max-width: 900px;">
+    <!-- BLOG MODAL -->
+    <div class="modal" id="blogModal">
+        <div class="modal-content" style="max-width: 800px;">
             <div class="modal-header">
-                <h3><i class="fas fa-newspaper"></i> <span id="blog-modal-title">New Blog Post</span></h3>
-                <button class="modal-close" onclick="closeModal('blog-modal')">&times;</button>
+                <h3 id="blogModalTitle">New Post</h3>
+                <button class="modal-close" onclick="closeModal('blogModal')">&times;</button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="blog-id">
+                <input type="hidden" id="blogId">
                 <div class="form-group">
-                    <label>Post Title *</label>
-                    <input type="text" id="blog-title" placeholder="Enter post title" oninput="generateSlug()">
+                    <label>Title *</label>
+                    <input type="text" id="blogTitle" oninput="generateSlug()">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>URL Slug</label>
-                        <input type="text" id="blog-slug" placeholder="auto-generated-from-title">
+                        <label>Slug</label>
+                        <input type="text" id="blogSlug">
                     </div>
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select id="blog-category">
-                            <option value="News">News</option>
-                            <option value="Guide">Guide</option>
-                            <option value="Updates">Updates</option>
-                            <option value="Tips">Tips</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Excerpt (Short description)</label>
-                    <textarea id="blog-excerpt" rows="2" placeholder="Brief summary for previews..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Featured Image</label>
-                    <div class="upload-area" onclick="document.getElementById('blog-file').click()">
-                        <i class="fas fa-image"></i>
-                        <p>Click to upload featured image</p>
-                    </div>
-                    <input type="file" id="blog-file" hidden accept="image/*" onchange="handleBlogImageUpload(this)">
-                    <img id="blog-image-preview" class="preview-image">
-                </div>
-                <div class="form-group">
-                    <label>Content *</label>
-                    <div id="blog-editor" style="height: 300px; background: white;"></div>
-                </div>
-                <div class="form-row" style="margin-top: 1rem;">
                     <div class="form-group">
                         <label>Status</label>
-                        <select id="blog-status">
+                        <select id="blogStatus">
                             <option value="draft">Draft</option>
                             <option value="published">Published</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Author</label>
-                        <input type="text" id="blog-author" value="Admin">
+                </div>
+                <div class="form-group">
+                    <label>Excerpt</label>
+                    <textarea id="blogExcerpt" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Featured Image</label>
+                    <div class="upload-area" onclick="document.getElementById('blogFile').click()">
+                        <i class="fas fa-image"></i>
+                        <p>Click to upload</p>
                     </div>
+                    <input type="file" id="blogFile" hidden accept="image/*">
+                    <img id="blogImagePreview" class="preview-img">
+                </div>
+                <div class="form-group">
+                    <label>Content</label>
+                    <div id="blogEditor" style="height: 250px;"></div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('blog-modal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveBlog()">
-                    <i class="fas fa-save"></i> Save Post
-                </button>
+                <button class="btn btn-outline" onclick="closeModal('blogModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveBlog()">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- Navigation Modal -->
-    <div class="modal" id="nav-modal">
-        <div class="modal-content" style="max-width: 500px;">
-            <div class="modal-header">
-                <h3><i class="fas fa-link"></i> <span id="nav-modal-title">Add Menu Item</span></h3>
-                <button class="modal-close" onclick="closeModal('nav-modal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="nav-id">
-                <div class="form-group">
-                    <label>Label *</label>
-                    <input type="text" id="nav-label" placeholder="e.g., About Us">
-                </div>
-                <div class="form-group">
-                    <label>URL *</label>
-                    <input type="text" id="nav-url" placeholder="e.g., about.html or #about">
-                </div>
-                <div class="form-group">
-                    <label>Position</label>
-                    <input type="number" id="nav-position" value="0" min="0">
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="nav-active" checked> Active
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeModal('nav-modal')">Cancel</button>
-                <button class="btn btn-primary" onclick="saveNavItem()">
-                    <i class="fas fa-save"></i> Save
-                </button>
-            </div>
-        </div>
-    </div>
+    <!-- TOAST -->
+    <div class="toast" id="toast">Success!</div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toast-message">Success!</span>
-    </div>
-
-    <!-- Scripts -->
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
@@ -1523,30 +1020,769 @@
         
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        const ADMIN_USERNAME = 'azor cynthia';
-        const ADMIN_PASSWORD = '2004';
+        // Admin credentials
+        const ADMIN_USER = 'azor cynthia';
+        const ADMIN_PASS = '2004';
 
-        // Global state
+        // State
         let quill = null;
         let allContent = [];
-        let allSettings = {};
-        let editingContentKey = null;
-        let pendingImageUrl = null;
+        let editingKey = null;
 
-        // Default content for initialization
+        // Default content
         const defaultContent = [
-            { key: 'hero_slide1_title', content: 'Your Trusted Partner for U.S. Immigration & Visa Solutions', type: 'text', page: 'home', label: 'Hero Slide 1 Title' },
-            { key: 'hero_slide1_text', content: 'Simplify your visa journey with expert guidance. From family visas to work permits and citizenship, we provide personalized support.', type: 'text', page: 'home', label: 'Hero Slide 1 Text' },
-            { key: 'hero_slide1_btn', content: 'https://calendly.com/cynobas/foreign-attorney-strategy-call', type: 'link', page: 'home', label: 'Hero Slide 1 Button Link' },
-            { key: 'hero_slide2_title', content: 'Document Assessment Consultation', type: 'text', page: 'home', label: 'Hero Slide 2 Title' },
-            { key: 'hero_slide2_text', content: 'We help clients who previously filed, received denials, or have new documents they want evaluated.', type: 'text', page: 'home', label: 'Hero Slide 2 Text' },
-            { key: 'attorney_name', content: 'Attorney Cynthia Azor', type: 'text', page: 'attorney', label: 'Attorney Name' },
-            { key: 'attorney_title', content: 'Immigration Attorney', type: 'text', page: 'attorney', label: 'Attorney Title' },
-            { key: 'attorney_subtitle', content: 'Licensed in Alabama | Serving clients in all 50 states', type: 'text', page: 'attorney', label: 'Attorney Subtitle' },
-            { key: 'attorney_bio_1', content: 'Attorney Cynthia Azor is licensed to practice law in Alabama and represents immigration clients in all 50 states.', type: 'text', page: 'attorney', label: 'Attorney Bio Paragraph 1' },
-            { key: 'attorney_bio_2', content: 'With years of experience in immigration law, she has successfully helped hundreds of families navigate the complex U.S. immigration system.', type: 'text', page: 'attorney', label: 'Attorney Bio Paragraph 2' },
-            { key: 'attorney_photo', content: 'assets/images/attorney-cynthia-azor.png', type: 'image', page: 'attorney', label: 'Attorney Photo' },
-            { key: 'services_title', content: 'Our Visa & Immigration Services', type: 'text', page: 'services', label: 'Services Section Title' },
-            { key: 'services_subtitle', content: 'Comprehensive legal solutions for all your immigration needs', type: 'text', page: 'services', label: 'Services Section Subtitle' },
-            { key: 'service1_title', content: 'Family-Based Immigration', type: 'text', page: 'services', label: 'Service 1 Title' },
-            { key: 'service1_text', content: 'Reunite with your loved ones through spouse visas, parent petitions, and family-based green cards.', type: 'text', page: 'services', label: 'Service 1 Description' }0
+            { key: 'hero_slide1_title', content: 'Your Trusted Partner for U.S. Immigration & Visa Solutions', type: 'text', page: 'home' },
+            { key: 'hero_slide1_text', content: 'Simplify your visa journey with expert guidance.', type: 'text', page: 'home' },
+            { key: 'hero_slide2_title', content: 'Document Assessment Consultation', type: 'text', page: 'home' },
+            { key: 'attorney_name', content: 'Attorney Cynthia Azor', type: 'text', page: 'attorney' },
+            { key: 'attorney_title', content: 'Immigration Attorney', type: 'text', page: 'attorney' },
+            { key: 'attorney_bio_1', content: 'Licensed to practice law in Alabama and represents immigration clients in all 50 states.', type: 'text', page: 'attorney' },
+            { key: 'services_title', content: 'Our Visa & Immigration Services', type: 'text', page: 'services' },
+            { key: 'footer_phone', content: '+1 (629) 202-2006', type: 'text', page: 'contact' },
+            { key: 'footer_email', content: 'info@cyazorlawfirm.com', type: 'text', page: 'contact' },
+        ];
+
+        // =============================================
+        // INITIALIZATION
+        // =============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            
+            // Check if already logged in
+            if (sessionStorage.getItem('admin_logged_in') === 'true') {
+                console.log('Already logged in');
+                showDashboard();
+            }
+
+            // Initialize Quill
+            quill = new Quill('#blogEditor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['link', 'image'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // Event Listeners
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Login
+            document.getElementById('loginBtn').addEventListener('click', handleLogin);
+            document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleLogin();
+            });
+            document.getElementById('loginUsername').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') document.getElementById('loginPassword').focus();
+            });
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+
+            // Mobile menu
+            document.getElementById('menuToggle').addEventListener('click', toggleSidebar);
+            document.getElementById('overlay').addEventListener('click', toggleSidebar);
+
+            // Navigation
+            document.querySelectorAll('.nav-item[data-section]').forEach(function(item) {
+                item.addEventListener('click', function() {
+                    switchSection(this.dataset.section);
+                });
+            });
+
+            // Tabs
+            document.querySelectorAll('.tab').forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    switchTab(this);
+                });
+            });
+
+            // Color inputs sync
+            syncColorInputs('colorPrimary', 'colorPrimaryText');
+            syncColorInputs('colorAccent', 'colorAccentText');
+            syncColorInputs('colorText', 'colorTextText');
+            syncColorInputs('colorBackground', 'colorBackgroundText');
+
+            // File uploads
+            document.getElementById('contentFile').addEventListener('change', function(e) {
+                previewFile(e.target, 'contentImagePreview');
+            });
+            document.getElementById('productFile').addEventListener('change', function(e) {
+                previewFile(e.target, 'productImagePreview');
+            });
+            document.getElementById('blogFile').addEventListener('change', function(e) {
+                previewFile(e.target, 'blogImagePreview');
+            });
+            document.getElementById('logoFile').addEventListener('change', function(e) {
+                previewFile(e.target, 'logoPreview');
+            });
+        }
+
+        // =============================================
+        // AUTHENTICATION
+        // =============================================
+        function handleLogin() {
+            console.log('Login attempt');
+            
+            const username = document.getElementById('loginUsername').value.trim().toLowerCase();
+            const password = document.getElementById('loginPassword').value.trim();
+            const errorEl = document.getElementById('loginError');
+            const btn = document.getElementById('loginBtn');
+
+            // Clear error
+            errorEl.classList.remove('show');
+
+            if (!username || !password) {
+                errorEl.textContent = 'Please enter username and password';
+                errorEl.classList.add('show');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+            // Simulate delay for UX
+            setTimeout(function() {
+                if (username === ADMIN_USER && password === ADMIN_PASS) {
+                    console.log('Login successful');
+                    sessionStorage.setItem('admin_logged_in', 'true');
+                    showDashboard();
+                } else {
+                    console.log('Login failed');
+                    errorEl.textContent = 'Invalid username or password';
+                    errorEl.classList.add('show');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                }
+            }, 500);
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                sessionStorage.removeItem('admin_logged_in');
+                location.reload();
+            }
+        }
+
+        function showDashboard() {
+            console.log('Showing dashboard');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('active');
+            loadDashboardData();
+        }
+
+        // =============================================
+        // NAVIGATION
+        // =============================================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function switchSection(sectionName) {
+            console.log('Switching to section:', sectionName);
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(function(item) {
+                item.classList.remove('active');
+            });
+            const activeNav = document.querySelector('.nav-item[data-section="' + sectionName + '"]');
+            if (activeNav) activeNav.classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.section').forEach(function(section) {
+                section.classList.remove('active');
+            });
+            const activeSection = document.getElementById(sectionName + 'Section');
+            if (activeSection) activeSection.classList.add('active');
+
+            // Update title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'settings': 'General Settings',
+                'theme': 'Theme & Colors',
+                'content': 'Page Content',
+                'products': 'Products',
+                'blog': 'Blog Posts',
+                'messages': 'Messages'
+            };
+            document.getElementById('pageTitle').textContent = titles[sectionName] || 'Dashboard';
+
+            // Load data
+            if (sectionName === 'content') loadContent();
+            if (sectionName === 'products') loadProducts();
+            if (sectionName === 'blog') loadBlog();
+            if (sectionName === 'messages') loadMessages();
+            if (sectionName === 'settings') loadSettings();
+
+            // Close mobile sidebar
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('overlay').classList.remove('active');
+            }
+        }
+
+        function switchTab(tabEl) {
+            const tabName = tabEl.dataset.tab;
+            
+            // Update tabs
+            tabEl.parentElement.querySelectorAll('.tab').forEach(function(t) {
+                t.classList.remove('active');
+            });
+            tabEl.classList.add('active');
+
+            // Update content
+            const parent = tabEl.closest('.card-body');
+            parent.querySelectorAll('.tab-content').forEach(function(content) {
+                content.classList.remove('active');
+            });
+            const targetContent = document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (targetContent) targetContent.classList.add('active');
+        }
+
+        // =============================================
+        // DATA LOADING
+        // =============================================
+        async function loadDashboardData() {
+            console.log('Loading dashboard data');
+            
+            try {
+                // Content count
+                const { count: contentCount } = await supabase.from('site_content').select('*', { count: 'exact', head: true });
+                document.getElementById('statContent').textContent = contentCount || 0;
+
+                // Products count
+                const { count: productsCount } = await supabase.from('products').select('*', { count: 'exact', head: true });
+                document.getElementById('statProducts').textContent = productsCount || 0;
+
+                // Blog count
+                const { count: blogCount } = await supabase.from('blog_posts').select('*', { count: 'exact', head: true });
+                document.getElementById('statPosts').textContent = blogCount || 0;
+
+                // Messages count
+                const { count: messagesCount } = await supabase.from('contact_submissions').select('*', { count: 'exact', head: true });
+                document.getElementById('statMessages').textContent = messagesCount || 0;
+            } catch (err) {
+                console.error('Dashboard data error:', err);
+            }
+        }
+
+        async function loadContent() {
+            const list = document.getElementById('contentList');
+            list.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading...</p></div>';
+
+            try {
+                const { data, error } = await supabase.from('site_content').select('*').order('key');
+                
+                if (error) throw error;
+
+                allContent = data || [];
+
+                if (allContent.length === 0) {
+                    document.getElementById('initBox').style.display = 'block';
+                    list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>No content yet</p></div>';
+                    return;
+                }
+
+                document.getElementById('initBox').style.display = 'none';
+                filterContent();
+            } catch (err) {
+                console.error('Load content error:', err);
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading content</p></div>';
+            }
+        }
+
+        function filterContent() {
+            const search = document.getElementById('contentSearch').value.toLowerCase();
+            const page = document.getElementById('contentPageFilter').value;
+            const list = document.getElementById('contentList');
+
+            let filtered = allContent;
+            
+            if (page !== 'all') {
+                filtered = filtered.filter(function(item) { return item.page === page; });
+            }
+            if (search) {
+                filtered = filtered.filter(function(item) {
+                    return item.key.toLowerCase().includes(search) || 
+                           (item.content && item.content.toLowerCase().includes(search));
+                });
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>No content found</p></div>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(function(item) {
+                const badgeClass = item.type === 'image' ? 'badge-image' : (item.type === 'link' ? 'badge-link' : 'badge-text');
+                const preview = item.type === 'image' 
+                    ? '<img src="' + item.content + '" style="max-height:40px;border-radius:4px;">'
+                    : (item.content ? item.content.substring(0, 80) + '...' : '');
+                
+                return '<div class="item-card">' +
+                    '<div class="item-info">' +
+                        '<h4>' + item.key + ' <span class="badge ' + badgeClass + '">' + item.type + '</span></h4>' +
+                        '<div class="preview">' + preview + '</div>' +
+                    '</div>' +
+                    '<div class="btn-group">' +
+                        '<button class="btn btn-sm btn-primary" onclick="editContent(\'' + item.key + '\')"><i class="fas fa-edit"></i></button>' +
+                        '<button class="btn btn-sm btn-danger" onclick="deleteContent(\'' + item.key + '\')"><i class="fas fa-trash"></i></button>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        async function loadProducts() {
+            const list = document.getElementById('productsList');
+            list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+                
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><i class="fas fa-shopping-bag"></i><p>No products yet</p></div>';
+                    return;
+                }
+
+                list.innerHTML = data.map(function(p) {
+                    return '<div class="item-card">' +
+                        '<div class="item-info">' +
+                            '<h4>' + p.title + '</h4>' +
+                            '<div class="preview">' + p.price + ' - ' + (p.description || 'No description') + '</div>' +
+                        '</div>' +
+                        '<div class="btn-group">' +
+                            '<button class="btn btn-sm btn-primary" onclick=\'editProduct(' + JSON.stringify(p) + ')\'><i class="fas fa-edit"></i></button>' +
+                            '<button class="btn btn-sm btn-danger" onclick="deleteProduct(' + p.id + ')"><i class="fas fa-trash"></i></button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            } catch (err) {
+                console.error('Products error:', err);
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading products</p></div>';
+            }
+        }
+
+        async function loadBlog() {
+            const list = document.getElementById('blogList');
+            list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                const { data, error } = await supabase.from('blog_posts').select('*').order('created_at', { ascending: false });
+                
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><i class="fas fa-newspaper"></i><p>No posts yet</p></div>';
+                    return;
+                }
+
+                list.innerHTML = data.map(function(post) {
+                    const statusClass = post.status === 'published' ? 'badge-success' : 'badge-warning';
+                    return '<div class="item-card">' +
+                        '<div class="item-info">' +
+                            '<h4>' + post.title + ' <span class="badge ' + statusClass + '">' + post.status + '</span></h4>' +
+                            '<div class="preview">' + (post.excerpt || post.slug || '') + '</div>' +
+                        '</div>' +
+                        '<div class="btn-group">' +
+                            '<button class="btn btn-sm btn-primary" onclick=\'editBlog(' + JSON.stringify(post).replace(/'/g, "\\'") + ')\'><i class="fas fa-edit"></i></button>' +
+                            '<button class="btn btn-sm btn-danger" onclick="deleteBlog(' + post.id + ')"><i class="fas fa-trash"></i></button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            } catch (err) {
+                console.error('Blog error:', err);
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading posts</p></div>';
+            }
+        }
+
+        async function loadMessages() {
+            const list = document.getElementById('messagesList');
+            list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                const { data, error } = await supabase.from('contact_submissions').select('*').order('created_at', { ascending: false });
+                
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    list.innerHTML = '<div class="empty-state"><i class="fas fa-envelope"></i><p>No messages yet</p></div>';
+                    return;
+                }
+
+                list.innerHTML = data.map(function(msg) {
+                    const date = new Date(msg.created_at).toLocaleString();
+                    return '<div class="item-card" style="flex-direction:column;align-items:stretch;">' +
+                        '<div style="display:flex;justify-content:space-between;margin-bottom:0.5rem;">' +
+                            '<strong>' + (msg.name || 'Unknown') + '</strong>' +
+                            '<small style="color:#888;">' + date + '</small>' +
+                        '</div>' +
+                        '<div style="color:#666;font-size:0.9rem;margin-bottom:0.5rem;">' +
+                            '<i class="fas fa-envelope"></i> ' + (msg.email || 'N/A') +
+                            (msg.phone ? ' | <i class="fas fa-phone"></i> ' + msg.phone : '') +
+                        '</div>' +
+                        '<div class="preview" style="white-space:normal;max-width:100%;">' + (msg.message || 'No message') + '</div>' +
+                    '</div>';
+                }).join('');
+            } catch (err) {
+                console.error('Messages error:', err);
+                list.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Error loading messages</p></div>';
+            }
+        }
+
+        async function loadSettings() {
+            try {
+                const { data } = await supabase.from('site_settings').select('*');
+                if (data) {
+                    data.forEach(function(item) {
+                        // Map to form fields based on key
+                        const fieldMap = {
+                            'site_name': 'settingSiteName',
+                            'logo_text': 'settingLogoText',
+                            'site_tagline': 'settingTagline',
+                            'contact_phone': 'settingPhone',
+                            'contact_email': 'settingEmail',
+                            'contact_address': 'settingAddress',
+                            'contact_hours': 'settingHours',
+                            'consultation_link': 'settingConsultationLink',
+                            'social_facebook': 'settingFacebook',
+                            'social_instagram': 'settingInstagram',
+                            'social_twitter': 'settingTwitter',
+                            'social_linkedin': 'settingLinkedin',
+                            'color_primary': 'colorPrimaryText',
+                            'color_accent': 'colorAccentText',
+                            'color_text': 'colorTextText',
+                            'color_background': 'colorBackgroundText'
+                        };
+                        
+                        const fieldId = fieldMap[item.key];
+                        if (fieldId) {
+                            const el = document.getElementById(fieldId);
+                            if (el) el.value = item.value || '';
+                            
+                            // Sync color pickers
+                            if (item.key.startsWith('color_')) {
+                                const pickerId = fieldId.replace('Text', '');
+                                const picker = document.getElementById(pickerId);
+                                if (picker && item.value) picker.value = item.value;
+                            }
+                        }
+                    });
+                }
+            } catch (err) {
+                console.log('Settings load error:', err);
+            }
+        }
+
+        // =============================================
+        // CONTENT CRUD
+        // =============================================
+        async function initializeContent() {
+            if (!confirm('Initialize default content?')) return;
+
+            try {
+                const { error } = await supabase.from('site_content').upsert(defaultContent);
+                if (error) throw error;
+                showToast('Content initialized!');
+                loadContent();
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        function openContentModal(item) {
+            editingKey = item ? item.key : null;
+            document.getElementById('contentModalTitle').textContent = item ? 'Edit Content' : 'Add Content';
+            document.getElementById('contentKey').value = item ? item.key : '';
+            document.getElementById('contentKey').readOnly = !!item;
+            document.getElementById('contentPage').value = item ? item.page : 'home';
+            document.getElementById('contentType').value = item ? item.type : 'text';
+            document.getElementById('contentValue').value = item ? item.content : '';
+            document.getElementById('contentImageUrl').value = item && item.type === 'image' ? item.content : '';
+            document.getElementById('contentImagePreview').classList.remove('show');
+            document.getElementById('contentFile').value = '';
+            toggleContentType();
+            document.getElementById('contentModal').classList.add('active');
+        }
+
+        function editContent(key) {
+            const item = allContent.find(function(c) { return c.key === key; });
+            if (item) openContentModal(item);
+        }
+
+        function toggleContentType() {
+            const type = document.getElementById('contentType').value;
+            document.getElementById('contentTextGroup').style.display = type !== 'image' ? 'block' : 'none';
+            document.getElementById('contentImageGroup').style.display = type === 'image' ? 'block' : 'none';
+        }
+
+        async function saveContent() {
+            const key = document.getElementById('contentKey').value.trim();
+            const page = document.getElementById('contentPage').value;
+            const type = document.getElementById('contentType').value;
+            let content = '';
+
+            if (!key) {
+                showToast('Key is required', true);
+                return;
+            }
+
+            if (type === 'image') {
+                const file = document.getElementById('contentFile').files[0];
+                if (file) {
+                    content = await uploadFile(file);
+                } else {
+                    content = document.getElementById('contentImageUrl').value.trim();
+                }
+            } else {
+                content = document.getElementById('contentValue').value.trim();
+            }
+
+            if (!content) {
+                showToast('Content is required', true);
+                return;
+            }
+
+            try {
+                const { error } = await supabase.from('site_content').upsert({ key, page, type, content });
+                if (error) throw error;
+                showToast('Content saved!');
+                closeModal('contentModal');
+                loadContent();
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        async function deleteContent(key) {
+            if (!confirm('Delete "' + key + '"?')) return;
+
+            try {
+                const { error } = await supabase.from('site_content').delete().eq('key', key);
+                if (error) throw error;
+                showToast('Deleted');
+                loadContent();
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        // =============================================
+        // PRODUCTS CRUD
+        // =============================================
+        function openProductModal(product) {
+            document.getElementById('productModalTitle').textContent = product ? 'Edit Product' : 'Add Product';
+            document.getElementById('productId').value = product ? product.id : '';
+            document.getElementById('productTitle').value = product ? product.title : '';
+            document.getElementById('productPrice').value = product ? product.price : '';
+            document.getElementById('productPaymentLink').value = product ? product.payment_link : '';
+            document.getElementById('productDescription').value = product ? product.description : '';
+            document.getElementById('productFile').value = '';
+            
+            const preview = document.getElementById('productImagePreview');
+            if (product && product.image_url) {
+                preview.src = product.image_url;
+                preview.classList.add('show');
+            } else {
+                preview.classList.remove('show');
+            }
+            
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function editProduct(product) {
+            openProductModal(product);
+        }
+
+        async function saveProduct() {
+            const id = document.getElementById('productId').value;
+            const title = document.getElementById('productTitle').value.trim();
+            const price = document.getElementById('productPrice').value.trim();
+            const payment_link = document.getElementById('productPaymentLink').value.trim();
+            const description = document.getElementById('productDescription').value.trim();
+
+            if (!title || !price) {
+                showToast('Title and price required', true);
+                return;
+            }
+
+            let image_url = null;
+            const file = document.getElementById('productFile').files[0];
+            if (file) {
+                image_url = await uploadFile(file);
+            }
+
+            const data = { title, price, payment_link, description };
+            if (image_url) data.image_url = image_url;
+
+            try {
+                let error;
+                if (id) {
+                    ({ error } = await supabase.from('products').update(data).eq('id', id));
+                } else {
+                    ({ error } = await supabase.from('products').insert(data));
+                }
+                if (error) throw error;
+                showToast('Product saved!');
+                closeModal('productModal');
+                loadProducts();
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('Delete this product?')) return;
+
+            try {
+                const { error } = await supabase.from('products').delete().eq('id', id);
+                if (error) throw error;
+                showToast('Deleted');
+                loadProducts();
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        // =============================================
+        // BLOG CRUD
+        // =============================================
+        function openBlogModal(post) {
+            document.getElementById('blogModalTitle').textContent = post ? 'Edit Post' : 'New Post';
+            document.getElementById('blogId').value = post ? post.id : '';
+            document.getElementById('blogTitle').value = post ? post.title : '';
+            document.getElementById('blogSlug').value = post ? post.slug : '';
+            document.getElementById('blogStatus').value = post ? post.status : 'draft';
+            document.getElementById('blogExcerpt').value = post ? post.excerpt : '';
+            document.getElementById('blogFile').value = '';
+            
+            quill.root.innerHTML = post ? (post.content || '') : '';
+            
+            const preview = document.getElementById('blogImagePreview');
+            if (post && (post.image_url || post.featured_image)) {
+                preview.src = post.image_url || post.featured_image;
+                preview.classList.add('show');
+            } else {
+                preview.classList.remove('show');
+            }
+            
+            document.getElementById('blogModal').classList.add('active');
+        }
+
+        function editBlog(post) {
+            openBlogModal(post);
+        }
+
+        function generateSlug() {
+            const title = document.getElementById('blogTitle').value;
+            const slug = title.toLowerCase()
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .trim();
+            document.getElementById('blogSlug').value = slug;
+        }
+
+        async function saveBlog() {
+            const id = document.getElementById('blogId').value;
+            const title = document.getElementById('blogTitle').value.trim();
+            const slug = document.getElementById('blogSlug').value.trim();
+            const status = document.getElementById('blogStatus').value;
+            const excerpt = document.getElementById('blogExcerpt').value.trim();
+            const content = quill.root.innerHTML;
+
+            if (!title) {
+                showToast('Title required', true);
+                return;
+            }
+
+            let image_url = null;
+            const file = document.getElementById('blogFile').files[0];
+            if (file) {
+                image_url = await uploadFile(file);
+            }
+
+            const data = { 
+                title, 
+                slug: slug || title.toLowerCase().replace(/\s+/g, '-'), 
+                status, 
+                excerpt, 
+                content,
+                updated_at: new Date().toISOString()
+            };
+            if (image_url) {
+                data.image_url = image_url;
+                data.featured_image = image_url;
+            }
+
+            try {
+                let error;
+                if (id) {
+                    ({ error } = await supabase.from('blog_posts').update(data).eq('id', id));
+                } else {
+                    ({ error } = await supabase.from('blog_posts').insert(data));
+                }
+                if (error) throw error;
+                showToast('Post saved!');
+                closeModal('blogModal');
+                loadBlog();
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        async function deleteBlog(id) {
+            if (!confirm('Delete this post?')) return;
+
+            try {
+                const { error } = await supabase.from('blog_posts').delete().eq('id', id);
+                if (error) throw error;
+                showToast('Deleted');
+                loadBlog();
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        // =============================================
+        // SETTINGS
+        // =============================================
+        async function saveSettings() {
+            const settings = [
+                { key: 'site_name', value: document.getElementById('settingSiteName').value },
+                { key: 'logo_text', value: document.getElementById('settingLogoText').value },
+                { key: 'site_tagline', value: document.getElementById('settingTagline').value },
+                { key: 'contact_phone', value: document.getElementById('settingPhone').value },
+                { key: 'contact_email', value: document.getElementById('settingEmail').value },
+                { key: 'contact_address', value: document.getElementById('settingAddress').value },
+                { key: 'contact_hours', value: document.getElementById('settingHours').value },
+                { key: 'consultation_link', value: document.getElementById('settingConsultationLink').value },
+                { key: 'social_facebook', value: document.getElementById('settingFacebook').value },
+                { key: 'social_instagram', value: document.getElementById('settingInstagram').value },
+                { key: 'social_twitter', value: document.getElementById('settingTwitter').value },
+                { key: 'social_linkedin', value: document.getElementById('settingLinkedin').value },
+            ];
+
+            try {
+                for (const s of settings) {
+                    await supabase.from('site_settings').upsert({ key: s.key, value: s.value, type: 'text', category: 'general' });
+                }
+                showToast('Settings saved!');
+            } catch (err) {
+                showToast('Error: ' + err.message, true);
+            }
+        }
+
+        async function saveTheme() {
+            const colors = [
+                { key: 'color_primary', value: document.getElementById('colorPrimaryText').value },
+                { key: 'color_accent', value: document.getElementById('colorAccentText').value },
+                { key: 'color_text', value: document.getElementById('colorTextText').value },
+                { key: 'color_background', value: document.getElementById('colorBack
