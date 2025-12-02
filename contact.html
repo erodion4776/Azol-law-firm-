@@ -154,11 +154,11 @@
             margin: 0 auto;
         }
 
+        /* UPDATED: Flex container to center the single column */
         .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 4rem;
-            align-items: start;
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
 
         /* Contact Info */
@@ -167,6 +167,9 @@
             padding: 2.5rem;
             border-radius: 15px;
             box-shadow: 0 5px 30px rgba(0,0,0,0.08);
+            /* UPDATED: Max width added for centering */
+            width: 100%;
+            max-width: 800px; 
         }
 
         .contact-info h2 {
@@ -174,6 +177,7 @@
             font-size: 2rem;
             color: var(--primary-color);
             margin-bottom: 1.5rem;
+            text-align: center;
         }
 
         .contact-item {
@@ -276,6 +280,7 @@
             margin-top: 2rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--light-bg);
+            text-align: center;
         }
 
         .social-links h3 {
@@ -287,6 +292,7 @@
         .social-icons {
             display: flex;
             gap: 1rem;
+            justify-content: center;
         }
 
         .social-icon {
@@ -305,243 +311,6 @@
         .social-icon:hover {
             background: var(--accent-color);
             transform: translateY(-3px);
-        }
-
-        /* Contact Form */
-        .contact-form-container {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
-        }
-
-        .contact-form-container h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-form-container .subtitle {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 500;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group label .required {
-            color: var(--error-color);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Roboto', sans-serif;
-            transition: all 0.3s ease;
-            background: var(--white);
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #aaa;
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-group select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-        }
-
-        /* Checkbox Group */
-        .checkbox-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .checkbox-group label {
-            display: block;
-            font-weight: 500;
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-        }
-
-        .checkbox-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.8rem;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--accent-color);
-            cursor: pointer;
-        }
-
-        .checkbox-item span {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        /* Newsletter Opt-in */
-        .newsletter-optin {
-            background: var(--light-bg);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .newsletter-optin label {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.8rem;
-            cursor: pointer;
-        }
-
-        .newsletter-optin input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent-color);
-            cursor: pointer;
-            margin-top: 2px;
-        }
-
-        .newsletter-optin .optin-text {
-            color: var(--text-dark);
-        }
-
-        .newsletter-optin .optin-text strong {
-            color: var(--primary-color);
-            display: block;
-            margin-bottom: 0.3rem;
-        }
-
-        .newsletter-optin .optin-text span {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        /* Submit Button */
-        .submit-btn {
-            width: 100%;
-            padding: 1.2rem 2rem;
-            background: var(--accent-color);
-            color: var(--white);
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .submit-btn:hover {
-            background: #c4a137;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-        }
-
-        .submit-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .submit-btn .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid transparent;
-            border-top-color: var(--white);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        .submit-btn.loading .spinner {
-            display: block;
-        }
-
-        .submit-btn.loading .btn-text {
-            display: none;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Form Messages */
-        .form-message {
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-
-        .form-message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
-        }
-
-        .form-message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
-        }
-
-        .form-message i {
-            margin-right: 0.5rem;
         }
 
         /* Quick Book Section */
@@ -672,7 +441,6 @@
         @media (max-width: 1024px) {
             .contact-grid {
                 grid-template-columns: 1fr;
-                gap: 2rem;
             }
         }
 
@@ -706,16 +474,7 @@
                 font-size: 2rem;
             }
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .checkbox-options {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-info,
-            .contact-form-container {
+            .contact-info {
                 padding: 1.5rem;
             }
 
@@ -844,105 +603,9 @@
                     </a>
                 </div>
             </div>
+            
+            <!-- FORM REMOVED HERE -->
 
-            <!-- Contact Form -->
-            <div class="contact-form-container fade-in-section">
-                <h2>Send Us a Message</h2>
-                <p class="subtitle">Fill out the form below and we'll get back to you within 24-48 hours.</p>
-
-                <!-- Form Messages -->
-                <div class="form-message" id="formMessage"></div>
-
-                <!-- IMPORTANT: Replace YOUR_MAILCHIMP_FORM_ACTION with your actual Mailchimp form action URL -->
-                <form id="contactForm" action="YOUR_MAILCHIMP_FORM_ACTION" method="POST" novalidate>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">First Name <span class="required">*</span></label>
-                            <input type="text" id="firstName" name="FNAME" placeholder="Enter your first name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name <span class="required">*</span></label>
-                            <input type="text" id="lastName" name="LNAME" placeholder="Enter your last name" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">Email Address <span class="required">*</span></label>
-                            <input type="email" id="email" name="EMAIL" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="PHONE" placeholder="Enter your phone number">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="service">Service Interested In <span class="required">*</span></label>
-                        <select id="service" name="SERVICE" required>
-                            <option value="">Select a service...</option>
-                            <option value="Family Visa">Family-Based Visa</option>
-                            <option value="Work Visa">Work / Employment Visa</option>
-                            <option value="Green Card">Green Card Application</option>
-                            <option value="Citizenship">U.S. Citizenship / Naturalization</option>
-                            <option value="Business Immigration">Business Immigration</option>
-                            <option value="VAWA">VAWA Case</option>
-                            <option value="Waiver">Waiver Application</option>
-                            <option value="Document Review">Document Review / Assessment</option>
-                            <option value="Consultation">General Consultation</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="country">Country of Origin</label>
-                        <input type="text" id="country" name="COUNTRY" placeholder="Enter your country of origin">
-                    </div>
-
-                    <div class="checkbox-group">
-                        <label>How did you hear about us?</label>
-                        <div class="checkbox-options">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="SOURCE" value="Google">
-                                <span>Google Search</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="SOURCE" value="Social Media">
-                                <span>Social Media</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="SOURCE" value="Referral">
-                                <span>Friend / Referral</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="SOURCE" value="Other">
-                                <span>Other</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Your Message <span class="required">*</span></label>
-                        <textarea id="message" name="MESSAGE" placeholder="Please describe your immigration situation and how we can help you..." required></textarea>
-                    </div>
-
-                    <!-- Newsletter Opt-in -->
-                    <div class="newsletter-optin">
-                        <label>
-                            <input type="checkbox" name="NEWSLETTER" value="Yes" checked>
-                            <div class="optin-text">
-                                <strong><i class="fas fa-envelope-open-text"></i> Subscribe to Our Newsletter</strong>
-                                <span>Receive immigration updates, tips, and exclusive resources. You can unsubscribe anytime.</span>
-                            </div>
-                        </label>
-                    </div>
-
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
-                        <span class="spinner"></span>
-                    </button>
-                </form>
-            </div>
         </div>
     </section>
 
@@ -1034,65 +697,6 @@
 
         const fadeElements = document.querySelectorAll('.fade-in-section');
         fadeElements.forEach(element => observer.observe(element));
-
-        // Form Submission Handler
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const formMessage = document.getElementById('formMessage');
-
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // Basic validation
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const service = document.getElementById('service').value;
-            const message = document.getElementById('message').value.trim();
-
-            if (!firstName || !lastName || !email || !service || !message) {
-                showMessage('Please fill in all required fields.', 'error');
-                return;
-            }
-
-            if (!isValidEmail(email)) {
-                showMessage('Please enter a valid email address.', 'error');
-                return;
-            }
-
-            // Show loading state
-            submitBtn.classList.add('loading');
-            submitBtn.disabled = true;
-
-            try {
-                // For Mailchimp integration, you'll need to use their API
-                // This is a placeholder for the actual submission
-                
-                // Simulate form submission (remove this in production)
-                await new Promise(resolve => setTimeout(resolve, 2000));
-
-                // Show success message
-                showMessage('Thank you for your message! We\'ll get back to you within 24-48 hours.', 'success');
-                contactForm.reset();
-
-            } catch (error) {
-                showMessage('Something went wrong. Please try again or contact us directly.', 'error');
-            } finally {
-                submitBtn.classList.remove('loading');
-                submitBtn.disabled = false;
-            }
-        });
-
-        function showMessage(text, type) {
-            formMessage.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${text}`;
-            formMessage.className = `form-message ${type}`;
-            formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
     </script>
 </body>
 </html>
