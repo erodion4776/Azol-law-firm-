@@ -307,19 +307,15 @@
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .faq-answer-content { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--text-light); line-height: 1.8; }
         
-        /* Contact Section - UPDATED TO REMOVE FORM AND CENTER CONTENT */
+        /* Contact Section - UPDATED (Removed Form) */
         .contact { padding: 5rem 2rem; background: var(--white); }
-        .contact-container { max-width: 800px; margin: 0 auto; text-align: center; }
+        .contact-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .contact-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
-        .contact-info p { color: var(--text-light); margin-bottom: 3rem; line-height: 1.8; max-width: 600px; margin-left: auto; margin-right: auto; }
-        .contact-details { display: inline-block; text-align: left; margin-bottom: 3rem; background: var(--light-bg); padding: 2rem; border-radius: 10px; width: 100%; max-width: 500px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-        .contact-item:last-child { margin-bottom: 0; }
+        .contact-info p { color: var(--text-light); margin-bottom: 2rem; line-height: 1.8; }
+        .contact-details { margin-bottom: 2rem; width: 100%; max-width: 500px; }
+        .contact-item { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
         .contact-item i { width: 40px; height: 40px; background: var(--accent-color); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .contact-item span { color: var(--text-dark); font-size: 1.1rem; }
-        .social-links { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
-        .social-links a { width: 45px; height: 45px; background: var(--primary-color); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 1.2rem; }
-        .social-links a:hover { background: var(--accent-color); transform: translateY(-3px); }
+        .contact-item span { color: var(--text-dark); text-align: left; }
         
         /* Footer */
         footer { background: var(--primary-color); color: var(--white); padding: 3rem 2rem 1rem; }
@@ -332,10 +328,10 @@
         .footer-section ul li a:hover { color: var(--accent-color); }
         .footer-contact-item { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
         .footer-contact-item i { color: var(--accent-color); width: 20px; }
-        .footer-section .social-links { justify-content: flex-start; }
-        .footer-section .social-links a { background: rgba(255,255,255,0.1); width: 40px; height: 40px; font-size: 1rem; }
-        .footer-section .social-links a:hover { background: var(--accent-color); }
-
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; justify-content: center; }
+        .footer-section .social-links { justify-content: flex-start; } /* Keep footer social links left-aligned */
+        .social-links a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .social-links a:hover { background: var(--accent-color); transform: translateY(-3px); }
         .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.9rem; }
         
         /* Scroll to Top */
@@ -349,6 +345,7 @@
             .attorney-image-wrapper { max-width: 400px; margin: 0 auto; }
             .services-grid { grid-template-columns: repeat(2, 1fr); }
             .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-container { grid-template-columns: 1fr; }
         }
         
         @media (max-width: 768px) {
@@ -372,6 +369,9 @@
             .thumbnail i { font-size: 1.5rem; }
             .guide-container { padding: 1.5rem; }
             .guide-content h2 { font-size: 1.8rem; }
+            .contact-item { justify-content: flex-start; } /* Left align contact info on mobile */
+            .contact-container { text-align: left; align-items: flex-start; }
+            .contact-info h2 { text-align: center; width: 100%; }
         }
         
         @media (max-width: 480px) {
@@ -418,7 +418,7 @@
     <section class="hero-carousel" id="home">
         <div class="hero-video-background">
             <video class="hero-video" id="heroVideo" autoplay muted loop playsinline>
-                <source src="assets/videos/hero-background.mp4" type="video/mp4">
+                <source src="assets/videos/hero-video.mp4" type="video/mp4">
             </video>
             <div class="hero-overlay"></div>
         </div>
@@ -692,7 +692,7 @@
         </div>
     </section>
 
-    <!-- CONTACT SECTION (FORM REMOVED) -->
+    <!-- CONTACT SECTION - UPDATED (Removed Form) -->
     <section class="contact" id="contact">
         <div class="contact-container">
             <div class="contact-info">
@@ -718,11 +718,11 @@
                     </div>
                 </div>
                 
-                <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <div class="social-links" style="color: var(--primary-color);">
+                    <a href="#" aria-label="Facebook" style="background: var(--primary-color);"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter" style="background: var(--primary-color);"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn" style="background: var(--primary-color);"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="Instagram" style="background: var(--primary-color);"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>
@@ -1079,14 +1079,14 @@
         const modal = document.getElementById('newsletterModal');
         const closeModal = document.getElementById('closeModal');
         
-        // Show modal after 8 seconds
+        // Show modal after 5 seconds
         setTimeout(() => {
             // Check if user has already seen the modal in this session to avoid annoyance
             if (!sessionStorage.getItem('modalSeen')) {
                 modal.classList.add('active');
                 sessionStorage.setItem('modalSeen', 'true');
             }
-        }, 8000); 
+        }, 8000); // 8 seconds delay
 
         // Close modal event
         closeModal.addEventListener('click', () => {
