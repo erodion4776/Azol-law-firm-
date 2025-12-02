@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CYAzor Law Firm - Expert Immigration & Visa Services</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -107,6 +107,155 @@
         .service-card:hover h3 { color: var(--accent-color); }
         .service-card p { color: var(--text-light); line-height: 1.8; font-size: 0.95rem; }
         
+        /* FREE GUIDE SECTION */
+        .free-guide-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a3c69 100%);
+            padding: 4rem 2rem;
+            color: var(--white);
+            text-align: center;
+        }
+        .guide-container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid var(--accent-color);
+            padding: 3rem;
+            border-radius: 15px;
+            position: relative;
+        }
+        .guide-badge {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .guide-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        .guide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9);
+        }
+        .pulse-button {
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+        }
+        .pulse-button:hover {
+            transform: scale(1.05);
+            background: #e6c245;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        /* POPUP MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 600px;
+            padding: 0;
+            border-radius: 15px;
+            position: relative;
+            transform: translateY(50px);
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-header {
+            background: var(--primary-color);
+            padding: 2rem;
+            text-align: center;
+            color: var(--white);
+        }
+        .modal-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .modal-body {
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .modal-body p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+        .modal-close:hover {
+            transform: rotate(90deg);
+            color: var(--accent-color);
+        }
+        .modal-btn {
+            display: block;
+            width: 100%;
+            background: #d44c37; /* Urgent Red color for modal */
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .modal-btn:hover {
+            background: #c0392b;
+        }
+
         /* Blog */
         .blog { padding: 5rem 2rem; background: var(--white); }
         .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; min-height: 300px; }
@@ -158,23 +307,19 @@
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .faq-answer-content { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--text-light); line-height: 1.8; }
         
-        /* Contact Section */
+        /* Contact Section - UPDATED TO REMOVE FORM AND CENTER CONTENT */
         .contact { padding: 5rem 2rem; background: var(--white); }
-        .contact-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .contact-container { max-width: 800px; margin: 0 auto; text-align: center; }
         .contact-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
-        .contact-info p { color: var(--text-light); margin-bottom: 2rem; line-height: 1.8; }
-        .contact-details { margin-bottom: 2rem; }
-        .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
-        .contact-item i { width: 40px; height: 40px; background: var(--accent-color); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .contact-item span { color: var(--text-dark); }
-        .contact-form { background: var(--light-bg); padding: 2rem; border-radius: 10px; }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--primary-color); }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 1rem; transition: border-color 0.3s ease; }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent-color); }
-        .form-group textarea { resize: vertical; min-height: 120px; }
-        .submit-btn { width: 100%; padding: 1rem 2rem; background: var(--accent-color); color: var(--white); border: none; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; }
-        .submit-btn:hover { background: #c4a137; }
+        .contact-info p { color: var(--text-light); margin-bottom: 3rem; line-height: 1.8; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .contact-details { display: inline-block; text-align: left; margin-bottom: 3rem; background: var(--light-bg); padding: 2rem; border-radius: 10px; width: 100%; max-width: 500px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+        .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .contact-item:last-child { margin-bottom: 0; }
+        .contact-item i { width: 40px; height: 40px; background: var(--accent-color); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .contact-item span { color: var(--text-dark); font-size: 1.1rem; }
+        .social-links { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
+        .social-links a { width: 45px; height: 45px; background: var(--primary-color); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 1.2rem; }
+        .social-links a:hover { background: var(--accent-color); transform: translateY(-3px); }
         
         /* Footer */
         footer { background: var(--primary-color); color: var(--white); padding: 3rem 2rem 1rem; }
@@ -187,9 +332,10 @@
         .footer-section ul li a:hover { color: var(--accent-color); }
         .footer-contact-item { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
         .footer-contact-item i { color: var(--accent-color); width: 20px; }
-        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
-        .social-links a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .social-links a:hover { background: var(--accent-color); transform: translateY(-3px); }
+        .footer-section .social-links { justify-content: flex-start; }
+        .footer-section .social-links a { background: rgba(255,255,255,0.1); width: 40px; height: 40px; font-size: 1rem; }
+        .footer-section .social-links a:hover { background: var(--accent-color); }
+
         .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.9rem; }
         
         /* Scroll to Top */
@@ -203,7 +349,6 @@
             .attorney-image-wrapper { max-width: 400px; margin: 0 auto; }
             .services-grid { grid-template-columns: repeat(2, 1fr); }
             .blog-grid { grid-template-columns: repeat(2, 1fr); }
-            .contact-container { grid-template-columns: 1fr; }
         }
         
         @media (max-width: 768px) {
@@ -225,6 +370,8 @@
             .slide-thumbnails { flex-wrap: wrap; gap: 1rem; }
             .thumbnail { width: 60px; height: 60px; }
             .thumbnail i { font-size: 1.5rem; }
+            .guide-container { padding: 1.5rem; }
+            .guide-content h2 { font-size: 1.8rem; }
         }
         
         @media (max-width: 480px) {
@@ -239,6 +386,7 @@
             .testimonials { padding: 3rem 1rem; }
             .faq { padding: 3rem 1rem; }
             .contact { padding: 3rem 1rem; }
+            .modal-content { width: 95%; }
         }
     </style>
 </head>
@@ -247,7 +395,7 @@
     <!-- HEADER -->
     <header id="header">
         <div class="header-container">
-            <a href="#" class="logo">CY<span>Azor</span> Law</a>
+            <a href="#" class="logo">CY<span>Azor</span> Law Firm</a>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -427,6 +575,19 @@
             </div>
         </div>
     </section>
+    
+    <!-- FREE GUIDE SIGN UP SECTION -->
+    <section class="free-guide-section" id="free-guide">
+        <div class="guide-container">
+            <div class="guide-badge">FREE RESOURCE</div>
+            <div class="guide-content">
+                <h2>Don't File Until You Read This</h2>
+                <p><strong>Did you know 30% of visas are rejected due to simple errors?</strong></p>
+                <p>Stop guessing and start succeeding. Join our exclusive newsletter to get the <em>"CYVisa Success Checklist"</em> sent straight to your inbox. This insider blueprint reveals the top mistakes to avoid and strategies to fast-track your approval.</p>
+                <a href="https://mailchi.mp/cyazorlawfirm/cyvisa-help-newsletter" target="_blank" class="pulse-button">YES! Send Me My Free Guide</a>
+            </div>
+        </div>
+    </section>
 
     <!-- BLOG SECTION -->
     <section class="blog" id="blog">
@@ -531,7 +692,7 @@
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
+    <!-- CONTACT SECTION (FORM REMOVED) -->
     <section class="contact" id="contact">
         <div class="contact-container">
             <div class="contact-info">
@@ -563,40 +724,6 @@
                     <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                     <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 </div>
-            </div>
-            
-            <div class="contact-form">
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="service">Service Needed</label>
-                        <select id="service" name="service">
-                            <option value="">Select a service</option>
-                            <option value="family-visa">Family-Based Immigration</option>
-                            <option value="employment-visa">Employment Visa</option>
-                            <option value="citizenship">Citizenship/Naturalization</option>
-                            <option value="deportation">Deportation Defense</option>
-                            <option value="document-review">Document Review</option>
-                            <option value="consultation">General Consultation</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Your Message *</label>
-                        <textarea id="message" name="message" required placeholder="Tell us about your case..."></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
             </div>
         </div>
     </section>
@@ -661,6 +788,22 @@
 
     <!-- SCROLL TO TOP BUTTON -->
     <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- POPUP MODAL -->
+    <div class="modal-overlay" id="newsletterModal">
+        <div class="modal-content">
+            <div class="modal-close" id="closeModal"><i class="fas fa-times"></i></div>
+            <div class="modal-header">
+                <h3>WAIT! Don't Leave Yet...</h3>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-gift" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                <h2>Grab Your Free Visa Guide</h2>
+                <p>Unlock the secrets to a successful visa application. Get our exclusive step-by-step checklist now!</p>
+                <a href="https://mailchi.mp/cyazorlawfirm/cyvisa-help-newsletter" target="_blank" class="modal-btn">Send Me The Free Guide</a>
+            </div>
+        </div>
+    </div>
 
     <!-- SUPABASE SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -931,6 +1074,33 @@
         });
 
         // ============================================
+        // POPUP MODAL LOGIC
+        // ============================================
+        const modal = document.getElementById('newsletterModal');
+        const closeModal = document.getElementById('closeModal');
+        
+        // Show modal after 8 seconds
+        setTimeout(() => {
+            // Check if user has already seen the modal in this session to avoid annoyance
+            if (!sessionStorage.getItem('modalSeen')) {
+                modal.classList.add('active');
+                sessionStorage.setItem('modalSeen', 'true');
+            }
+        }, 8000); 
+
+        // Close modal event
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // Close when clicking outside content
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // ============================================
         // MOBILE MENU
         // ============================================
         const hamburger = document.getElementById('hamburger');
@@ -1011,48 +1181,6 @@
                     });
                 }
             });
-        });
-
-        // ============================================
-        // CONTACT FORM HANDLING
-        // ============================================
-        const contactForm = document.getElementById('contactForm');
-        
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                service: document.getElementById('service').value,
-                message: document.getElementById('message').value,
-                submitted_at: new Date().toISOString()
-            };
-            
-            const submitBtn = contactForm.querySelector('.submit-btn');
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            try {
-                // Try to save to Supabase
-                const { error } = await supabase
-                    .from('contact_submissions')
-                    .insert([formData]);
-                
-                if (error) throw error;
-                
-                alert('Thank you! Your message has been sent. We will contact you shortly.');
-                contactForm.reset();
-            } catch (err) {
-                console.log('Form submission error:', err.message);
-                // Fallback: Still show success (you could integrate email service here)
-                alert('Thank you for your message! We will contact you shortly.');
-                contactForm.reset();
-            } finally {
-                submitBtn.textContent = 'Send Message';
-                submitBtn.disabled = false;
-            }
         });
 
         // ============================================
