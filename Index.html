@@ -307,7 +307,7 @@
         .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .faq-answer-content { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--text-light); line-height: 1.8; }
         
-        /* Contact Section - UPDATED (Removed Form) */
+        /* Contact Section */
         .contact { padding: 5rem 2rem; background: var(--white); }
         .contact-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
         .contact-info h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
@@ -395,20 +395,22 @@
     <!-- HEADER -->
     <header id="header">
         <div class="header-container">
-            <a href="#" class="logo">CY<span>Azor</span> Law Firm</a>
+            <!-- UPDATED LOGO LINK -->
+            <a href="index.html" class="logo">CY<span>Azor</span> Law Firm</a>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
             <nav id="nav">
+                <!-- UPDATED NAVIGATION LINKS TO EXTERNAL FILES -->
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#attorney">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#shop">E-Books</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="shop.html">E-Books</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -692,7 +694,7 @@
         </div>
     </section>
 
-    <!-- CONTACT SECTION - UPDATED (Removed Form) -->
+    <!-- CONTACT SECTION -->
     <section class="contact" id="contact">
         <div class="contact-container">
             <div class="contact-info">
@@ -744,23 +746,24 @@
             
             <div class="footer-section">
                 <h3>Quick Links</h3>
+                <!-- UPDATED FOOTER LINKS TO EXTERNAL FILES -->
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#attorney">About Us</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
             
             <div class="footer-section">
                 <h3>Our Services</h3>
                 <ul>
-                    <li><a href="#services">Family Immigration</a></li>
-                    <li><a href="#services">Employment Visas</a></li>
-                    <li><a href="#services">Citizenship</a></li>
-                    <li><a href="#services">Deportation Defense</a></li>
-                    <li><a href="#services">Appeals</a></li>
+                    <li><a href="services.html">Family Immigration</a></li>
+                    <li><a href="services.html">Employment Visas</a></li>
+                    <li><a href="services.html">Citizenship</a></li>
+                    <li><a href="services.html">Deportation Defense</a></li>
+                    <li><a href="services.html">Appeals</a></li>
                 </ul>
             </div>
             
@@ -1162,26 +1165,6 @@
                     : '<i class="fas fa-volume-up"></i>';
             });
         }
-
-        // ============================================
-        // SMOOTH SCROLL FOR ANCHOR LINKS
-        // ============================================
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
 
         // ============================================
         // SET CURRENT YEAR
